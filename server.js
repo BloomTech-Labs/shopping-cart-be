@@ -14,7 +14,7 @@ server.use(express.json())
 mongoose.connect(mongoURL, { useNewUrlParser: true })
 
 server.get('/', (req, res) => {
-  res.status(200).json('Api is running!!')
+  res.status(200).send("Api is running!!")
 })
 
 module.exports = server;
