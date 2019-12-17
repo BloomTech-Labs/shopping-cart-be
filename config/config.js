@@ -1,13 +1,12 @@
 require('dotenv').config()
 
-const { NODE_ENV } = process.env
-let mongoURL = ''
+const { NODE_ENV } = process.env;
+let mongoURI = '';
 
 if (NODE_ENV === 'test') {
-  // add: "mongodb://localhost/test" for travis config
-  mongoURL = process.env.DB_CONNECTION_TEST || 'mongodb://localhost/test'
+  mongoURI = process.env.DB_CONNECTION_TEST;
 } else {
-  mongoURL = process.env.DB_CONNECTION
+  mongoURI = process.env.DB_CONNECTION;
 }
 
-module.exports = mongoURL
+module.exports = mongoURI;
