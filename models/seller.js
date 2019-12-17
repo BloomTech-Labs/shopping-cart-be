@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const sellerSchema = mongoose.Schema({
   phone: {
@@ -12,6 +12,6 @@ const sellerSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
-const Seller = mongoose.model("Seller", sellerSchema);
-module.exports = Seller;
+})
+const Seller = mongoose.model('Seller', sellerSchema)
+module.exports = Seller
