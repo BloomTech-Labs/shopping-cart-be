@@ -4,18 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "test": "cross-env NODE_ENV=test nyc jest --coverage --detectOpenHandles --forceExit",
     "dev-test": "standard --fix && cross-env NODE_ENV=test jest --watchAll --verbose --coverage",
-=======
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
-    "dev-test": "cross-env NODE_ENV=test jest --watchAll --verbose",
->>>>>>> 1627b2a29131be4c4cd93f62ae3176298d965081
     "lint": "standard --fix",
     "server": "nodemon index.js",
     "start": "node index.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-<<<<<<< HEAD
     "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
   },
   "jest": {
@@ -30,15 +24,6 @@
       "text"
     ],
     "tempDirectory": "./coverage"
-=======
-    "coverage": "DB_ENV=testing nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
-  },
-  "jest": {
-    "testEnvironment": "node"
-  },
-  "standard": {
-    "env": [ "jest" ]
->>>>>>> 1627b2a29131be4c4cd93f62ae3176298d965081
   },
   "repository": {
     "type": "git",
