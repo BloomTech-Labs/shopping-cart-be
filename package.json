@@ -15,9 +15,9 @@
   "jest": {
     "coverageReporters": [
       "json"
-    ]
+    ],
+    "testEnvironment": "node"
   },
-  "testEnvironment": "node",
   "nyc": {
     "reporter": [
       "lcov",
