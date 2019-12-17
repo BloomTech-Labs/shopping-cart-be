@@ -5,12 +5,14 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const mongoURI = require("./config/config");
 
+const sellersRouter = require("./routes/registerSeller");
 const server = express();
 
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.use("/api/auth", sellersRouter);
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
