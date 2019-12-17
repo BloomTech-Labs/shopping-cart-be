@@ -3,8 +3,12 @@ const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
 const mongoose = require('mongoose')
+<<<<<<< HEAD
 const mongoURI = require('./config/config')
 console.log(mongoURI)
+=======
+const mongoURL = require('./config/config')
+>>>>>>> 1627b2a29131be4c4cd93f62ae3176298d965081
 
 const sellersRouter = require('./routes/registerSeller')
 const server = express()
