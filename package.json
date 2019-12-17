@@ -4,10 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "dev-test": "cross-env NODE_ENV=test jest --watchAll --verbose",
     "lint": "standard --fix",
     "server": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "coverage": "DB_ENV=testing nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "standard": {
+    "env": [ "jest" ]
   },
   "repository": {
     "type": "git",
