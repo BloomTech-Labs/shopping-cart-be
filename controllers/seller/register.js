@@ -1,7 +1,7 @@
-const Sellers = require("../../models/seller");
-const bcrypt = require("bcryptjs");
-const generateToken = require("../../helpers/generateToken");
-const {validateRegisterInput} = require("../../middlewares/validateSellerData");
+const Sellers = require('../../models/seller')
+const bcrypt = require('bcryptjs')
+const generateToken = require('../../helpers/generateToken')
+const { validateRegisterInput } = require('../../middleware/validateSellerData')
 
 function register (req, res) {
   const { errors, isValid } = validateRegisterInput(
