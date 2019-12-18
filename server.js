@@ -25,7 +25,7 @@ server.get('/', (req, res) => {
   res.status(200).send('Api is running!!')
 })
 
-server.get('*', (req, res) => {
+server.all('*', (req, res) => {
   res.status(404).json({ message: 'This URL can not be found' })
 })
 
