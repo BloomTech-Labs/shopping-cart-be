@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc jest --coverage --detectOpenHandles --forceExit",
-    "dev-test": "standard --fix && cross-env NODE_ENV=test jest --watchAll --verbose --coverage",
+    "test-dev": "standard --fix && cross-env NODE_ENV=test jest --watchAll --verbose --coverage",
     "lint": "standard --fix",
     "server": "nodemon index.js",
     "start": "node index.js",
