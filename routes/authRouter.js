@@ -5,5 +5,6 @@ const sellerController = require('../controllers/seller/index')
 // @desc Register new user
 // @access Public
 router.post('/register', sellerController.register)
+router.post('/login', sellerController.login)
 
 module.exports = router
