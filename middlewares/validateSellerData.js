@@ -18,10 +18,6 @@ function validateRegisterInput (data) {
     errors.password = 'Password field is required'
   } else if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
     errors.password = 'Password must be at least 6 characters'
-  } else if (Validator.isEmpty(data.password2)) {
-    errors.password2 = 'Confirm password field is required'
-  } else if (!Validator.equals(data.password, data.password2)) {
-    errors.password2 = 'Passwords must match'
   }
   return {
     errors,
