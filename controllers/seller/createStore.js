@@ -12,7 +12,7 @@ function createStore(req, res) {
     currency: req.body.currency,
     imageUrl: req.body.imageUrl,
     storeName: req.body.storeName,
-    sellerId: req.decodedToken.sub
+    seller: req.decodedToken.sub
   });
 
   newStore
