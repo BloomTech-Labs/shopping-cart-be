@@ -56,7 +56,7 @@ describe('test', () => {
         imageUrl: 'some image'
       })
       .set('Authorization', token)
-    const res = response.body.store
+    const res = response.body.saved
     expect(response.status).toBe(201)
     expect(res).toBeDefined()
     expect(res).toHaveProperty('ownerName')
@@ -75,8 +75,7 @@ describe('test', () => {
         imageUrl: 'some image'
       })
       .set('Authorization', token)
-    console.log(response.body)
-    // expect(response.status).toBe(400);
+
     expect(response.body).toEqual({ message: 'Store name already exists' })
   })
   it('should return Owner Name is required', async () => {
