@@ -17,11 +17,12 @@ const productSchema = mongoose.Schema({
     type: Number
   },
   storeId: {
-    type: String,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'store',
+    required: true,
   }
 })
 
-const Product = mongoose.model('Product', productSchema)
+const Product = mongoose.model('product', productSchema)
 
 module.exports = Product
