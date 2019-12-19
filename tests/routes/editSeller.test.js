@@ -63,7 +63,6 @@ describe('edit store', () => {
     expect(response.body).toEqual({
       ownerName: 'Name of store owner is required',
       currency: 'Store currency is required',
-      imageUrl: 'Store imageURL is required',
       storeName: 'Store name is required'
     })
   })
@@ -77,7 +76,6 @@ describe('edit store', () => {
     expect(response.body).toBeDefined()
     expect(response.body).toEqual({
       currency: 'Store currency is required',
-      imageUrl: 'Store imageURL is required',
       storeName: 'Store name is required'
     })
   })
@@ -90,7 +88,7 @@ describe('edit store', () => {
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
     expect(response.body).toEqual({
-      imageUrl: 'Store imageURL is required',
+      // imageUrl: 'Store imageURL is required',
       storeName: 'Store name is required'
     })
   })
