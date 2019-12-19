@@ -1,12 +1,12 @@
 const Sellers = require('../../models/seller')
 const bcrypt = require('bcryptjs')
 const generateToken = require('../../helpers/generateToken')
-const { validateRegisterInput } = require('../../middleware/validateSellerData')
+const {
+  validateRegisterInput
+} = require('../../middleware/validateSellerData')
 
 function register (req, res) {
-  const { errors, isValid } = validateRegisterInput(
-    req.body
-  )
+  const { errors, isValid } = validateRegisterInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
   }
@@ -36,7 +36,7 @@ function register (req, res) {
         })
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        res.status(500).json({ message: err.message })
       })
   })
 }

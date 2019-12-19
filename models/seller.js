@@ -13,5 +13,5 @@ const sellerSchema = mongoose.Schema({
     default: Date.now
   }
 })
-const Seller = mongoose.model('Seller', sellerSchema)
+const Seller = mongoose.model('seller', sellerSchema)
 module.exports = Seller
