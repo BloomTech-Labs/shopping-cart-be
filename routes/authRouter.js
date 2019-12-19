@@ -6,6 +6,7 @@ const authentication = require('../middlewares/authentication')
 // @desc Register new user
 // @access Public
 router.post('/register', sellerController.register)
+router.post('/login', sellerController.login)
 
 // @route POST api/auth/edit
 // @desc Edit a seller's store

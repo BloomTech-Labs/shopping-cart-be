@@ -5,14 +5,14 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const mongoURI = require('./config/config')
 
-const sellersRouter = require('./routes/registerSeller')
+const authRouter = require('./routes/authRouter')
 const server = express()
 
 server.use(helmet())
 server.use(cors())
 server.use(express.json())
 
-server.use('/api/auth', sellersRouter)
+server.use('/api/auth', authRouter)
 mongoose
   .connect(mongoURI, {
     useNewUrlParser: true,
