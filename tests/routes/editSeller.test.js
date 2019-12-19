@@ -27,11 +27,11 @@ beforeAll(async () => {
 
     //   Create a store
     const newStore = new Store({
-      storeName: 'Glass &  Sticks',
+      storeName: 'Book &  Sticks',
       ownerName: 'Jane Doe',
       currency: 'dollars',
       imageUrl: 'some image',
-      Seller: response1.body.user.id
+      seller: response1.body.user.id
     })
     newStore
       .save()

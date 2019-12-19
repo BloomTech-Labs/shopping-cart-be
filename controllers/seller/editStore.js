@@ -13,7 +13,7 @@ function editStore(req, res) {
   const { ownerName, currency, imageUrl, storeName } = req.body
 
   //   find seller / store
-  Store.findOne({ Seller: sellerId })
+  Store.findOne({ seller: sellerId })
     .then(store => {
       if (!store) {
         return res.status(404).json({ message: 'No store was found' })

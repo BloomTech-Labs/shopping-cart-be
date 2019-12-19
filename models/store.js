@@ -7,8 +7,8 @@ const storeSchema = mongoose.Schema({
   },
   currency: { type: String, required: true },
   imageUrl: { type: String },
-  storeName: { type: String, required: true },
-  Seller: {
+  storeName: { type: String, required: true, unique: true },
+  seller: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Seller'
   },
@@ -17,5 +17,5 @@ const storeSchema = mongoose.Schema({
     default: Date.now
   }
 })
-const Store = mongoose.model('Store', storeSchema)
+const Store = mongoose.model('store', storeSchema)
 module.exports = Store

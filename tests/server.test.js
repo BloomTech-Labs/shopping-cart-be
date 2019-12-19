@@ -1,11 +1,6 @@
 const request = require('supertest')
 const server = require('../server')
 const mongoose = require('mongoose')
-// const sellers = require("../routes/registerSeller")
-
-beforeEach(() => {
-  jest.setTimeout(10000)
-})
 
 describe('index route', () => {
   it('it runs', async done => {
@@ -23,7 +18,6 @@ describe('index route', () => {
 
 afterAll(async () => {
   try {
-    // await clearDb();
     await mongoose.connection.collections.sellers.drop()
     await mongoose.disconnect()
   } catch (error) {
