@@ -73,7 +73,7 @@ describe('registerSeller', () => {
     const res = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '07031900035',
+        phone: '07031900054',
         password: 'Password12345'
       })
 

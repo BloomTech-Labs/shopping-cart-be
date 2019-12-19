@@ -7,6 +7,7 @@ const mongoURI = require('./config/config')
 
 const authRouter = require('./routes/authRouter')
 const productRouter = require('./routes/productRouter')
+const storeRouter = require('./routes/storeRouter')
 const server = express()
 
 server.use(helmet())
@@ -15,6 +16,7 @@ server.use(express.json())
 
 server.use('/api/auth', authRouter)
 server.use('/api/store', productRouter)
+server.use('/api/store', storeRouter)
 
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
