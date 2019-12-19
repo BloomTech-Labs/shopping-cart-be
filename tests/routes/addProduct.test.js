@@ -29,23 +29,7 @@ describe('add a product', () => {
     expect(res.status).toBe(400)
     expect(res.body).toEqual({ message: 'No credentials provided' })
   })
-  // });
 
-  // describe("test", () => {
-  // //   beforeAll(async () => {
-  // //     try {
-  // //       clearDb();
-  // //       const response1 = await request(server)
-  // //         .post("/api/auth/register")
-  // //         .send({
-  // //           phone: "07031900033",
-  // //           password: "password12345"
-  // //         });
-  // //       token = response1.body.token;
-  // //     } catch (error) {
-  // //       console.error(error.name, error.message);
-  // //     }
-  // //   });
   it('successfully creates a product', async () => {
     const response = await request(server)
       .post('/api/store/1/products')
