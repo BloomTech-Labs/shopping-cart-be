@@ -32,7 +32,7 @@ describe('add a product', () => {
 
   it('successfully creates a product', async () => {
     const response = await request(server)
-      .post('/api/store/1/products')
+      .post('/api/store/5dfa4ead78b643025153e1ac/products')
       .send({
         name: 'product1',
         description: 'test product',
