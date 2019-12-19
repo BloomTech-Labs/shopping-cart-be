@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const mongoURI = require('./config/config')
 
 const authRouter = require('./routes/authRouter')
-const storeRouter = require("./routes/storeRouter")
+const storeRouter = require('./routes/storeRouter')
 const server = express()
 
 server.use(helmet())
@@ -14,7 +14,7 @@ server.use(cors())
 server.use(express.json())
 
 server.use('/api/auth', authRouter)
-server.use("/api/store", storeRouter)
+server.use('/api/store', storeRouter)
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

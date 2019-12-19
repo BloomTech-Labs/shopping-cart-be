@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const storeSchema = mongoose.Schema({
   ownerName: {
@@ -8,15 +8,15 @@ const storeSchema = mongoose.Schema({
   },
   currency: { type: String, required: true },
   imageUrl: { type: String },
-  storeName: { type: String, required: true, unique:true },
+  storeName: { type: String, required: true, unique: true },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Seller"
+    ref: 'Seller'
   },
   register_date: {
     type: Date,
     default: Date.now
   }
-});
-const Store = mongoose.model("store", storeSchema);
-module.exports = Store;
+})
+const Store = mongoose.model('store', storeSchema)
+module.exports = Store
