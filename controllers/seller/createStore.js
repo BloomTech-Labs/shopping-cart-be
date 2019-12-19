@@ -1,6 +1,13 @@
 const Store = require("../../models/store");
+const {
+  validateCreateStoreInput
+} = require("../../middleware/validateCreateStoreData");
 
 function createStore(req, res) {
+  const { errors, isValid } = validateCreateStoreInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const storeName = req.body.storeName;
   Store.findOne({ storeName }).then(user => {
     if (user) {
