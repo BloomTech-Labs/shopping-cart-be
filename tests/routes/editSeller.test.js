@@ -1,0 +1,141 @@
+const request = require('supertest')
+const server = require('../../server')
+const Store = require('../../models/store')
+
+let token
+let wrongToken
+
+async function clearDb() {
+  await Store.deleteMany({})
+}
+
+beforeAll(async () => {
+  try {
+    clearDb()
+    const response1 = await request(server)
+      .post('/api/auth/register')
+      .send({
+        phone: '07031900036',
+        password: 'password12345'
+      })
+    const response2 = await request(server)
+      .post('/api/auth/register')
+      .send({ phone: '07031900037', password: 'password12345' })
+
+    wrongToken = response2.body.token
+    token = response1.body.token
+
+    //   Create a store
+    const newStore = new Store({
+      storeName: 'Glass &  Sticks',
+      ownerName: 'Jane Doe',
+      currency: 'dollars',
+      imageUrl: 'some image',
+      Seller: response1.body.user.id
+    })
+    newStore
+      .save()
+      .then(store => {})
+      .catch(err => console.log(err))
+  } catch (error) {
+    console.error(error.name, error.message)
+  }
+})
+
+describe('edit store', () => {
+  it('should work', async () => {
+    expect(1).toBe(1)
+  })
+
+  it('should return no credentials provided', async () => {
+    const response = await request(server).put('/api/auth/stores')
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ message: 'No credentials provided' })
+  })
+
+  it('should return all fields required', async () => {
+    const response = await request(server)
+      .put('/api/auth/stores')
+      .send({})
+      .set('Authorization', token)
+    expect(response.status).toBe(400)
+    expect(response.body).toBeDefined()
+    expect(response.body).toEqual({
+      ownerName: 'Name of store owner is required',
+      currency: 'Store currency is required',
+      imageUrl: 'Store imageURL is required',
+      storeName: 'Store name is required'
+    })
+  })
+
+  it('should return currency, imageUrl & storename required', async () => {
+    const response = await request(server)
+      .put('/api/auth/stores')
+      .send({ ownerName: 'John Doe' })
+      .set('Authorization', token)
+    expect(response.status).toBe(400)
+    expect(response.body).toBeDefined()
+    expect(response.body).toEqual({
+      currency: 'Store currency is required',
+      imageUrl: 'Store imageURL is required',
+      storeName: 'Store name is required'
+    })
+  })
+
+  it('should return imageUrl & storename required', async () => {
+    const response = await request(server)
+      .put('/api/auth/stores')
+      .send({ ownerName: 'John Doe', currency: 'cedi' })
+      .set('Authorization', token)
+    expect(response.status).toBe(400)
+    expect(response.body).toBeDefined()
+    expect(response.body).toEqual({
+      imageUrl: 'Store imageURL is required',
+      storeName: 'Store name is required'
+    })
+  })
+
+  it('should return storename required', async () => {
+    const response = await request(server)
+      .put('/api/auth/stores')
+      .send({
+        ownerName: 'John Doe',
+        currency: 'cedi',
+        imageUrl: 'https://someimage.com'
+      })
+      .set('Authorization', token)
+    expect(response.status).toBe(400)
+    expect(response.body).toBeDefined()
+    expect(response.body).toEqual({
+      storeName: 'Store name is required'
+    })
+  })
+
+  it('should return edited store info', async () => {
+    const response = await request(server)
+      .put('/api/auth/stores')
+      .send({
+        ownerName: 'John Doe',
+        currency: 'cedi',
+        imageUrl: 'https://someimage.com',
+        storeName: 'sticks & bones'
+      })
+      .set('Authorization', token)
+    expect(response.status).toBe(200)
+    expect(response.body).toBeDefined()
+  })
+
+  it('should return store not found', async () => {
+    const response = await request(server)
+      .put('/api/auth/stores')
+      .send({
+        ownerName: 'John Doe',
+        currency: 'cedi',
+        imageUrl: 'https://someimage.com',
+        storeName: 'sticks & bones'
+      })
+      .set('Authorization', wrongToken)
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({ message: 'No store was found' })
+  })
+})

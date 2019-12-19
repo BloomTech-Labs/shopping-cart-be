@@ -14,7 +14,11 @@ server.use(express.json())
 
 server.use('/api/auth', sellersRouter)
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  })
   .then(() => {
     console.log('MongoDB is connected')
   })
