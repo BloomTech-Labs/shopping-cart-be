@@ -48,14 +48,14 @@ describe('edit store', () => {
   })
 
   it('should return no credentials provided', async () => {
-    const response = await request(server).put('/api/auth/stores')
+    const response = await request(server).put('/api/store')
     expect(response.status).toBe(400)
     expect(response.body).toEqual({ message: 'No credentials provided' })
   })
 
   it('should return all fields required', async () => {
     const response = await request(server)
-      .put('/api/auth/stores')
+      .put('/api/store')
       .send({})
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -70,7 +70,7 @@ describe('edit store', () => {
 
   it('should return currency, imageUrl & storename required', async () => {
     const response = await request(server)
-      .put('/api/auth/stores')
+      .put('/api/store')
       .send({ ownerName: 'John Doe' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -84,7 +84,7 @@ describe('edit store', () => {
 
   it('should return imageUrl & storename required', async () => {
     const response = await request(server)
-      .put('/api/auth/stores')
+      .put('/api/store')
       .send({ ownerName: 'John Doe', currency: 'cedi' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -97,7 +97,7 @@ describe('edit store', () => {
 
   it('should return storename required', async () => {
     const response = await request(server)
-      .put('/api/auth/stores')
+      .put('/api/store')
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
@@ -113,7 +113,7 @@ describe('edit store', () => {
 
   it('should return edited store info', async () => {
     const response = await request(server)
-      .put('/api/auth/stores')
+      .put('/api/store')
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
@@ -127,7 +127,7 @@ describe('edit store', () => {
 
   it('should return store not found', async () => {
     const response = await request(server)
-      .put('/api/auth/stores')
+      .put('/api/store')
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
