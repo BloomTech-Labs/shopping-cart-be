@@ -7,9 +7,9 @@ const authenticateMiddleware = require('../middleware/authenticateMiddleware')
 // @access Private
 router.post('/', authenticateMiddleware, storeController.createStore)
 
-// @route PUT /api/store/edit
+// @route PUT /api/store/:store_id
 // @desc Edit a seller's store
 // @access Private
-router.put('/', authenticateMiddleware, storeController.editStore)
+router.put('/:store_id', authenticateMiddleware, storeController.editStore)
 
 module.exports = router

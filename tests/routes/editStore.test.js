@@ -4,6 +4,8 @@ const Store = require('../../models/store')
 
 let token
 let wrongToken
+let store_id
+let seller
 
 async function clearDb() {
   await Store.deleteMany({})
@@ -24,6 +26,7 @@ beforeAll(async () => {
 
     wrongToken = response2.body.token
     token = response1.body.token
+    seller = response1.body.user.id
 
     //   Create a store
     const newStore = new Store({
@@ -33,6 +36,9 @@ beforeAll(async () => {
       imageUrl: 'some image',
       seller: response1.body.user.id
     })
+
+    store_id = newStore.id
+
     newStore
       .save()
       .then(store => {})
@@ -48,14 +54,14 @@ describe('edit store', () => {
   })
 
   it('should return no credentials provided', async () => {
-    const response = await request(server).put('/api/store')
+    const response = await request(server).put(`/api/store/${store_id}`)
     expect(response.status).toBe(400)
     expect(response.body).toEqual({ message: 'No credentials provided' })
   })
 
   it('should return all fields required', async () => {
     const response = await request(server)
-      .put('/api/store')
+      .put(`/api/store/${store_id}`)
       .send({})
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -69,7 +75,7 @@ describe('edit store', () => {
 
   it('should return currency, imageUrl & storename required', async () => {
     const response = await request(server)
-      .put('/api/store')
+      .put(`/api/store/${store_id}`)
       .send({ ownerName: 'John Doe' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -82,7 +88,7 @@ describe('edit store', () => {
 
   it('should return imageUrl & storename required', async () => {
     const response = await request(server)
-      .put('/api/store')
+      .put(`/api/store/${store_id}`)
       .send({ ownerName: 'John Doe', currency: 'cedi' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -95,7 +101,7 @@ describe('edit store', () => {
 
   it('should return storename required', async () => {
     const response = await request(server)
-      .put('/api/store')
+      .put(`/api/store/${store_id}`)
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
@@ -110,11 +116,18 @@ describe('edit store', () => {
   })
 
   it('should return edited store info', async () => {
+    const testStore = await Store.create({
+      storeName: 'Book &  Lockers',
+      ownerName: 'Susan Doe',
+      currency: 'dollars',
+      imageUrl: 'some image',
+      seller
+    })
     const response = await request(server)
-      .put('/api/store')
+      .put(`/api/store/${testStore.id}`)
       .send({
         ownerName: 'John Doe',
-        currency: 'cedi',
+        currency: 'shillings',
         imageUrl: 'https://someimage.com',
         storeName: 'sticks & bones'
       })
@@ -123,9 +136,16 @@ describe('edit store', () => {
     expect(response.body).toBeDefined()
   })
 
-  it('should return store not found', async () => {
+  it('should return user access error', async () => {
+    const testStore = await Store.create({
+      storeName: 'Book &  Drums',
+      ownerName: 'Susan Doe',
+      currency: 'dollars',
+      imageUrl: 'some image',
+      seller
+    })
     const response = await request(server)
-      .put('/api/store')
+      .put(`/api/store/${testStore.id}`)
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
@@ -133,6 +153,22 @@ describe('edit store', () => {
         storeName: 'sticks & bones'
       })
       .set('Authorization', wrongToken)
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({
+      message: 'You can only modify your own store'
+    })
+  })
+
+  it('should return store not found', async () => {
+    const response = await request(server)
+      .put(`/api/store/5dfca0dcec912243c05735a9`)
+      .send({
+        ownerName: 'John Doe',
+        currency: 'cedi',
+        imageUrl: 'https://someimage.com',
+        storeName: 'sticks & bones'
+      })
+      .set('Authorization', token)
     expect(response.status).toBe(404)
     expect(response.body).toEqual({ message: 'No store was found' })
   })
