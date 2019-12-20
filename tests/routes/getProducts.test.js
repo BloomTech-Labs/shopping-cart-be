@@ -23,7 +23,7 @@ describe('get all products', () => {
   })
 
   test('should return one product', async () => {
-    Product.create({
+    const product = await Product.create({
       name: "Apetsi's product",
       description: 'some description here',
       price: 300,
