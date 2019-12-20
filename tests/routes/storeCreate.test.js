@@ -3,6 +3,7 @@ const server = require('../../server')
 const Store = require('../../models/store')
 
 let token
+let token2
 async function clearDb () {
   await Store.deleteMany({})
 }
@@ -35,6 +36,15 @@ describe('test', () => {
 
       token = response1.body.token
 
+      const response2 = await request(server)
+      .post('/api/auth/register')
+      .send({
+        phone: '070319000',
+        password: 'password12345'
+      })
+
+    token2 = response2.body.token
+
       Store.create({
         storeName: 'Ruff&Rumble',
         ownerName: 'Jack Daniels',
@@ -55,7 +65,7 @@ describe('test', () => {
         currency: 'dollars',
         imageUrl: 'some image'
       })
-      .set('Authorization', token)
+      .set('Authorization', token2)
     const res = response.body.saved
     expect(response.status).toBe(201)
     expect(res).toBeDefined()
@@ -65,7 +75,7 @@ describe('test', () => {
     expect(res).toHaveProperty('storeName')
     expect(res).toHaveProperty('seller')
   })
-  it('should return Store name already exists', async () => {
+  it('You can not create more than one store', async () => {
     const response = await request(server)
       .post('/api/store')
       .send({
@@ -76,7 +86,7 @@ describe('test', () => {
       })
       .set('Authorization', token)
 
-    expect(response.body).toEqual({ message: 'Store name already exists' })
+    expect(response.body).toEqual({ message: 'You can not create more than one store' })
   })
   it('should return Owner Name is required', async () => {
     const response = await request(server)
