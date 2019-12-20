@@ -19,7 +19,7 @@ const productSchema = mongoose.Schema({
   storeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'store',
-    required: true,
+    required: true
   }
 })
 
