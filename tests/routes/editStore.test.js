@@ -12,6 +12,7 @@ async function clearDb() {
 }
 
 beforeAll(async () => {
+  jest.setTimeout(10000)
   try {
     clearDb()
     const response1 = await request(server)
