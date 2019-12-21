@@ -34,7 +34,7 @@ beforeAll(async () => {
 
     // create store for seller 1
     const newStore = new Store({
-      storeName: "Book &  Sticks",
+      storeName: "Stone &  Sticks",
       ownerName: "Jane Doe",
       currency: "dollars",
       imageUrl: "some image",
@@ -44,7 +44,7 @@ beforeAll(async () => {
     store_id = newStore.id;
     newStore
       .save()
-      .then(store => console.log(store))
+      .then(store => {})
       .catch(err => console.log(err));
 
     // create store for seller 2
@@ -59,12 +59,14 @@ beforeAll(async () => {
     store_id2 = newStore2.id;
     newStore2
       .save()
-      .then(store => console.log(store))
+      .then(store => {})
       .catch(err => console.log(err));
   } catch (error) {
     console.error(error.name, error.message);
   }
 });
+
+
 
 describe("delete a store", () => {
   it("returns No credentials provided", async () => {

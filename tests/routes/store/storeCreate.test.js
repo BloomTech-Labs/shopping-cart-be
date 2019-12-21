@@ -15,6 +15,13 @@ beforeAll(async () => {
   }
 })
 
+afterAll(async () => {
+  try {
+    await clearDb()
+  } catch (error) {
+    console.error(error.name, error.message)
+  }
+})
 describe('create a new store', () => {
   it('returns No credentials provided message', async () => {
     const res = await request(server).post('/api/store')
@@ -84,7 +91,7 @@ describe('test', () => {
         currency: 'dollars',
         imageUrl: 'some image'
       })
-      .set('Authorization', token)
+      .set('Authorization', token2)
 
     expect(response.body).toEqual({ message: 'You can not create more than one store' })
   })
