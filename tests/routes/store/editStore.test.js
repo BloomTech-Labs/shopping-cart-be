@@ -1,6 +1,6 @@
 const request = require('supertest')
-const server = require('../../server')
-const Store = require('../../models/store')
+const server = require('../../../server')
+const Store = require('../../../models/store')
 
 let token
 let wrongToken
