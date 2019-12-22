@@ -13,6 +13,7 @@ const server = express()
 server.use(helmet())
 server.use(cors())
 server.use(express.json())
+server.use(express.urlencoded({ extended: false }))
 
 server.use('/api/auth', authRouter)
 server.use('/api/store', productRouter)
