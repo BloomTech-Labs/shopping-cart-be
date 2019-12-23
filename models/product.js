@@ -14,7 +14,8 @@ const productSchema = mongoose.Schema({
     required: true
   },
   stock: {
-    type: Number
+    type: Number,
+    required: true
   },
   storeId: {
     type: mongoose.Schema.Types.ObjectId,
