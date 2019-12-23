@@ -1,6 +1,6 @@
 const Product = require('../../models/product')
 
-async function getProducts(req, res) {
+async function getProducts (req, res) {
   try {
     const products = await Product.find()
     if (products.length === 0) {

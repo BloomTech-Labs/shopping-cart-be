@@ -9,7 +9,7 @@ const authenticate = require('../middleware/authenticateMiddleware')
 // @route POST api/store/:storeId/products
 // @desc  Add a new item to the store
 // @access Private
-router.post('/:storeId/products/', authenticate, addProduct)
+router.post('/products/', authenticate, addProduct)
 
 // @route GET api/store/products
 // @desc Gett all products from store

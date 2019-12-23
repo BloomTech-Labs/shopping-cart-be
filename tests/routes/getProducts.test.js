@@ -3,7 +3,7 @@ const server = require('../../server')
 const Product = require('../../models/product')
 const mongoose = require('mongoose')
 
-async function clearDb() {
+async function clearDb () {
   await Product.deleteMany({})
 }
 
