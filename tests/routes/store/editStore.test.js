@@ -1,6 +1,6 @@
 const request = require('supertest')
-const server = require('../../server')
-const Store = require('../../models/store')
+const server = require('../../../server')
+const Store = require('../../../models/store')
 
 let token
 let wrongToken
@@ -12,6 +12,7 @@ async function clearDb() {
 }
 
 beforeAll(async () => {
+  jest.setTimeout(10000)
   try {
     clearDb()
     const response1 = await request(server)
