@@ -44,13 +44,13 @@ describe('test', () => {
       token = response1.body.token
 
       const response2 = await request(server)
-      .post('/api/auth/register')
-      .send({
-        phone: '070319000',
-        password: 'password12345'
-      })
+        .post('/api/auth/register')
+        .send({
+          phone: '070319000',
+          password: 'password12345'
+        })
 
-    token2 = response2.body.token
+      token2 = response2.body.token
 
       Store.create({
         storeName: 'Ruff&Rumble',

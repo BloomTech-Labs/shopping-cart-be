@@ -1,7 +1,7 @@
 const Product = require('../../models/product')
 const validateProductData = require('../../middleware/validateProductData')
 
-async function editProduct(req, res) {
+async function editProduct (req, res) {
   const { errors, isValid } = validateProductData(req.body)
   const productId = req.params.product_id
 

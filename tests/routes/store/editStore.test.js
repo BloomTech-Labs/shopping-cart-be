@@ -7,7 +7,7 @@ let wrongToken
 let store_id
 let seller
 
-async function clearDb() {
+async function clearDb () {
   await Store.deleteMany({})
 }
 
@@ -162,7 +162,7 @@ describe('edit store', () => {
 
   it('should return store not found', async () => {
     const response = await request(server)
-      .put(`/api/store/5dfca0dcec912243c05735a9`)
+      .put('/api/store/5dfca0dcec912243c05735a9')
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',

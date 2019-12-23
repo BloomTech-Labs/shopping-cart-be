@@ -6,7 +6,7 @@ let token
 let testProduct
 let wrongId
 
-async function clearDB() {
+async function clearDB () {
   await Product.deleteMany({})
 }
 

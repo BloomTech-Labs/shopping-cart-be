@@ -2,7 +2,7 @@ const Store = require('../../models/store')
 
 const { validateEditInput } = require('../../middleware/validateEditInput')
 
-function editStore(req, res) {
+function editStore (req, res) {
   const { sub: sellerId } = req.decodedToken
   const { store_id } = req.params
   const { errors, isValid } = validateEditInput(req.body)
@@ -18,7 +18,7 @@ function editStore(req, res) {
     .then(store => {
       if (!store) {
         return res.status(404).json({ message: 'No store was found' })
-      } else if (String(store.seller) != String(sellerId)) {
+      } else if (String(store.seller) !== String(sellerId)) {
         return res
           .status(400)
           .json({ message: 'You can only modify your own store' })
