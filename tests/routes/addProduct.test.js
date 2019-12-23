@@ -4,7 +4,7 @@ const Product = require('../../models/product')
 
 let token
 
-async function clearDb () {
+async function clearDb() {
   await Product.deleteMany({})
 }
 
@@ -75,7 +75,9 @@ describe('add a product', () => {
       .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
-    expect(response.body).toEqual({ description: 'Description field is required' })
+    expect(response.body).toEqual({
+      description: 'Description field is required'
+    })
   })
 
   it('should return stock is required', async () => {
