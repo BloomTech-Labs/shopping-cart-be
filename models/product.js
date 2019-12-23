@@ -21,7 +21,12 @@ const productSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'store',
     required: true
-  }
+  },
+  images: [
+    {
+      type: String
+    }
+  ]
 })
 
 const Product = mongoose.model('product', productSchema)
