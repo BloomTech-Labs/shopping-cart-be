@@ -2,7 +2,7 @@ const Store = require('../../models/store')
 
 const { validateEditInput } = require('../../middleware/validateEditInput')
 
-function editStore(req, res) {
+function editStore (req, res) {
   const { sub: sellerId } = req.decodedToken
   const { store_id } = req.params
   const { errors, isValid } = validateEditInput(req.body)
