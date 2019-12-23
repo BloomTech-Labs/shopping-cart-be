@@ -4,7 +4,7 @@ const Product = require('../../models/product')
 
 let token
 
-async function clearDb() {
+async function clearDb () {
   await Product.deleteMany({})
 }
 
