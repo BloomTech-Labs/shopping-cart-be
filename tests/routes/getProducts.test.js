@@ -1,7 +1,8 @@
 const request = require('supertest')
 const server = require('../../server')
 const Product = require('../../models/product')
-const mongoose = require('mongoose')
+
+let token
 
 async function clearDb () {
   await Product.deleteMany({})
@@ -10,6 +11,23 @@ async function clearDb () {
 beforeAll(async () => {
   try {
     await clearDb()
+    const response = await request(server)
+      .post('/api/auth/register')
+      .send({
+        phone: '07031900078',
+        password: 'password12345'
+      })
+    token = response.body.token
+
+    await request(server)
+      .post('/api/store')
+      .send({
+        storeName: 'Glass &  Sticks',
+        ownerName: 'Jane Doe',
+        currency: 'dollars',
+        imageUrl: 'some image'
+      })
+      .set('Authorization', token)
   } catch (error) {
     console.error(error.name, error.message)
   }
@@ -17,20 +35,26 @@ beforeAll(async () => {
 
 describe('get all products', () => {
   test('should return no products found', async () => {
-    const response = await request(server).get('/api/store/products')
+    const response = await request(server)
+      .get('/api/store/products')
+      .set('Authorization', token)
     expect(response.status).toBe(404)
     expect(response.body).toEqual({ message: 'No products found' })
   })
 
   test('should return one product', async () => {
-    const product = await Product.create({
-      name: "Apetsi's product",
-      description: 'some description here',
-      price: 300,
-      stock: 4958,
-      storeId: '5dfa58c0b825192402a38b29'
-    })
-    const response = await request(server).get('/api/store/products')
+    await request(server)
+      .post('/api/store/products')
+      .send({
+        name: 'product1',
+        description: 'some description here',
+        stock: '1',
+        price: '200'
+      })
+      .set('Authorization', token)
+    const response = await request(server)
+      .get('/api/store/products')
+      .set('Authorization', token)
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(1)
     expect(response.body[0]).toHaveProperty(

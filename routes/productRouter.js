@@ -14,7 +14,7 @@ router.post('/products/', authenticate, addProduct)
 // @route GET api/store/products
 // @desc Gett all products from store
 // @access Public
-router.get('/products', getProducts)
+router.get('/products', authenticate, getProducts)
 
 // @route POST /api/store/products/:product_id
 // @desc Login user
