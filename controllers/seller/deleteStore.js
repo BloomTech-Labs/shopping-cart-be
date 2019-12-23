@@ -1,5 +1,5 @@
 const Store = require('../../models/store')
-
+const Product = require('../../models/product')
 async function deleteStore (req, res) {
   const { sub } = req.decodedToken
   try {
@@ -10,8 +10,8 @@ async function deleteStore (req, res) {
         .json({ message: 'There is no store associated with this account' })
     }
     const storeId = store._id
+    await Product.deleteMany({ storeId })
     await Store.deleteOne({ _id: storeId })
-
     return res.status(200).json({ message: `${store.storeName} store has been removed` })
   } catch (err) {
     res.status(500).json({ message: err.message })
