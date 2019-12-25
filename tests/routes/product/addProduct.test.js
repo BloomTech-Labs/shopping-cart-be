@@ -1,14 +1,14 @@
 const request = require('supertest')
-const server = require('../../server')
-const Product = require('../../models/product')
-const Seller = require('../../models/seller')
-const Store = require('../../models/store')
+const server = require('../../../server')
+const Product = require('../../../models/product')
+const Seller = require('../../../models/seller')
+const Store = require('../../../models/store')
 
 let token
 
 async function clearDb () {
-  await Product.deleteMany({})
   await Seller.deleteMany({})
+  await Product.deleteMany({})
   await Store.deleteMany({})
 }
 
@@ -22,7 +22,6 @@ beforeAll(async () => {
         password: 'password12345'
       })
 
-    console.log('RESBODY>>>>', response.body)
     token = response.body.token
 
     await request(server)
@@ -46,7 +45,6 @@ describe('add a product', () => {
     expect(res.body).toEqual({ message: 'No credentials provided' })
   })
 
-  console.log('TOKEN>>>>>>>>>>>>>>>>', token)
 
   it('successfully creates a product', async () => {
     const response = await request(server)

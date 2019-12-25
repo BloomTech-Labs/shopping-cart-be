@@ -1,6 +1,6 @@
 const request = require('supertest')
-const server = require('../../server')
-const Product = require('../../models/product')
+const server = require('../../../server')
+const Product = require('../../../models/product')
 
 let token
 
