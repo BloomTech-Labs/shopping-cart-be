@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   addProduct,
   getProducts,
+  getOneProduct,
   editProduct,
   deleteProduct
 } = require("../controllers/product");
@@ -17,6 +18,11 @@ router.post("/products/", authenticate, addProduct);
 // @access Public
 router.get("/products", authenticate, getProducts);
 
+// @route GET api/store/products/:product_id
+// @desc Gett all products from store
+// @access Public
+router.get("/products/:product_id", authenticate, getOneProduct);
+
 // @route POST /api/store/products/:product_id
 // @desc Edit a product
 // @access Public
@@ -28,4 +34,4 @@ router.put("/products/:product_id", authenticate, editProduct);
 router.delete("/products/:product_id", authenticate, deleteProduct);
 
 module.exports = router;
-4
+4;
