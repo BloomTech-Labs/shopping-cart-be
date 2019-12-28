@@ -11,7 +11,7 @@ const authenticate = require("../middleware/authenticateMiddleware");
 // @route POST api/store/products
 // @desc  Add a new item to the store
 // @access Private
-router.post("/products/", authenticate, addProduct);
+router.post("/products", authenticate, addProduct);
 
 // @route GET api/store/products
 // @desc Gett all products from store

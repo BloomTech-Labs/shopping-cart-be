@@ -57,9 +57,6 @@ describe("get all products", () => {
       .set("Authorization", token);
 
     productId = res.body["_id"];
-
-    console.log("PR>>>>>", res.body);
-
     const response = await request(server)
       .get("/api/store/products")
       .set("Authorization", token);
@@ -74,23 +71,21 @@ describe("get all products", () => {
 });
 
 describe("get a product", () => {
-  // test("should return no products found", async () => {
-  //   const response = await request(server)
-  //     .get("/api/store/products/5e03ae9b7cfc69bc054f6156")
-  //     .set("Authorization", token);
-  //   expect(response.status).toBe(404);
-  //   expect(response.body).toEqual({ message: "No product found" });
-  // });
-
-  test("should return one product", async () => {
-    console.log("PD>>>>>>>>>", productId);
-    const res = await request(server)
-      .post(`/api/store/products/${productId}`)
+  test("should return one product by its id", async () => {
+    const response = await request(server)
+      .get(`/api/store/products/${productId}`)
       .set("Authorization", token);
-
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0]).toHaveProperty("description", "some description here");
-    expect(res.body[0]).toBeTruthy();
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty(
+      "description",
+      "some description here"
+    );
+  });
+  test("should return no products found", async () => {
+    const response = await request(server)
+      .get("/api/store/products/5e03ae9b7cfc69bc054f6156")
+      .set("Authorization", token);
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ message: "No product found" });
   });
 });
