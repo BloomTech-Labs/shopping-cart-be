@@ -2,7 +2,8 @@ const Store = require("../../models/store");
 
 async function getOneStore(req, res) {
   try {
-    const store = await Store.findById(req.params.store_id);
+    const { sub: sellerId } = req.decodedToken;
+    const store = await Store.findOne({ seller: sellerId });
 
     if (!store) {
       return res.status(404).json({ message: "No store found" });

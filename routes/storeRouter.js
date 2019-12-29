@@ -24,6 +24,6 @@ router.delete(
 // @route GET api/store/:store_id
 // @desc Get store by id
 // @access Private
-router.get("/:store_id", storeController.getStore);
+router.get("/", authenticateMiddleware, storeController.getStore);
 
 module.exports = router;

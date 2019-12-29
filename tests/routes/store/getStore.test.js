@@ -24,7 +24,7 @@ beforeAll(async () => {
     const response2 = await request(server)
       .post("/api/store")
       .send({
-        storeName: "Stone &  Sticks",
+        storeName: "Stone &  Stickss",
         ownerName: "Jane Doe",
         currency: "dollars",
         imageUrl: "some image"
@@ -37,19 +37,11 @@ beforeAll(async () => {
 });
 
 describe("get a store", () => {
-  it("returns no store was found", async () => {
-    const res = await request(server)
-      .get("/api/store/5dfd9f2b77846e05c835efae")
-      .set("Authorization", token);
-    expect(res.status).toBe(404);
-    expect(res.body).toEqual({ message: "No store found" });
-  });
-
   it("Return a store", async () => {
     const res = await request(server)
-      .get(`/api/store/${store_id}`)
+      .get(`/api/store`)
       .set("Authorization", token);
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty("storeName", "Stone &  Sticks");
+    expect(res.body).toHaveProperty("storeName", "Stone &  Stickss");
   });
 });
