@@ -3,9 +3,7 @@ const server = require('../../../server')
 const Store = require('../../../models/store')
 
 let token
-let wrongToken
-let store_id
-let seller
+let token3
 
 async function clearDb () {
   await Store.deleteMany({})
@@ -24,23 +22,37 @@ beforeAll(async () => {
     const response2 = await request(server)
       .post('/api/auth/register')
       .send({ phone: '07031900037', password: 'password12345' })
-
-    wrongToken = response2.body.token
+    const response3 = await request(server)
+      .post('/api/auth/register')
+      .send({ phone: '08124120374', password: 'password12345' })
+    token3 = response3.body.token
     token = response1.body.token
-    seller = response1.body.user.id
 
     //   Create a store
     const newStore = new Store({
-      storeName: 'Book &  Sticks',
+      storeName: 'Book&Sticks',
       ownerName: 'Jane Doe',
       currency: 'dollars',
       imageUrl: 'some image',
       seller: response1.body.user.id
     })
 
-    store_id = newStore.id
-
     newStore
+      .save()
+      .then(store => {})
+      .catch(err => console.log(err))
+
+    // Create a store for second seller
+
+    const newStore2 = new Store({
+      storeName: 'Harry&Jane',
+      ownerName: 'Naira Marley',
+      currency: 'Naira',
+      imageUrl: 'some image',
+      seller: response2.body.user.id
+    })
+
+    newStore2
       .save()
       .then(store => {})
       .catch(err => console.log(err))
@@ -55,14 +67,14 @@ describe('edit store', () => {
   })
 
   it('should return no credentials provided', async () => {
-    const response = await request(server).put(`/api/store/${store_id}`)
+    const response = await request(server).put('/api/store')
     expect(response.status).toBe(400)
     expect(response.body).toEqual({ message: 'No credentials provided' })
   })
 
   it('should return all fields required', async () => {
     const response = await request(server)
-      .put(`/api/store/${store_id}`)
+      .put('/api/store')
       .send({})
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -76,7 +88,7 @@ describe('edit store', () => {
 
   it('should return currency, imageUrl & storename required', async () => {
     const response = await request(server)
-      .put(`/api/store/${store_id}`)
+      .put('/api/store')
       .send({ ownerName: 'John Doe' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -89,7 +101,7 @@ describe('edit store', () => {
 
   it('should return imageUrl & storename required', async () => {
     const response = await request(server)
-      .put(`/api/store/${store_id}`)
+      .put('/api/store')
       .send({ ownerName: 'John Doe', currency: 'cedi' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -102,7 +114,7 @@ describe('edit store', () => {
 
   it('should return storename required', async () => {
     const response = await request(server)
-      .put(`/api/store/${store_id}`)
+      .put('/api/store')
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
@@ -117,15 +129,8 @@ describe('edit store', () => {
   })
 
   it('should return edited store info', async () => {
-    const testStore = await Store.create({
-      storeName: 'Book &  Lockers',
-      ownerName: 'Susan Doe',
-      currency: 'dollars',
-      imageUrl: 'some image',
-      seller
-    })
     const response = await request(server)
-      .put(`/api/store/${testStore.id}`)
+      .put('/api/store')
       .send({
         ownerName: 'John Doe',
         currency: 'shillings',
@@ -136,41 +141,31 @@ describe('edit store', () => {
     expect(response.status).toBe(200)
     expect(response.body).toBeDefined()
   })
-
-  it('should return user access error', async () => {
-    const testStore = await Store.create({
-      storeName: 'Book &  Drums',
-      ownerName: 'Susan Doe',
-      currency: 'dollars',
-      imageUrl: 'some image',
-      seller
-    })
-    const response = await request(server)
-      .put(`/api/store/${testStore.id}`)
-      .send({
-        ownerName: 'John Doe',
-        currency: 'cedi',
-        imageUrl: 'https://someimage.com',
-        storeName: 'sticks & bones'
-      })
-      .set('Authorization', wrongToken)
-    expect(response.status).toBe(400)
-    expect(response.body).toEqual({
-      message: 'You can only modify your own store'
-    })
-  })
-
   it('should return store not found', async () => {
     const response = await request(server)
-      .put('/api/store/5dfca0dcec912243c05735a9')
+      .put('/api/store')
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
         imageUrl: 'https://someimage.com',
         storeName: 'sticks & bones'
       })
-      .set('Authorization', token)
+      .set('Authorization', token3)
     expect(response.status).toBe(404)
     expect(response.body).toEqual({ message: 'No store was found' })
+  })
+
+  it('Store Name has been taken already', async () => {
+    const response = await request(server)
+      .put('/api/store')
+      .send({
+        storeName: 'Harry&Jane',
+        ownerName: 'Naira Marley',
+        currency: 'Naira',
+        imageUrl: 'some image'
+      })
+      .set('Authorization', token)
+    expect(response.body).toEqual({ message: 'Store Name has been taken already' })
+    expect(response.status).toBe(400)
   })
 })
