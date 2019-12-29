@@ -11,7 +11,6 @@ async function getProducts(req, res) {
     }
     return res.status(200).json(products);
   } catch (err) {
-    console.log(err);
     return res.status(500).json(err.message);
   }
 }
@@ -25,7 +24,6 @@ async function getOneProduct(req, res) {
     }
     return res.status(200).json(product);
   } catch (err) {
-    console.log(err);
     return res.status(500).json(err.message);
   }
 }
