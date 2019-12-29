@@ -12,20 +12,20 @@ async function clearDb() {
 }
 
 beforeAll(async () => {
+  jest.setTimeout(10000);
   try {
     await clearDb();
     const response = await request(server)
       .post("/api/auth/register")
       .send({
-        phone: "07031900078",
+        phone: "07031900071",
         password: "password12345"
       });
     token = response.body.token;
-
     await request(server)
       .post("/api/store")
       .send({
-        storeName: "Glass &  Sticks",
+        storeName: "Phones and Laptops",
         ownerName: "Jane Doe",
         currency: "dollars",
         imageUrl: "some image"
