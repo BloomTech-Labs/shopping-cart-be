@@ -1,12 +1,8 @@
 const Product = require("../../models/product");
-<<<<<<< HEAD
-const Store = require("../../models/store");
 
 async function getProducts(req, res) {
   try {
-    const store = await Store.findOne({ seller: req.decodedToken.sub });
-
-    const products = await Product.find({ storeId: store["_id"] });
+    const products = await Product.find({ storeId: req.params.store_id });
     if (products.length === 0) {
       return res.status(404).json({ message: "No products found" });
     }
@@ -30,20 +26,3 @@ async function getOneProduct(req, res) {
 }
 
 module.exports = { getProducts, getOneProduct };
-=======
-
-async function getProducts(req, res) {
-  try {
-    const products = await Product.find({ storeId: req.params.store_id });
-    if (products.length === 0) {
-      return res.status(404).json({ message: "No products found" });
-    }
-    res.status(200).json(products);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err.message);
-  }
-}
-
-module.exports = getProducts;
->>>>>>> bg-get-product-storeid

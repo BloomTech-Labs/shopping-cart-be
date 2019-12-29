@@ -19,9 +19,9 @@ async function addProduct (req, res) {
     product.storeId = store._id
     const newProduct = new Product(product)
     const result = await newProduct.save()
-    res.status(200).json(result)
+    return res.status(200).json(result)
   } catch (err) {
-    res.status(500).json(err.message)
+    return res.status(500).json(err.message)
   }
 }
 

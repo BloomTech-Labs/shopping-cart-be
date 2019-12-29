@@ -16,7 +16,12 @@ router.post("/products/", authenticate, addProduct);
 // @route GET api/store/products/:store_id
 // @desc Gett all products from store
 // @access Public
-router.get("/products/:store_id", authenticate, getProducts);
+router.get("/products/:store_id", getProducts);
+
+// @route GET api/store/products/:product_id
+// @desc Gett all products from store
+// @access Public
+router.get("/product/:product_id", getOneProduct);
 
 // @route POST /api/store/products/:product_id
 // @desc Edit a product
@@ -26,6 +31,6 @@ router.put("/products/:product_id", authenticate, editProduct);
 // @route DELETE /api/store/products/:product_id
 // @desc Delete a product
 // @access Public
-router.put("/products/:product_id", authenticate, editProduct);
+router.delete("/products/:product_id", authenticate, deleteProduct);
 
 module.exports = router;

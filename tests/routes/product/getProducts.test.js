@@ -5,6 +5,7 @@ const Store = require("../../../models/store");
 
 let token;
 let productId;
+let storeId;
 
 async function clearDb() {
   await Store.deleteMany({});
@@ -17,20 +18,21 @@ beforeAll(async () => {
     const response = await request(server)
       .post("/api/auth/register")
       .send({
-        phone: "07031900078",
+        phone: "07031900079",
         password: "password12345"
       });
     token = response.body.token;
 
-    await request(server)
+    const res = await request(server)
       .post("/api/store")
       .send({
-        storeName: "Glass &  Sticks",
+        storeName: "Love & Joy",
         ownerName: "Jane Doe",
         currency: "dollars",
         imageUrl: "some image"
       })
       .set("Authorization", token);
+    storeId = res.body.saved["_id"];
   } catch (error) {
     console.error(error.name, error.message);
   }
@@ -38,9 +40,9 @@ beforeAll(async () => {
 
 describe("get all products", () => {
   test("should return no products found", async () => {
-    const response = await request(server)
-      .get("/api/store/products")
-      .set("Authorization", token);
+    const response = await request(server).get(
+      `/api/store/products/${storeId}`
+    );
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: "No products found" });
   });
@@ -58,7 +60,7 @@ describe("get all products", () => {
 
     productId = res.body["_id"];
     const response = await request(server)
-      .get("/api/store/products")
+      .get(`/api/store/products/${storeId}`)
       .set("Authorization", token);
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
@@ -73,7 +75,7 @@ describe("get all products", () => {
 describe("get a product", () => {
   test("should return one product by its id", async () => {
     const response = await request(server)
-      .get(`/api/store/products/${productId}`)
+      .get(`/api/store/product/${productId}`)
       .set("Authorization", token);
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty(
@@ -83,7 +85,7 @@ describe("get a product", () => {
   });
   test("should return no products found", async () => {
     const response = await request(server)
-      .get("/api/store/products/5e03ae9b7cfc69bc054f6156")
+      .get("/api/store/product/5e03ae9b7cfc69bc054f6156")
       .set("Authorization", token);
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: "No product found" });

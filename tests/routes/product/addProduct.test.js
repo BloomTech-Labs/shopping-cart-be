@@ -1,30 +1,15 @@
-<<<<<<< HEAD:tests/routes/product/addProduct.test.js
-const request = require('supertest')
-const server = require('../../../server')
-const Product = require('../../../models/product')
-const Seller = require('../../../models/seller')
-const Store = require('../../../models/store')
-=======
 const request = require("supertest");
-const server = require("../../server");
-const Product = require("../../models/product");
-const Seller = require("../../models/seller");
-const Store = require("../../models/store");
->>>>>>> bg-get-product-storeid:tests/routes/addProduct.test.js
+const server = require("../../../server");
+const Product = require("../../../models/product");
+const Seller = require("../../../models/seller");
+const Store = require("../../../models/store");
 
 let token;
 
-<<<<<<< HEAD:tests/routes/product/addProduct.test.js
-async function clearDb () {
-  await Seller.deleteMany({})
-  await Product.deleteMany({})
-  await Store.deleteMany({})
-=======
 async function clearDb() {
   await Product.deleteMany({});
   await Seller.deleteMany({});
   await Store.deleteMany({});
->>>>>>> bg-get-product-storeid:tests/routes/addProduct.test.js
 }
 
 beforeAll(async () => {
@@ -37,11 +22,7 @@ beforeAll(async () => {
         password: "password12345"
       });
 
-<<<<<<< HEAD:tests/routes/product/addProduct.test.js
-    token = response.body.token
-=======
     token = response.body.token;
->>>>>>> bg-get-product-storeid:tests/routes/addProduct.test.js
 
     await request(server)
       .post("/api/store")
@@ -57,15 +38,12 @@ beforeAll(async () => {
   }
 });
 
-<<<<<<< HEAD:tests/routes/product/addProduct.test.js
-=======
 describe("add a product", () => {
   it("returns No credentials provided message", async () => {
     const res = await request(server).post("/api/store/products");
     expect(res.status).toBe(400);
     expect(res.body).toEqual({ message: "No credentials provided" });
   });
->>>>>>> bg-get-product-storeid:tests/routes/addProduct.test.js
 
   it("successfully creates a product", async () => {
     const response = await request(server)
