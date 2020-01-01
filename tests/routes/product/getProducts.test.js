@@ -1,10 +1,12 @@
 const request = require("supertest");
 const server = require("../../../server");
 const Product = require("../../../models/product");
+const Seller = require("../../../models/seller");
 
 let token;
 
 async function clearDb() {
+  await Seller.deleteMany({});
   await Product.deleteMany({});
 }
 
@@ -14,12 +16,12 @@ beforeAll(async () => {
     const response = await request(server)
       .post("/api/auth/register")
       .send({
-        phone: "07031900078",
+        phone: "07031900073",
         password: "password12345"
       });
     token = response.body.token;
 
-    const res = await request(server)
+    await request(server)
       .post("/api/store")
       .send({
         storeName: "Phones and Laptops",
