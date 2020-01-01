@@ -1,15 +1,15 @@
-const request = require("supertest");
-const server = require("../../../server");
-const Product = require("../../../models/product");
-const Seller = require("../../../models/seller");
-const Store = require("../../../models/store");
+const request = require('supertest')
+const server = require('../../../server')
+const Product = require('../../../models/product')
+const Seller = require('../../../models/seller')
+const Store = require('../../../models/store')
 
 let token
 
-async function clearDb() {
-  await Product.deleteMany({});
-  await Seller.deleteMany({});
-  await Store.deleteMany({});
+async function clearDb () {
+  await Seller.deleteMany({})
+  await Product.deleteMany({})
+  await Store.deleteMany({})
 }
 
 beforeAll(async () => {
@@ -18,16 +18,16 @@ beforeAll(async () => {
     const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: "07031900078",
-        password: "password12345"
-      });
+        phone: '07031900075',
+        password: 'password12345'
+      })
 
-    token = response.body.token;
+    token = response.body.token
 
     await request(server)
       .post('/api/store')
       .send({
-        storeName: 'Glass &  Sticks',
+        storeName: 'Laptops & Phones',
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image'
@@ -55,6 +55,7 @@ describe('add a product', () => {
         price: '200'
       })
       .set('Authorization', token)
+
     expect(response.status).toBe(200)
     expect(response.body).toBeDefined()
     expect(response.body.name).toBe('product1')

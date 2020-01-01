@@ -1,7 +1,7 @@
-const addProduct = require("./addProduct");
-const { getProducts, getOneProduct } = require("./getProducts");
-const editProduct = require("./editProduct");
-const deleteProduct = require("./deleteProduct");
+const addProduct = require('./addProduct')
+const { getProducts, getOneProduct } = require('./getProducts')
+const editProduct = require('./editProduct')
+const deleteProduct = require('./deleteProduct')
 
 module.exports = {
   addProduct,
@@ -9,4 +9,4 @@ module.exports = {
   getOneProduct,
   editProduct,
   deleteProduct
-};
+}
