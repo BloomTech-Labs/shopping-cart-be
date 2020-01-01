@@ -39,9 +39,9 @@ beforeAll(async () => {
 
 describe("get all products", () => {
   test("should return no products found", async () => {
-    const response = await request(server)
-      .get("/api/store/products/5e00a47af069c4278845cfb1")
-      .set("Authorization", token);
+    const response = await request(server).get(
+      "/api/store/products/5e00a47af069c4278845cfb1"
+    );
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: "No products found" });
   });
@@ -56,9 +56,10 @@ describe("get all products", () => {
         price: "200"
       })
       .set("Authorization", token);
-    const response = await request(server)
-      .get(`/api/store/products/${storeId}`)
-      .set("Authorization", token);
+
+    const response = await request(server).get(
+      `/api/store/products/${storeId}`
+    );
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
     expect(response.body[0]).toHaveProperty(
