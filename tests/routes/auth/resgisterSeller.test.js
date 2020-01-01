@@ -1,6 +1,6 @@
 const request = require('supertest')
-const server = require('../../server')
-const Seller = require('../../models/seller')
+const server = require('../../../server')
+const Seller = require('../../../models/seller')
 
 async function clearDb () {
   await Seller.deleteMany({})

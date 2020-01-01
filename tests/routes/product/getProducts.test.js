@@ -1,7 +1,7 @@
 const request = require("supertest");
-const server = require("../../server");
-const Product = require("../../models/product");
-const Store = require("../../models/store");
+const server = require("../../../server");
+const Product = require("../../../models/product");
+const Store = require("../../../models/store");
 
 let token;
 let storeId;
@@ -40,7 +40,7 @@ beforeAll(async () => {
 describe("get all products", () => {
   test("should return no products found", async () => {
     const response = await request(server).get(
-      "/api/store/products/5e00a47af069c4278845cfb1"
+      "/api/store/5e00a47af069c4278845cfb1/products"
     );
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: "No products found" });
@@ -58,7 +58,7 @@ describe("get all products", () => {
       .set("Authorization", token);
 
     const response = await request(server).get(
-      `/api/store/products/${storeId}`
+      `/api/store/${storeId}/products`
     );
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
