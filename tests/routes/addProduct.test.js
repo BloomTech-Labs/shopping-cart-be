@@ -1,25 +1,28 @@
-const request = require('supertest')
-const server = require('../../server')
-const Product = require('../../models/product')
+const request = require("supertest");
+const server = require("../../server");
+const Product = require("../../models/product");
+const Seller = require("../../models/seller");
+const Store = require("../../models/store");
 
 let token
 
-async function clearDb () {
-  await Product.deleteMany({})
+async function clearDb() {
+  await Product.deleteMany({});
+  await Seller.deleteMany({});
+  await Store.deleteMany({});
 }
 
 beforeAll(async () => {
-  jest.setTimeout(10000)
-
   try {
     await clearDb()
     const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '07031900078',
-        password: 'password12345'
-      })
-    token = response.body.token
+        phone: "07031900078",
+        password: "password12345"
+      });
+
+    token = response.body.token;
 
     await request(server)
       .post('/api/store')
