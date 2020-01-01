@@ -1,19 +1,18 @@
 const Store = require('../../models/store')
-
+const Product = require('../../models/product')
 async function deleteStore (req, res) {
-  const { store_id } = req.params
-  const { sub: sellerId } = req.decodedToken
+  const { sub } = req.decodedToken
   try {
-    const store = await Store.findById({ _id: store_id })
+    const store = await Store.findOne({ seller: sub })
     if (!store) {
-      return res.status(404).json({ message: 'No store was found' })
-    } else if (String(store.seller) != String(sellerId)) {
       return res
-        .status(400)
-        .json({ message: 'You can only delete your own store' })
+        .status(404)
+        .json({ message: 'There is no store associated with this account' })
     }
-    await Store.deleteOne({ _id: store_id })
-    return res.status(200).json({ message: 'Store has been removed' })
+    const storeId = store._id
+    await Product.deleteMany({ storeId })
+    await Store.deleteOne({ _id: storeId })
+    return res.status(200).json({ message: `${store.storeName} store has been removed` })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

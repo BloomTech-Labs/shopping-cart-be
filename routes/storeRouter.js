@@ -10,17 +10,13 @@ router.post("/", authenticateMiddleware, storeController.createStore);
 // @route PUT /api/store/:store_id
 // @desc Edit a seller's store
 // @access Private
-router.put("/:store_id", authenticateMiddleware, storeController.editStore);
+router.put("/", authenticateMiddleware, storeController.editStore);
 
 // @route DELETE /api/store/:storeId
 // @desc Delete a seller's store
 // @access Private
 
-router.delete(
-  "/:store_id",
-  authenticateMiddleware,
-  storeController.deleteStore
-);
+router.delete("/", authenticateMiddleware, storeController.deleteStore);
 // @route GET api/store/:store_id
 // @desc Get store by id
 // @access Private
