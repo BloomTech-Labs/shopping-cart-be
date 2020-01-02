@@ -27,7 +27,7 @@ function register (req, res) {
       .then(user => {
         // Generate Token and sends it back with user data
         const token = generateToken(user)
-        res.status(201).json({
+        return res.status(201).json({
           user: {
             id: user.id,
             phone: user.phone
@@ -36,7 +36,7 @@ function register (req, res) {
         })
       })
       .catch(err => {
-        res.status(500).json({ message: err.message })
+        return res.status(500).json({ message: err.message })
       })
   })
 }
