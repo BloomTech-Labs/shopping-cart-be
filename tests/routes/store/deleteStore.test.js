@@ -2,9 +2,9 @@ const request = require('supertest')
 const server = require('../../../server')
 const Store = require('../../../models/store')
 
-let token;
-let token2;
-let storeName;
+let token
+let token2
+let storeName
 
 async function clearDb () {
   await Store.deleteMany({})
@@ -30,7 +30,6 @@ beforeAll(async () => {
       })
 
     token2 = response2.body.token
- 
 
     // create store for seller 2
     const newStore2 = new Store({
