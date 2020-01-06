@@ -37,14 +37,7 @@ beforeAll(async () => {
     console.error(error.name, error.message)
   }
 })
-
-describe('add a product', () => {
-  it('returns No credentials provided message', async () => {
-    const res = await request(server).post('/api/store/products')
-    expect(res.status).toBe(400)
-    expect(res.body).toEqual({ message: 'No credentials provided' })
-  })
-
+describe('add new products', () => {
   it('successfully creates a product', async () => {
     const response = await request(server)
       .post('/api/store/products')
