@@ -1,0 +1,12 @@
+extends layout
+block content
+
+    form(method='POST' class="form-registration")
+
+        label(for='password') 
+        input(type='password' name='password' class='.form-registration input' value='' placeholder='Enter New Password', autofocus=true)
+
+        label(for='confirm')
+        input(type='password' name='confirmPassword' class='.form-registration input' value='' placeholder='Confirm New Password')
+        
+        button(class=".form-registration button") Submit

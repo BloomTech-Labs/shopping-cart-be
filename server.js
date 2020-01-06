@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
+const path = require('path')
 const mongoose = require('mongoose')
 const mongoURI = require('./config/config')
 
@@ -18,6 +19,10 @@ server.use(express.urlencoded({ extended: false }))
 server.use('/api/auth', authRouter)
 server.use('/api/store', productRouter)
 server.use('/api/store', storeRouter)
+
+server.use(express.static(path.join(__dirname, 'public')))
+server.set('views', path.join(__dirname, 'views'))
+server.set('view engine', 'pug')
 
 mongoose
   .connect(mongoURI, {
