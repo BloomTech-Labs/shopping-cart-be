@@ -1,30 +1,33 @@
 const request = require('supertest')
-const server = require('../../server')
-const Product = require('../../models/product')
+const server = require('../../../server')
+const Product = require('../../../models/product')
+const Seller = require('../../../models/seller')
+const Store = require('../../../models/store')
 
 let token
 
 async function clearDb () {
+  await Seller.deleteMany({})
   await Product.deleteMany({})
+  await Store.deleteMany({})
 }
 
 beforeAll(async () => {
-  jest.setTimeout(10000)
-
   try {
     await clearDb()
     const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '07031900078',
+        phone: '07031900075',
         password: 'password12345'
       })
+
     token = response.body.token
 
     await request(server)
       .post('/api/store')
       .send({
-        storeName: 'Glass &  Sticks',
+        storeName: 'Laptops & Phones',
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image'
@@ -34,14 +37,7 @@ beforeAll(async () => {
     console.error(error.name, error.message)
   }
 })
-
-describe('add a product', () => {
-  it('returns No credentials provided message', async () => {
-    const res = await request(server).post('/api/store/products')
-    expect(res.status).toBe(400)
-    expect(res.body).toEqual({ message: 'No credentials provided' })
-  })
-
+describe('add new products', () => {
   it('successfully creates a product', async () => {
     const response = await request(server)
       .post('/api/store/products')
@@ -52,6 +48,7 @@ describe('add a product', () => {
         price: '200'
       })
       .set('Authorization', token)
+
     expect(response.status).toBe(200)
     expect(response.body).toBeDefined()
     expect(response.body.name).toBe('product1')

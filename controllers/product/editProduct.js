@@ -13,7 +13,8 @@ async function editProduct (req, res) {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    stock: req.body.stock
+    stock: req.body.stock,
+    images: req.body.images
   }
 
   try {
@@ -26,9 +27,9 @@ async function editProduct (req, res) {
       { $set: newProductDetails },
       { new: true }
     )
-    res.status(200).json(updatedProduct)
+    return res.status(200).json(updatedProduct)
   } catch (err) {
-    res.status(500).json(err.message)
+    return res.status(500).json(err.message)
   }
 }
 

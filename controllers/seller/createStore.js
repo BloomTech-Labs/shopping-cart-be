@@ -33,12 +33,12 @@ async function createStore (req, res) {
         seller: req.decodedToken.sub
       })
       const saved = await newStore.save()
-      res.status(201).json({
+      return res.status(201).json({
         saved
       })
     }
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    return res.status(500).json({ message: err.message })
   }
 }
 

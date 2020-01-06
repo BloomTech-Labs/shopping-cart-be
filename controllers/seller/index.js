@@ -4,6 +4,8 @@ const editStore = require('./editStore')
 const createStore = require('./createStore')
 const deleteStore = require('./deleteStore')
 const { recover, reset, resetPassword } = require('./passwordReset')
+const getStore = require('./getStore')
+
 module.exports = {
   register,
   login,
@@ -12,5 +14,6 @@ module.exports = {
   deleteStore,
   recover,
   reset,
-  resetPassword
+  resetPassword,
+  getStore
 }
