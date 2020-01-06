@@ -2,9 +2,9 @@ const request = require('supertest')
 const server = require('../../../server')
 const Store = require('../../../models/store')
 
-let token
-let token2
-let storeName
+let token;
+let token2;
+let storeName;
 
 async function clearDb () {
   await Store.deleteMany({})
@@ -13,14 +13,14 @@ beforeAll(async () => {
   jest.setTimeout(10000)
   try {
     clearDb()
-    const response1 = await request(server)
+    const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '0903190035',
+        phone: '3334445555',
         password: 'password12345'
       })
 
-    token = response1.body.token
+    token = response.body.token
 
     const response2 = await request(server)
       .post('/api/auth/register')
@@ -30,6 +30,7 @@ beforeAll(async () => {
       })
 
     token2 = response2.body.token
+ 
 
     // create store for seller 2
     const newStore2 = new Store({
@@ -42,7 +43,6 @@ beforeAll(async () => {
     storeName = newStore2.storeName
     newStore2
       .save()
-      .then(store => {})
       .catch(err => console.log(err))
   } catch (error) {
     console.error(error.name, error.message)

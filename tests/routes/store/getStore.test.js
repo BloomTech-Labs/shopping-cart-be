@@ -23,7 +23,7 @@ beforeAll(async () => {
     await request(server)
       .post('/api/store')
       .send({
-        storeName: 'Stone &  Stickss',
+        storeName: 'wear4feet',
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image'
@@ -40,6 +40,6 @@ describe('get a store', () => {
       .get('/api/store')
       .set('Authorization', token)
     expect(res.status).toBe(200)
-    expect(res.body).toHaveProperty('storeName', 'Stone &  Stickss')
+    expect(res.body).toHaveProperty('storeName', 'wear4feet')
   })
 })
