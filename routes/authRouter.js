@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const sellerController = require('../controllers/seller/index')
-const { check } = require('express-validator')
 
 // @route POST api/auth/register
 // @desc Register new user
@@ -18,20 +17,8 @@ router.get('/', (req, res) => {
 
 router.post('/recover', sellerController.recover)
 
-router.get('/reset/:token', sellerController.reset)
-
 router.post(
   '/reset/:token',
-  [
-    check('password')
-      .not()
-      .isEmpty()
-      .isLength({ min: 6 })
-      .withMessage('Must be at least 6 chars long'),
-    check('confirmPassword', 'Passwords do not match').custom(
-      (value, { req }) => value === req.body.password
-    )
-  ],
   sellerController.resetPassword
 )
 

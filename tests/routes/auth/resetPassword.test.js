@@ -3,7 +3,6 @@ const server = require('../../../server')
 const Seller = require('../../../models/seller')
 
 let token
-let token2
 let tokenReg
 let tokenReg2
 async function clearDb () {
@@ -30,17 +29,6 @@ describe('Password Reset Route', () => {
     expect(message).toBeDefined()
   })
 
-  it('reset route: check if seller has valid resetPasswordToken that has not expired', async () => {
-    const responseReg = await request(server)
-      .post('/api/auth/register').send({ phone: '07031990000', password: 'password12345' })
-    tokenReg = responseReg.body.token
-    const response2 = await request(server).get(`/api/auth/reset/${tokenReg}`).send({
-      phone: '07031990000'
-    })
-    const message = response2.body
-    expect(response2.status).toBe(401)
-    expect(message).toEqual({ message: 'Password reset token is invalid or has expired.' })
-  })
   it('resetPassword route: check if seller has valid resetPasswordToken that has not expired', async () => {
     const responseReg2 = await request(server)
       .post('/api/auth/register').send({ phone: '07031990222', password: 'password12345' })

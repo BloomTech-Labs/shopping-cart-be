@@ -1,8 +1,8 @@
-const Seller = require('../../models/seller')
 const bcrypt = require('bcryptjs')
 const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = require('twilio')(accountSid, authToken)
+const Seller = require('../../models/seller')
 
 // ===PASSWORD RECOVER AND RESET
 
@@ -26,16 +26,14 @@ async function recover (req, res) {
       try {
         const savedSeller = await seller.save()
         const link =
-          'http://' +
-          req.headers.host +
-          '/api/auth/reset/' +
-          savedSeller.resetPasswordToken
+          `https://shopping-cart-eu3.netlify.com/setnewpassword?token=${savedSeller.resetPasswordToken}`
+
         const message = await client.messages.create({
           body: `Hi \n
                Please click on the following link ${link} to reset your password. \n\n
                         If you did not request this, please ignore this phone and your password will remain unchanged.\n`,
           from: process.env.TWILIO_NUMBER,
-          to: `+234${seller.phone}` // country code and number to be selected from FE
+          to: `+${seller.phone}` // country code and number to be selected from FE
         })
         res.status(200).json({
           status: 'A reset phone has been sent to ' + seller.phone + '.',
@@ -44,28 +42,6 @@ async function recover (req, res) {
       } catch (error) {
         res.status(500).json({ message: error.message })
       }
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-}
-
-// @route POST api/auth/reset
-// @desc Reset Password - Validate password reset token and shows the password reset view
-// @access Public
-
-async function reset (req, res) {
-  try {
-    const seller = await Seller.findOne({
-      resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() }
-    })
-    if (!seller) {
-      return res
-        .status(401)
-        .json({ message: 'Password reset token is invalid or has expired.' })
-    } else {
-      res.render('reset', { seller })
     }
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -102,4 +78,4 @@ async function resetPassword (req, res) {
   }
 }
 
-module.exports = { recover, reset, resetPassword }
+module.exports = { recover, resetPassword }
