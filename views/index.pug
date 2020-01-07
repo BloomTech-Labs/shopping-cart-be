@@ -1,0 +1,16 @@
+extends layout
+
+block content
+
+  if registrations.length
+    table.listing-table.table-dark.table-striped
+      tr
+        th password
+        th password
+      each registration in registrations
+        tr
+          td= registration.password
+          td= registration.password
+          
+  else
+    p No registrations

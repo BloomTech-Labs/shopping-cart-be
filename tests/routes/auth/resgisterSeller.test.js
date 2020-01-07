@@ -25,14 +25,14 @@ describe('registerSeller', () => {
   })
   it('expects user already exists error message', async () => {
     await Seller.create({
-      phone: '08124120374',
+      phone: '08124120355',
       password: 'Password12345'
 
     })
     const res = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '08124120374',
+        phone: '08124120355',
         password: 'Password12345'
       })
     expect(res.body).toEqual({ message: 'User already exists' })

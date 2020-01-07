@@ -13,14 +13,14 @@ beforeAll(async () => {
   jest.setTimeout(10000)
   try {
     clearDb()
-    const response1 = await request(server)
+    const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '0903190035',
+        phone: '3334445555',
         password: 'password12345'
       })
 
-    token = response1.body.token
+    token = response.body.token
 
     const response2 = await request(server)
       .post('/api/auth/register')
@@ -42,7 +42,6 @@ beforeAll(async () => {
     storeName = newStore2.storeName
     newStore2
       .save()
-      .then(store => {})
       .catch(err => console.log(err))
   } catch (error) {
     console.error(error.name, error.message)
