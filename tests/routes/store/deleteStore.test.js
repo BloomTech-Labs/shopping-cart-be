@@ -12,11 +12,11 @@ async function clearDb () {
 beforeAll(async () => {
   jest.setTimeout(10000)
   try {
-    clearDb()
+    await clearDb()
     const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '3334445555',
+        phone: '2347031900079',
         password: 'password12345'
       })
 
@@ -25,7 +25,7 @@ beforeAll(async () => {
     const response2 = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '06023378722',
+        phone: '2347031900071',
         password: 'password12345'
       })
 

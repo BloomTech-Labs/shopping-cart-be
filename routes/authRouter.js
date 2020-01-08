@@ -12,10 +12,6 @@ router.post("/register", validatePhoneNumber, sellerController.register);
 // @access Public
 router.post("/login", sellerController.login);
 
-router.get("/", (req, res) => {
-  res.render("reset", { title: "Reset Password Form" });
-});
-
 router.post("/recover", sellerController.recover);
 
 router.post("/reset/:token", sellerController.resetPassword);

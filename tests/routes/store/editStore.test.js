@@ -16,15 +16,15 @@ beforeAll(async () => {
     const response1 = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '07031900036',
+        phone: '2347031900036',
         password: 'password12345'
       })
     const response2 = await request(server)
       .post('/api/auth/register')
-      .send({ phone: '07031900037', password: 'password12345' })
+      .send({ phone: '2347031900037', password: 'password12345' })
     const response3 = await request(server)
       .post('/api/auth/register')
-      .send({ phone: '08124120379', password: 'password12345' })
+      .send({ phone: '2348124120379', password: 'password12345' })
     token3 = response3.body.token
     token = response1.body.token
 

@@ -27,7 +27,7 @@ beforeAll(async () => {
     const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '1234567809',
+        phone: '2347031900078',
         password: 'password12345'
       })
     token = response.body.token
