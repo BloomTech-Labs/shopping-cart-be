@@ -2,8 +2,8 @@ const request = require('supertest')
 const server = require('../../../server')
 const Store = require('../../../models/store')
 
-let token;
-let token2;
+let token
+let token2
 
 async function clearDb () {
   await Store.deleteMany({})
