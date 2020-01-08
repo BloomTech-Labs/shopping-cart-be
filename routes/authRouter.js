@@ -1,25 +1,23 @@
-const router = require('express').Router()
-const sellerController = require('../controllers/seller/index')
+const router = require("express").Router();
+const sellerController = require("../controllers/seller/index");
+const { validatePhoneNumber } = require("../middleware/validateSellerData");
 
 // @route POST api/auth/register
 // @desc Register new user
 // @access Public
-router.post('/register', sellerController.register)
+router.post("/register", validatePhoneNumber, sellerController.register);
 
 // @route POST api/auth/login
 // @desc Login user
 // @access Public
-router.post('/login', sellerController.login)
+router.post("/login", sellerController.login);
 
-router.get('/', (req, res) => {
-  res.render('reset', { title: 'Reset Password Form' })
-})
+router.get("/", (req, res) => {
+  res.render("reset", { title: "Reset Password Form" });
+});
 
-router.post('/recover', sellerController.recover)
+router.post("/recover", sellerController.recover);
 
-router.post(
-  '/reset/:token',
-  sellerController.resetPassword
-)
+router.post("/reset/:token", sellerController.resetPassword);
 
-module.exports = router
+module.exports = router;
