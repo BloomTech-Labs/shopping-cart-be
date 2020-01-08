@@ -31,7 +31,7 @@ describe('Password Reset Route', () => {
 
   it('resetPassword route: check if seller has valid resetPasswordToken that has not expired', async () => {
     const responseReg2 = await request(server)
-      .post('/api/auth/register').send({ phone: '07031990222', password: 'password12345' })
+      .post('/api/auth/register').send({ phone: '2347031990222', password: 'password12345' })
     tokenReg2 = responseReg2.body.token
     const response3 = await request(server).post(`/api/auth/reset/${tokenReg}`).send({
       password: 'passsword123',
@@ -50,7 +50,7 @@ describe('Password Reset Route II', () => {
       const response1 = await request(server)
         .post('/api/auth/register')
         .send({
-          phone: '08124120374',
+          phone: '2348124120374',
           password: 'password12345'
         })
 
@@ -62,7 +62,7 @@ describe('Password Reset Route II', () => {
   // test is skipped except absolutely necessary to test this case because we are making calls to twilio endpoint here
   xit('send a reset message(link) if phone number is valid', async () => {
     const res = await request(server).post('/api/auth/recover').send({
-      phone: '08124120374'
+      phone: '2348124120374'
     })
     console.log(res.status, res.body)
     expect(res.status).toBe(200)

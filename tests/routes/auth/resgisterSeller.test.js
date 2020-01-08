@@ -25,14 +25,14 @@ describe('registerSeller', () => {
   })
   it('expects user already exists error message', async () => {
     await Seller.create({
-      phone: '08124120355',
+      phone: '2348124120355',
       password: 'Password12345'
 
     })
     const res = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '08124120355',
+        phone: '2348124120355',
         password: 'Password12345'
       })
     expect(res.body).toEqual({ message: 'User already exists' })
@@ -42,7 +42,7 @@ describe('registerSeller', () => {
     const res = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '1112223333'
+        phone: '2348124120355'
       })
     expect(res.status).toBe(400)
     expect(res.body).toEqual({ password: 'Password field is required' })
@@ -51,7 +51,7 @@ describe('registerSeller', () => {
     const res = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '2223335555',
+        phone: '2348124120355',
         password: 'Pass'
       })
     expect(res.status).toBe(400)
@@ -67,13 +67,23 @@ describe('registerSeller', () => {
         password: 'Password12345'
       })
     expect(res.status).toBe(400)
-    expect(res.body).toEqual({ phone: 'Phone Number is invalid' })
+    expect(res.body).toEqual({ phone: 'Phone Number is invalid, make sure you add your country calling code' })
+  })
+  it('expects Phone Number is invalid error message ', async () => {
+    const res = await request(server)
+      .post('/api/auth/register')
+      .send({
+        phone: '',
+        password: 'Password12345'
+      })
+    expect(res.status).toBe(400)
+    expect(res.body).toEqual({ phone: 'Phone Number field is required' })
   })
   it('checks if user has been created successfully with a token being returned', async () => {
     const res = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '07031900054',
+        phone: '2347031900054',
         password: 'Password12345'
       })
 

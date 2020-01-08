@@ -1,5 +1,8 @@
 const Validator = require('validator')
 const isEmpty = require('is-empty')
+const accountSid = process.env.TWILIO_ACCOUNT_SID
+const authToken = process.env.TWILIO_AUTH_TOKEN
+const client = require('twilio')(accountSid, authToken)
 
 function validateRegisterInput (data) {
   const errors = {}
@@ -22,6 +25,24 @@ function validateRegisterInput (data) {
   return {
     errors,
     isValid: isEmpty(errors)
+  }
+}
+
+// validate phone number using TWILO API
+async function validatePhoneNumber (req, res, next) {
+  try {
+    if (req.body.phone) {
+      await client.lookups
+        .phoneNumbers(`+${req.body.phone}`)
+        .fetch()
+        .then(phone_number => phone_number)
+    }
+    next()
+  } catch (e) {
+    return res.status(400).json({
+      phone:
+        'Phone Number is invalid, make sure you add your country calling code'
+    })
   }
 }
 
@@ -49,4 +70,8 @@ function validateLoginInput (data) {
   }
 }
 
-module.exports = { validateRegisterInput, validateLoginInput }
+module.exports = {
+  validateRegisterInput,
+  validateLoginInput,
+  validatePhoneNumber
+}

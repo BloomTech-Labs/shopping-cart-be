@@ -37,7 +37,7 @@ describe('test', () => {
       const response1 = await request(server)
         .post('/api/auth/register')
         .send({
-          phone: '07031900033',
+          phone: '2347031900033',
           password: 'password12345'
         })
 
@@ -46,7 +46,7 @@ describe('test', () => {
       const response2 = await request(server)
         .post('/api/auth/register')
         .send({
-          phone: '070319000',
+          phone: '23470319000',
           password: 'password12345'
         })
 

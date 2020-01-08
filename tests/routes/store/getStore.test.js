@@ -3,6 +3,7 @@ const server = require('../../../server')
 const Store = require('../../../models/store')
 
 let token
+let token2
 
 async function clearDb () {
   await Store.deleteMany({})
@@ -14,11 +15,20 @@ beforeAll(async () => {
     const response = await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '0903190035',
+        phone: '2347031900053',
         password: 'password12345'
       })
 
     token = response.body.token
+
+    const response2 = await request(server)
+      .post('/api/auth/register')
+      .send({
+        phone: '2347031900153',
+        password: 'password12345'
+      })
+
+    token2 = response2.body.token
 
     await request(server)
       .post('/api/store')
@@ -41,5 +51,11 @@ describe('get a store', () => {
       .set('Authorization', token)
     expect(res.status).toBe(200)
     expect(res.body).toHaveProperty('storeName', 'wear4feet')
+  })
+  it('Return No store found', async () => {
+    const res = await request(server)
+      .get('/api/store')
+      .set('Authorization', token2)
+    expect(res.status).toBe(404)
   })
 })

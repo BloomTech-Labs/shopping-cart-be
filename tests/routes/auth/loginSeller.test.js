@@ -23,7 +23,7 @@ describe('loginSeller', () => {
     const res = await request(server)
       .post('/api/auth/login')
       .send({
-        phone: '1112223333'
+        phone: '2347032716121'
       })
     expect(res.status).toBe(400)
     expect(res.body).toEqual({ password: 'Password field is required' })
@@ -32,7 +32,7 @@ describe('loginSeller', () => {
     const res = await request(server)
       .post('/api/auth/login')
       .send({
-        phone: '2223335555',
+        phone: '2347032716122',
         password: 'Pass'
       })
     expect(res.status).toBe(400)
@@ -54,13 +54,13 @@ describe('loginSeller', () => {
     await request(server)
       .post('/api/auth/register')
       .send({
-        phone: '07031900035',
+        phone: '2347031900035',
         password: 'Password12345'
       })
     const res = await request(server)
       .post('/api/auth/login')
       .send({
-        phone: '07031900035',
+        phone: '2347031900035',
         password: 'Password12345'
       })
 
