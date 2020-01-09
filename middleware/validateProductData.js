@@ -25,8 +25,8 @@ function validateProductInput (data) {
     errors.price = 'Price field is required'
   } else if (isNaN(price)) {
     errors.price = 'Price must be a number'
-  } else if (Number(price) <= 0) {
-    errors.price = 'Price cant be less than 0'
+  } else if (Number(price) < 0) {
+    errors.price = 'Price cant be less than 1'
   }
 
   // stock checks
