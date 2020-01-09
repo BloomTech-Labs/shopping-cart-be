@@ -30,11 +30,9 @@ function validateProductInput (data) {
   }
 
   // stock checks
-  if (!stock) {
-    errors.stock = 'Stock field is required'
-  } else if (isNaN(stock)) {
+  if (stock && isNaN(stock)) {
     errors.stock = 'Stock must be a number'
-  } else if (Number(stock) <= 0) {
+  } else if (stock && Number(stock) <= 0) {
     errors.stock = 'Stock cant be less than 0'
   }
 

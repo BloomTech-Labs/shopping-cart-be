@@ -89,19 +89,20 @@ describe('add new products', () => {
     })
   })
 
-  it('should return stock is required', async () => {
+  it('should return stock should be a number', async () => {
     const response = await request(server)
       .post('/api/store/products')
       .send({
         name: 'product1',
         description: 'test product',
-        price: '200'
+        price: '200',
+        stock: 'ab'
       })
       .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
     expect(response.body).toEqual({
-      stock: 'Stock field is required'
+      stock: 'Stock must be a number'
     })
   })
 
