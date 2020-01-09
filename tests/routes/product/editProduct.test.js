@@ -99,17 +99,19 @@ describe('edit product', () => {
     expect(res.body).toEqual({ price: 'Price must be a number' })
   })
 
-  it('should return stock is required', async () => {
+  it('should return stock should be a number', async () => {
     const res = await request(server)
       .put(`/api/store/products/${testProduct.id}`)
       .send({
         name: 'product name',
         description: 'test product',
-        price: '499'
+        price: '499',
+        stock: 'ab'
+
       })
       .set('Authorization', token)
     expect(res.status).toEqual(400)
-    expect(res.body).toEqual({ stock: 'Stock field is required' })
+    expect(res.body).toEqual({ stock: 'Stock must be a number' })
   })
 
   it('should return stock must be a number', async () => {
