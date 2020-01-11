@@ -32,8 +32,8 @@ function validateProductInput (data) {
   // stock checks
   if (stock && isNaN(stock)) {
     errors.stock = 'Stock must be a number'
-  } else if (stock && Number(stock) <= 0) {
-    errors.stock = 'Stock cant be less than 0'
+  } else if (stock && Number(stock) < 0) {
+    errors.stock = 'Stock cant be less than 1'
   }
 
   return {

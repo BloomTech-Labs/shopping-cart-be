@@ -152,7 +152,7 @@ describe('add new products', () => {
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
     expect(response.body).toEqual({
-      price: 'Price cant be less than 0'
+      price: 'Price cant be less than 1'
     })
   })
 })
