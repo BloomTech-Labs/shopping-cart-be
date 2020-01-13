@@ -4,6 +4,11 @@ const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = require('twilio')(accountSid, authToken)
 const Seller = require('../../models/seller')
 
+const { validateRecoverPhone } = require('../../middleware/validateSellerData')
+const {
+  validatePasswordResetInput
+} = require('../../middleware/validatePasswordReset')
+
 // ===PASSWORD RECOVER AND RESET
 
 // @route POST api/auth/recover
@@ -12,6 +17,12 @@ const Seller = require('../../models/seller')
 
 async function recover (req, res) {
   try {
+    const { errors, isValid } = validateRecoverPhone(req.body)
+
+    if (!isValid) {
+      return res.status(400).json(errors)
+    }
+
     const seller = await Seller.findOne({ phone: req.body.phone })
     if (!seller) {
       return res.status(401).json({
@@ -25,8 +36,7 @@ async function recover (req, res) {
       seller.generatePasswordReset()
       try {
         const savedSeller = await seller.save()
-        const link =
-          `https://shopping-cart-eu3.netlify.com/setnewpassword?token=${savedSeller.resetPasswordToken}`
+        const link = `https://shopping-cart-eu3.netlify.com/setnewpassword?token=${savedSeller.resetPasswordToken}`
 
         const message = await client.messages.create({
           body: `Hi \n
@@ -53,28 +63,38 @@ async function recover (req, res) {
 // @access Public
 
 async function resetPassword (req, res) {
-  const seller = await Seller.findOne({
-    resetPasswordToken: req.params.token,
-    resetPasswordExpires: { $gt: Date.now() }
-  })
-  if (!seller) {
-    return res
-      .status(401)
-      .json({ message: 'Password reset token is invalid or has expired.' })
-  } else {
-    // Set the new password
-    seller.password = req.body.password
-    seller.resetPasswordToken = undefined
-    seller.resetPasswordExpires = undefined
-    const hash = bcrypt.hashSync(seller.password)
-    seller.password = hash
-    seller.save(error => {
-      if (error) {
-        return res.status(500).json({ message: error.message })
-      } else {
-        res.status(200).json({ message: 'Your password has been updated.' })
-      }
+  try {
+    const { errors, isValid } = validatePasswordResetInput(req.body)
+    if (!isValid) {
+      return res.status(400).json(errors)
+    }
+
+    const seller = await Seller.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() }
     })
+    if (!seller) {
+      return res
+        .status(401)
+        .json({ message: 'Password reset token is invalid or has expired.' })
+    } else {
+      // Set the new password
+      seller.password = req.body.password
+      seller.resetPasswordToken = undefined
+      seller.resetPasswordExpires = undefined
+      const hash = bcrypt.hashSync(seller.password)
+      seller.password = hash
+      seller.save(error => {
+        if (error) {
+          return res.status(500).json({ message: error.message })
+        } else {
+          res.status(200).json({ message: 'Your password has been updated.' })
+        }
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: error.message })
   }
 }
 

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const sellerController = require('../controllers/seller/index')
+const authenticate = require('../middleware/authenticateMiddleware')
+
 const { validatePhoneNumber } = require('../middleware/validateSellerData')
 
 // @route POST api/auth/register
@@ -15,5 +17,7 @@ router.post('/login', sellerController.login)
 router.post('/recover', sellerController.recover)
 
 router.post('/reset/:token', sellerController.resetPassword)
+
+router.delete('/account', authenticate, sellerController.deleteAccount)
 
 module.exports = router
