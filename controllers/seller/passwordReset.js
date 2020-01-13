@@ -4,6 +4,10 @@ const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = require('twilio')(accountSid, authToken)
 const Seller = require('../../models/seller')
 
+
+const { validateRecoverPhone } = require("../../middleware/validateSellerData");
+
+
 // ===PASSWORD RECOVER AND RESET
 
 // @route POST api/auth/recover
@@ -12,6 +16,12 @@ const Seller = require('../../models/seller')
 
 async function recover (req, res) {
   try {
+    const { errors, isValid } = validateRecoverPhone(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    
     const seller = await Seller.findOne({ phone: req.body.phone })
     if (!seller) {
       return res.status(401).json({

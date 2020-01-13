@@ -1,8 +1,11 @@
 const Store = require("../../models/store");
 const Product = require("../../models/product");
 const Seller = require("../../models/seller");
+
+
 async function deleteAccount(req, res) {
   const { sub } = req.decodedToken;
+
   try {
     const seller = await Seller.findOne({ _id: sub });
     if (!seller) {
