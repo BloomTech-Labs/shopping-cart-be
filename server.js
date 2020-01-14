@@ -20,7 +20,7 @@ server.use(express.urlencoded({ extended: false }))
 server.use('/api/auth', authRouter)
 server.use('/api/store', productRouter)
 server.use('/api/store', storeRouter)
-server.use('/api/cart', cartRouter)
+server.use('/api/store', cartRouter)
 
 server.use(express.static(path.join(__dirname, 'public')))
 server.set('views', path.join(__dirname, 'views'))

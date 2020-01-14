@@ -1,3 +1,7 @@
-const getCartContents = require('./getCartContents')
+const addCart = require('./addCart')
+const getCart = require('./getCart')
 
-module.exports = { getCartContents }
+module.exports = {
+  addCart,
+  getCart
+}

@@ -1,34 +1,36 @@
 const mongoose = require('mongoose')
 
 const cartSchema = new mongoose.Schema({
-  store_id: {
+  storeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'store',
     required: true
   },
-  contents: {
-    type: Array,
-    required: true
-  },
+  contents: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'store',
+      required: true
+    }
+  ],
   total: {
     type: Number,
     required: true
   },
-  agreed_price: {
-    type: Number,
-    required: true
+  agreedPrice: {
+    type: Number
   },
-  checked_out: {
+  checkedOut: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
-  checkout_date: {
+  checkoutDate: {
     type: Date,
-    required: true
+    default: Date.now
   },
-  paid_amount: {
-    type: Number,
-    required: true
+  paidAmount: {
+    type: Number
   }
 })
 
