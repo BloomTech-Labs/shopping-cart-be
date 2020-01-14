@@ -21,7 +21,9 @@ async function getCart(req, res) {
       }
     ])
 
-    const storeCart = populatedCart.filter(item => item.storeId !== storeId)
+    const storeCart = populatedCart.filter(
+      item => String(item.storeId) === String(storeId)
+    )
 
     res.status(200).json(storeCart)
   } catch (error) {
