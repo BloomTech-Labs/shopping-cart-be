@@ -3,7 +3,7 @@ const isEmpty = require('is-empty')
 function validateCartInput (data) {
   const errors = {}
   // Convert empty fields to an empty string so we can use validator functions
-  let {agreedPrice, total} = data
+  let { agreedPrice, total } = data
 
   agreedPrice = agreedPrice || ''
   total = total || ''
@@ -16,7 +16,6 @@ function validateCartInput (data) {
   } else if (Number(agreedPrice) < 0) {
     errors.agreedPrice = 'agreedPrice cant be less than 1'
   }
-
 
   // total checks
   if (!total) {

@@ -15,7 +15,7 @@ const cartSchema = new mongoose.Schema({
     required: true
   },
   agreedPrice: {
-    type: Number,
+    type: Number
   },
   checkedOut: {
     type: Boolean,
