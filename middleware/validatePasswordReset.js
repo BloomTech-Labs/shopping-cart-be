@@ -11,10 +11,6 @@ function validatePasswordResetInput (data) {
     errors.password = 'Password field is required'
   } else if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
     errors.password = 'Password must be at least 6 characters'
-  } else if (Validator.isEmpty(data.confirmPassword)) {
-    errors.confirmPassword = 'Confirm password field is required'
-  } else if (!Validator.equals(data.password, data.confirmPassword)) {
-    errors.confirmPassword = 'Passwords must match'
   }
   return {
     errors,

@@ -70,8 +70,23 @@ function validateLoginInput (data) {
   }
 }
 
+function validateRecoverPhone (data) {
+  const errors = {}
+  data.phone = !isEmpty(data.phone) ? data.phone : ''
+  if (Validator.isEmpty(data.phone)) {
+    errors.phone = 'Phone Number field is required'
+  } else if (!Validator.isMobilePhone(data.phone)) {
+    errors.phone = 'Phone Number is invalid'
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  }
+}
+
 module.exports = {
   validateRegisterInput,
   validateLoginInput,
-  validatePhoneNumber
+  validatePhoneNumber,
+  validateRecoverPhone
 }
