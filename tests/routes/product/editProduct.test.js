@@ -11,6 +11,7 @@ async function clearDB () {
 }
 
 beforeAll(async () => {
+  jest.setTimeout(10000)
   try {
     await clearDB()
     const newProduct = new Product({
