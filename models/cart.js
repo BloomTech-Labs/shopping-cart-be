@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const cartSchema = new mongoose.Schema({
-  store_id: {
+  storeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'store',
     required: true
@@ -14,24 +14,23 @@ const cartSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  agreed_price: {
+  agreedPrice: {
     type: Number,
-    required: true
   },
-  checked_out: {
+  checkedOut: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
-  checkout_date: {
+  checkoutDate: {
     type: Date,
-    required: true
+    default: Date.now
   },
-  paid_amount: {
-    type: Number,
-    required: true
+  paidAmount: {
+    type: Number
   }
 })
 
 const Cart = mongoose.model('cart', cartSchema)
 
-module.exports = Buyer
+module.exports = Cart
