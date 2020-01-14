@@ -10,7 +10,7 @@ async function getCart(req, res) {
       return res.status(404).json({ message: 'No store found' })
     }
 
-    const cart = await Cart.aggregate([
+    const populatedCart = await Cart.aggregate([
       {
         $lookup: {
           from: 'products',
@@ -21,7 +21,9 @@ async function getCart(req, res) {
       }
     ])
 
-    res.send(cart)
+    const storeCart = populatedCart.filter(item => item.storeId !== storeId)
+
+    res.status(200).json(storeCart)
   } catch (error) {
     return res.status(500).json(error.message)
   }
