@@ -6,7 +6,7 @@ async function getOneStore (req, res) {
     const store_id = req.params.store_id ? req.params.store_id : null
     const store = await Store.findOne( sellerId ? { seller: sellerId } : { _id: store_id }) 
 
-    if (!store) { 
+    if (!store) {
       return res.status(404).json({ message: 'No store found' })
     }
     return res.status(200).json(store)

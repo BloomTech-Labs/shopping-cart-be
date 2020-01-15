@@ -45,8 +45,6 @@ beforeAll(async () => {
 
     storeId = response3.body.saved._id
 
-    debugger
-
   } catch (error) {
     console.error(error.name, error.message)
   }
