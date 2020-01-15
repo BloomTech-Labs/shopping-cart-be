@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/LABS-EU3/shopping_cart_backend#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "coveralls": "^3.0.9",
