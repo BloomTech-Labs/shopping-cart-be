@@ -5,9 +5,13 @@ const Store = require('../../../models/store')
 let token
 let token3
 
-async function clearDb () {
+async function clearDb() {
   await Store.deleteMany({})
 }
+
+beforeEach(() => {
+  jest.setTimeout(10000)
+})
 
 beforeAll(async () => {
   jest.setTimeout(10000)
@@ -165,7 +169,9 @@ describe('edit store', () => {
         imageUrl: 'some image'
       })
       .set('Authorization', token)
-    expect(response.body).toEqual({ message: 'Store Name has been taken already' })
+    expect(response.body).toEqual({
+      message: 'Store Name has been taken already'
+    })
     expect(response.status).toBe(400)
   })
 })
