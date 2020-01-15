@@ -23,8 +23,7 @@ const cartSchema = new mongoose.Schema({
     default: false
   },
   checkoutDate: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   paidAmount: {
     type: Number

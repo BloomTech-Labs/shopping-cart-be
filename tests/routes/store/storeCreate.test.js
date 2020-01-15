@@ -7,7 +7,11 @@ let token2
 async function clearDb () {
   await Store.deleteMany({})
 }
+beforeEach(() => {
+  jest.setTimeout(10000)
+})
 beforeAll(async () => {
+  jest.setTimeout(10000)
   try {
     await clearDb()
   } catch (error) {
