@@ -6,10 +6,13 @@ const cartSchema = new mongoose.Schema({
     ref: 'store',
     required: true
   },
-  contents: {
-    type: Array,
-    required: true
-  },
+  contents: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'product',
+      required: true
+    }
+  ],
   total: {
     type: Number,
     required: true
@@ -23,7 +26,8 @@ const cartSchema = new mongoose.Schema({
     default: false
   },
   checkoutDate: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   paidAmount: {
     type: Number
