@@ -5,8 +5,7 @@ const Cart = require('../../models/cart')
 const Store = require('../../models/store')
 const validateCartInput = require('../../middleware/validateCartData')
 
-
-async function addCart (req, res) {
+async function addCart(req, res) {
   const { errors, isValid } = validateCartInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
@@ -16,9 +15,7 @@ async function addCart (req, res) {
   try {
     const store = await Store.findById({ _id: id })
     if (!store) {
-      return res
-        .status(404)
-        .json({ message: 'This store does not exist' })
+      return res.status(404).json({ message: 'This store does not exist' })
     }
 
     const cart = req.body
