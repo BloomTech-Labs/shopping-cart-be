@@ -6,7 +6,7 @@ let token
 let testProduct
 let wrongId
 
-async function clearDB () {
+async function clearDB() {
   await Product.deleteMany({})
 }
 
@@ -107,7 +107,6 @@ describe('edit product', () => {
         description: 'test product',
         price: '499',
         stock: 'ab'
-
       })
       .set('Authorization', token)
     expect(res.status).toEqual(400)

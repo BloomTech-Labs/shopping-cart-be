@@ -16,14 +16,18 @@ async function getCart(req, res) {
           from: 'products',
           localField: 'contents',
           foreignField: '_id',
-          as: 'productObjects'
+          as: 'content'
         }
       }
     ])
 
     const storeCart = populatedCart.filter(
       item => String(item._id) === String(cartId)
-    )
+    )[0]
+
+    storeCart.contents.length = 0
+    storeCart.contents = [...storeCart.content]
+    delete storeCart['content']
 
     res.status(200).json(storeCart)
   } catch (error) {
