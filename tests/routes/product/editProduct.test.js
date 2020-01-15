@@ -1,6 +1,7 @@
 const request = require('supertest')
 const server = require('../../../server')
 const Product = require('../../../models/product')
+const Seller = require('../../../models/seller')
 
 let token
 let testProduct
@@ -8,6 +9,7 @@ let wrongId
 
 async function clearDB () {
   await Product.deleteMany({})
+  await Seller.deleteMany({})
 }
 
 beforeEach(() => {
