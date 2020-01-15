@@ -4,7 +4,7 @@ const Seller = require('../../../models/seller')
 
 let token
 
-async function clearDb() {
+async function clearDb () {
   await Seller.deleteMany({})
 }
 beforeEach(() => {

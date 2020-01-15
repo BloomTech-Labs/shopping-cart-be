@@ -47,7 +47,6 @@ beforeAll(async () => {
       .set('Authorization', token)
 
     storeId = response3.body.saved._id
-
   } catch (error) {
     console.error(error.name, error.message)
   }
@@ -69,7 +68,7 @@ describe('get a store', () => {
   })
   it('Return No store with that id', async () => {
     const res = await request(server)
-      .get(`/api/store/123456`)
+      .get('/api/store/123456')
     expect(res.status).toBe(404)
     expect(res.body).toHaveProperty('message', 'There is no store with that id')
   })
