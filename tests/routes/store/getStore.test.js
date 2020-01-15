@@ -67,6 +67,12 @@ describe('get a store', () => {
     expect(res.status).toBe(200)
     expect(res.body).toHaveProperty('storeName', 'wear4feet')
   })
+  it('Return No store with that id', async () => {
+    const res = await request(server)
+      .get(`/api/store/123456`)
+    expect(res.status).toBe(404)
+    expect(res.body).toHaveProperty('message', 'There is no store with that id')
+  })
   it('Return No store found', async () => {
     const res = await request(server)
       .get('/api/store')
