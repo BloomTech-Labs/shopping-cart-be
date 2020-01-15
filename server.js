@@ -33,10 +33,6 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true
   })
-  .then(() => {
-    console.log('MongoDB is connected')
-  })
-
   .catch(err => console.log(err))
 
 server.get('/', (req, res) => {
