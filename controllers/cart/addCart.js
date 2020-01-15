@@ -9,30 +9,30 @@ async function addCart (req, res) {
   if (!isValid) {
     return res.status(400).json(errors)
   }
-
   const id = req.params.store_id
   try {
     const store = await Store.findById({ _id: id })
     if (!store) {
       return res.status(404).json({ message: 'This store does not exist' })
     }
-
     const cart = req.body
     cart.storeId = store._id
     const newCart = new Cart(cart)
     const result = await newCart.save()
-    const link = 'http://' + req.headers.host + '/api/store/cart/'// to be changed to FE route
+
+    // to be changed to FE route this is just a placeholder
+    const link = 'http://' + req.headers.host + '/api/store/cart/'
+
     const msg = {
       to: `${result.email}`,
       from: process.env.FROM_EMAIL,
-      subject: 'Pure Retail email notification for your saved cart',
+      subject: 'Pure Retail email Notification for your Saved Cart',
       text: 'This link will lead you to your saved cart',
-      html: `<strong><a href=${link}>Click me</a></strong>`
+      html: `<strong><a href=${link}>Click this link to go to your saved cart.</a></strong>`
     }
     await sgMail.send(msg)
-
     res.status(200).json({
-      status: 'A reset phone has been sent to ' + result.email + '.',
+      status: 'A link to your saved cart has been sent to ' + result.email + '.',
       result
     })
   } catch (err) {
