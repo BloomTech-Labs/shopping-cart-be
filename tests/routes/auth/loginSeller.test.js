@@ -5,6 +5,9 @@ const Seller = require('../../../models/seller')
 async function clearDb () {
   await Seller.deleteMany({})
 }
+beforeEach(() => {
+  jest.setTimeout(10000)
+})
 
 beforeAll(async () => {
   try {

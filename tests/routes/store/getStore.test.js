@@ -11,6 +11,9 @@ async function clearDb () {
   await Store.deleteMany({})
   await Seller.deleteMany({})
 }
+beforeEach(() => {
+  jest.setTimeout(10000)
+})
 beforeAll(async () => {
   jest.setTimeout(10000)
   try {
