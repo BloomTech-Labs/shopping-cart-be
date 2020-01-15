@@ -10,6 +10,10 @@ async function clearDB () {
   await Product.deleteMany({})
 }
 
+beforeEach(() => {
+  jest.setTimeout(10000)
+})
+
 beforeAll(async () => {
   jest.setTimeout(10000)
   try {

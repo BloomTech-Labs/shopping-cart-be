@@ -7,30 +7,14 @@ async function editCart (req, res) {
     return res.status(400).json(errors)
   }
   const cartId = req.params.cart_id
-  const {
-    contents,
-    total,
-    agreedPrice,
-    checkedOut,
-    paidAmount,
-    checkoutDate
-  } = req.body
   try {
     const cart = await Cart.findById({ _id: cartId })
     if (!cart) {
       return res.status(404).json({ message: 'This cart does not exist' })
     } else {
-      const newCartDetails = {
-        contents,
-        total,
-        agreedPrice,
-        checkedOut: checkedOut || false,
-        paidAmount,
-        checkoutDate
-      }
       const updateCart = await Cart.findOneAndUpdate(
         { _id: cartId },
-        { $set: newCartDetails },
+        { $set: req.body },
         { new: true }
       )
       return res.status(200).json(updateCart)
