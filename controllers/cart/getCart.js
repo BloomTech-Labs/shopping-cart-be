@@ -4,10 +4,10 @@ const Product = require('../../models/product')
 
 async function getCart(req, res) {
   try {
-    const storeId = req.params.store_id
-    const store = await Store.findById({ _id: storeId })
-    if (!store) {
-      return res.status(404).json({ message: 'No store found' })
+    const cartId = req.params.cart_id
+    const cart = await Cart.findById({ _id: cartId })
+    if (!cart) {
+      return res.status(404).json({ message: 'No cart found' })
     }
 
     const populatedCart = await Cart.aggregate([
@@ -22,7 +22,7 @@ async function getCart(req, res) {
     ])
 
     const storeCart = populatedCart.filter(
-      item => String(item.storeId) === String(storeId)
+      item => String(item._id) === String(cartId)
     )
 
     res.status(200).json(storeCart)

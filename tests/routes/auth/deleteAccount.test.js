@@ -4,7 +4,7 @@ const Seller = require('../../../models/seller')
 
 let token
 
-async function clearDb () {
+async function clearDb() {
   await Seller.deleteMany({})
 }
 
@@ -47,6 +47,8 @@ describe('delete an account', () => {
       .set('Authorization', token)
 
     expect(res.status).toBe(404)
-    expect(res.body).toEqual({ message: 'There is no user associated with this account' })
+    expect(res.body).toEqual({
+      message: 'There is no user associated with this account'
+    })
   })
 })
