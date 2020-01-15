@@ -80,7 +80,7 @@ beforeAll(async () => {
 describe('get cart contents', () => {
   it('should return store not found', async () => {
     const response = await request(server).get(
-      '/api/store/5e1ee0099f037d24abba6aa9'
+      '/api/store/cart/5e1ee0099f037d24abba6aa9'
     )
 
     expect(response.status).toBe(404)
@@ -89,7 +89,7 @@ describe('get cart contents', () => {
   })
 
   it('should return found store with details', async () => {
-    const response = await request(server).get(`/api/store/${cartId}`)
+    const response = await request(server).get(`/api/store/cart/${cartId}`)
     expect(response.status).toBe(200)
     expect(response.body.contents).toBeDefined()
     expect(response.body.checkedOut).toBeDefined()
@@ -100,7 +100,7 @@ describe('get cart contents', () => {
   })
 
   it('should return type error with wrong id', async () => {
-    const response = await request(server).get('/api/store/wrongId/')
+    const response = await request(server).get('/api/store/cart/wrongId/')
     expect(response.status).toBe(500)
     expect(response.body).toBeDefined()
   })
