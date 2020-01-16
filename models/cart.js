@@ -33,7 +33,8 @@ const cartSchema = new mongoose.Schema({
     type: Number
   },
   email: {
-    type: String
+    type: String,
+    required: true
   }
 })
 
