@@ -8,7 +8,7 @@ router.post('/charge', async (req,res) => {
     let transaction = req.body
     const paymentIntent = await stripe.paymentIntents.create({
         amount: transaction.amount,
-        currency: transaction.currency || 'usd',
+        currency: transaction.currency,
       });
     res.status(200).json({paymentIntent: paymentIntent})
 })
