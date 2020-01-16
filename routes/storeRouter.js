@@ -7,19 +7,24 @@ const authenticateMiddleware = require('../middleware/authenticateMiddleware')
 // @access Private
 router.post('/', authenticateMiddleware, storeController.createStore)
 
-// @route PUT /api/store/:store_id
+// @route PUT /api/store/
 // @desc Edit a seller's store
 // @access Private
 router.put('/', authenticateMiddleware, storeController.editStore)
 
-// @route DELETE /api/store/:storeId
+// @route DELETE /api/store/
 // @desc Delete a seller's store
 // @access Private
-
 router.delete('/', authenticateMiddleware, storeController.deleteStore)
-// @route GET api/store/:store_id
-// @desc Get store by id
+
+// @route GET api/store/
+// @desc Get store by seller_id from auth token
 // @access Private
 router.get('/', authenticateMiddleware, storeController.getStore)
+
+// @route GET /api/store/:store_id
+// @desc Get store by store_id from URL
+// @access Public
+router.get('/:store_id', storeController.getStore)
 
 module.exports = router
