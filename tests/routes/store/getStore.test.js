@@ -1,12 +1,15 @@
 const request = require('supertest')
 const server = require('../../../server')
 const Store = require('../../../models/store')
+const Seller = require('../../../models/seller')
 
 let token
 let token2
+let storeId
 
 async function clearDb () {
   await Store.deleteMany({})
+  await Seller.deleteMany({})
 }
 beforeEach(() => {
   jest.setTimeout(10000)
@@ -33,7 +36,7 @@ beforeAll(async () => {
 
     token2 = response2.body.token
 
-    await request(server)
+    const response3 = await request(server)
       .post('/api/store')
       .send({
         storeName: 'wear4feet',
@@ -42,18 +45,33 @@ beforeAll(async () => {
         imageUrl: 'some image'
       })
       .set('Authorization', token)
+
+    storeId = response3.body.saved._id
+
   } catch (error) {
     console.error(error.name, error.message)
   }
 })
 
 describe('get a store', () => {
-  it('Return a store', async () => {
+  it('Return a store (authed)', async () => {
     const res = await request(server)
       .get('/api/store')
       .set('Authorization', token)
     expect(res.status).toBe(200)
     expect(res.body).toHaveProperty('storeName', 'wear4feet')
+  })
+  it('Return a store (unauthed)', async () => {
+    const res = await request(server)
+      .get(`/api/store/${storeId}`)
+    expect(res.status).toBe(200)
+    expect(res.body).toHaveProperty('storeName', 'wear4feet')
+  })
+  it('Return No store with that id', async () => {
+    const res = await request(server)
+      .get(`/api/store/123456`)
+    expect(res.status).toBe(404)
+    expect(res.body).toHaveProperty('message', 'There is no store with that id')
   })
   it('Return No store found', async () => {
     const res = await request(server)
