@@ -31,6 +31,10 @@ const cartSchema = new mongoose.Schema({
   },
   paidAmount: {
     type: Number
+  },
+  email: {
+    type: String,
+    required: true
   }
 })
 
