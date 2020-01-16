@@ -83,13 +83,12 @@ describe('Password Reset Route II', () => {
     }
   })
   // test is skipped except absolutely necessary to test this case because we are making calls to twilio endpoint here
-  xit('send a reset message(link) if phone number is valid', async () => {
+  it.skip('send a reset message(link) if phone number is valid', async () => {
     const res = await request(server)
       .post('/api/auth/recover')
       .send({
         phone: '2348124120374'
       })
-    console.log(res.status, res.body)
     expect(res.status).toBe(200)
     expect(res.body).toBeDefined()
   })
