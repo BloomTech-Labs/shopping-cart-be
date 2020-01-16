@@ -5,7 +5,7 @@ const Store = require('../../../models/store')
 let token
 let token3
 
-async function clearDb() {
+async function clearDb () {
   await Store.deleteMany({})
 }
 
