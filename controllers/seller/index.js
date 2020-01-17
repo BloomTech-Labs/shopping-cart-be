@@ -1,11 +1,12 @@
-const register = require('./register')
-const login = require('./login')
-const editStore = require('./editStore')
-const createStore = require('./createStore')
-const deleteStore = require('./deleteStore')
-const deleteAccount = require('./deleteAccount')
-const { recover, resetPassword } = require('./passwordReset')
-const getStore = require('./getStore')
+const register = require("./register");
+const login = require("./login");
+const editStore = require("./editStore");
+const createStore = require("./createStore");
+const deleteStore = require("./deleteStore");
+const deleteAccount = require("./deleteAccount");
+const { recover, resetPassword } = require("./passwordReset");
+const getStore = require("./getStore");
+const updateAccount = require("./updateAccount");
 
 module.exports = {
   register,
@@ -16,5 +17,6 @@ module.exports = {
   recover,
   resetPassword,
   getStore,
-  deleteAccount
-}
+  deleteAccount,
+  updateAccount
+};
