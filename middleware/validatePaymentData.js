@@ -9,18 +9,18 @@ function validatePaymentInput (data) {
 
   // amount checks
   if (!amount) {
-    errors.name = 'Amount field is required'
+    errors.amount = 'amount field is required'
   } else if (isNaN(amount)) {
-    errors.price = 'Amount must be a number'
+    errors.amount = 'amount must be a number'
   } else if (Number(amount) <= 0) {
-    errors.price = 'Amount cant be less than 1'
+    errors.amount = 'amount cant be less than 1'
   }
 
   // currency checks
   if (!currency) {
-    errors.description = 'Currency field is required'
+    errors.currency = 'crrency field is required'
   } else if (!isNaN(currency)) {
-    errors.price = 'Currency cant be a number'
+    errors.currency = 'currency cant be a number'
   }
 
   return {
