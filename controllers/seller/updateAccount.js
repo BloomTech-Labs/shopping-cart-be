@@ -1,34 +1,34 @@
-const Store = require("../../models/store");
+const Store = require('../../models/store')
 
 const {
   validateAccountDetails
-} = require("../../middleware/validateCreateStoreData");
+} = require('../../middleware/validateCreateStoreData')
 
-async function updateAccount(req, res) {
-  const { sub } = req.decodedToken;
-  const { errors, isValid } = validateAccountDetails(req.body);
+async function updateAccount (req, res) {
+  const { sub } = req.decodedToken
+  const { errors, isValid } = validateAccountDetails(req.body)
 
   if (!isValid) {
-    return res.status(400).json(errors);
+    return res.status(400).json(errors)
   }
 
   //   find seller / store
   try {
-    const findStore = await Store.findOne({ seller: sub });
+    const findStore = await Store.findOne({ seller: sub })
     if (!findStore) {
-      return res.status(404).json({ message: "No store was found" });
+      return res.status(404).json({ message: 'No store was found' })
     } else {
-      const storeId = findStore._id;
+      const storeId = findStore._id
       const updateStore = await Store.findOneAndUpdate(
         { _id: storeId },
         { $set: req.body },
         { new: true }
-      );
-      return res.json(updateStore);
+      )
+      return res.json(updateStore)
     }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message })
   }
 }
 
-module.exports = updateAccount;
+module.exports = updateAccount
