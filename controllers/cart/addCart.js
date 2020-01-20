@@ -5,7 +5,7 @@ const Store = require('../../models/store')
 const validateCartInput = require('../../middleware/validateCartData')
 const Mailgen = require('mailgen')
 
-async function addCart(req, res) {
+async function addCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
@@ -72,7 +72,6 @@ async function addCart(req, res) {
       result
     })
   } catch (err) {
-    console.log(err)
     return res.status(500).json(err.message)
   }
 }
