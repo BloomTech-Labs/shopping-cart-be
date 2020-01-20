@@ -14,22 +14,36 @@ async function getCart(req, res) {
       {
         $lookup: {
           from: 'products',
-          localField: '$contents.productId',
+          localField: 'contents.product',
           foreignField: '_id',
           as: 'content'
         }
       }
     ])
 
-    console.log(populatedCart)
-
     const storeCart = populatedCart.filter(
       item => String(item._id) === String(cartId)
     )[0]
 
+    let copyOfContents = [...storeCart.contents]
+    let details = []
+    copyOfContents.forEach(item => {
+      for (let i = 0; i < copyOfContents.length; i++) {
+        if (String(item.product) == String(storeCart.content[i]._id)) {
+          console.log(true)
+          details.push({
+            ...storeCart.content[i],
+            ...item
+          })
+        }
+      }
+    })
+    storeCart.details = details
     storeCart.contents.length = 0
-    storeCart.contents = [...storeCart.content]
+
+    storeCart.contents = [...storeCart.details]
     delete storeCart.content
+    delete storeCart.details
 
     res.status(200).json(storeCart)
   } catch (error) {
