@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { addCart, editCart, getCart } = require('../controllers/cart')
+const { addCart, editCart, getCart, submitCart } = require('../controllers/cart')
 
 // @route POST api/store/:store_id/cart
 // @desc  Add items to cart
@@ -16,5 +16,10 @@ router.get('/cart/:cart_id', getCart)
 // @desc  Add items to cart
 // @access Public
 router.put('/cart/:cart_id', editCart)
+
+// @route POST api/store/:store_id/cart/submit
+// @desc  submit final cart for approval
+// @access Public
+router.post('/:store_id/cart/submit', submitCart)
 
 module.exports = router

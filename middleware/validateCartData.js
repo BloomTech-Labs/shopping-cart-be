@@ -1,13 +1,13 @@
 const isEmpty = require('is-empty')
-const Validator = require('validator')
+// const Validator = require('validator')
 function validateCartInput (data) {
   const errors = {}
   // Convert empty fields to an empty string so we can use validator functions
-  let { agreedPrice, total, email } = data
+  let { agreedPrice, total } = data
 
   agreedPrice = agreedPrice || ''
   total = total || ''
-  email = email || ''
+  // email = email || ''
 
   // agreedPrice checks
   if (!agreedPrice) {
@@ -28,11 +28,11 @@ function validateCartInput (data) {
   }
 
   // email checks
-  if (!email) {
-    errors.email = 'email field is required'
-  } else if (!Validator.isEmail(email)) {
-    errors.email = 'Email Address must be valid'
-  }
+  // if (!email) {
+  //   errors.email = 'email field is required'
+  // } else if (!Validator.isEmail(email)) {
+  //   errors.email = 'Email Address must be valid'
+  // }
 
   return {
     errors,
