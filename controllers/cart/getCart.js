@@ -1,7 +1,6 @@
 const Cart = require('../../models/cart')
 
-
-async function getCart (req, res) {
+async function getCart(req, res) {
   try {
     const cartId = req.params.cart_id
     const cart = await Cart.findById({ _id: cartId })
@@ -13,7 +12,7 @@ async function getCart (req, res) {
       {
         $lookup: {
           from: 'products',
-          localField: '$contents.productId',
+          localField: 'contents.product',
           foreignField: '_id',
           as: 'content'
         }
@@ -24,9 +23,24 @@ async function getCart (req, res) {
       item => String(item._id) === String(cartId)
     )[0]
 
+    let copyOfContents = [...storeCart.contents]
+    let details = []
+    copyOfContents.forEach(item => {
+      for (let i = 0; i < copyOfContents.length; i++) {
+        if (String(item.product) == String(storeCart.content[i]._id)) {
+          details.push({
+            ...storeCart.content[i],
+            ...item
+          })
+        }
+      }
+    })
+    storeCart.details = details
     storeCart.contents.length = 0
-    storeCart.contents = [...storeCart.content]
+
+    storeCart.contents = [...storeCart.details]
     delete storeCart.content
+    delete storeCart.details
 
     res.status(200).json(storeCart)
   } catch (error) {
