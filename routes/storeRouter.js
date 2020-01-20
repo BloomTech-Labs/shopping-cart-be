@@ -27,4 +27,13 @@ router.get('/', authenticateMiddleware, storeController.getStore)
 // @access Public
 router.get('/:store_id', storeController.getStore)
 
+// @route PUT /api/store/:store_id/account
+// @desc Get store by store_id from URL
+// @access Public
+router.put(
+  '/account',
+  authenticateMiddleware,
+  storeController.updateAccount
+)
+
 module.exports = router

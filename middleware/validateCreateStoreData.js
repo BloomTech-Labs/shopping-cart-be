@@ -9,9 +9,11 @@ function validateCreateStoreInput (data) {
   // Store owner's name checks
   if (Validator.isEmpty(data.ownerName)) {
     errors.ownerName = 'Name of store owner is required'
-  } else if (Validator.isEmpty(data.currency)) { // Store currency check
+  } else if (Validator.isEmpty(data.currency)) {
+    // Store currency check
     errors.currency = 'Store currency is required'
-  } else if (Validator.isEmpty(data.storeName)) { // Store name check
+  } else if (Validator.isEmpty(data.storeName)) {
+    // Store name check
     errors.storeName = 'Store name is required'
   }
   return {
@@ -19,4 +21,16 @@ function validateCreateStoreInput (data) {
     isValid: isEmpty(errors)
   }
 }
-module.exports = { validateCreateStoreInput }
+
+function validateAccountDetails (data) {
+  const errors = {}
+  data.stripeId = !isEmpty(data.stripeId) ? data.stripeId : ''
+  if (Validator.isEmpty(data.stripeId)) {
+    errors.stripeId = 'StripeId is required'
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  }
+}
+module.exports = { validateCreateStoreInput, validateAccountDetails }

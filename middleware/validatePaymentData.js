@@ -3,7 +3,7 @@ const isEmpty = require('is-empty')
 function validatePaymentInput (data) {
   const errors = {}
   // Convert empty fields to an empty string so we can use validator functions
-  let { amount, currency} = data
+  let { amount, currency } = data
   amount = amount || ''
   currency = currency || ''
 

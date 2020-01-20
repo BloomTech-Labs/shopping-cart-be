@@ -15,7 +15,8 @@ const storeSchema = mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  stripeId: { type: String }
 })
 const Store = mongoose.model('store', storeSchema)
 module.exports = Store
