@@ -29,12 +29,12 @@ async function submitCart (req, res) {
 
     const text = message.split(' ').join('%20')
 
-    res.status(200).json({
-        status: `Cart has been successfully submitted`,
-    })
     res.redirect(
-        `https://api.whatsapp.com/send?phone=${seller.phone}&text=${text}`
-      );
+      `https://api.whatsapp.com/send?phone=${seller.phone}&text=${text}`
+    )
+    res.status(200).json({
+      status: 'Cart has been successfully submitted'
+    })
   } catch (err) {
     return res.status(500).json(err.message)
   }

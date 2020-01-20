@@ -1,6 +1,4 @@
 const Cart = require('../../models/cart')
-const Store = require('../../models/store')
-const Product = require('../../models/product')
 
 async function getCart (req, res) {
   try {
@@ -14,7 +12,7 @@ async function getCart (req, res) {
       {
         $lookup: {
           from: 'products',
-          localField: 'contents',
+          localField: 'contents.product',
           foreignField: '_id',
           as: 'content'
         }
@@ -25,9 +23,24 @@ async function getCart (req, res) {
       item => String(item._id) === String(cartId)
     )[0]
 
+    const copyOfContents = [...storeCart.contents]
+    const details = []
+    copyOfContents.forEach(item => {
+      for (let i = 0; i < copyOfContents.length; i++) {
+        if (String(item.product) == String(storeCart.content[i]._id)) {
+          details.push({
+            ...storeCart.content[i],
+            ...item
+          })
+        }
+      }
+    })
+    storeCart.details = details
     storeCart.contents.length = 0
-    storeCart.contents = [...storeCart.content]
+
+    storeCart.contents = [...storeCart.details]
     delete storeCart.content
+    delete storeCart.details
 
     res.status(200).json(storeCart)
   } catch (error) {

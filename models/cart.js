@@ -8,9 +8,14 @@ const cartSchema = new mongoose.Schema({
   },
   contents: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'product',
-      required: true
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'product'
+      },
+      quantity: {
+        type: Number,
+        required: true
+      }
     }
   ],
   total: {
@@ -26,13 +31,30 @@ const cartSchema = new mongoose.Schema({
     default: false
   },
   checkoutDate: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   paidAmount: {
     type: Number
   },
   email: {
+    type: String,
+    required: true
+  },
+  deliveryAddress: {
+    type: String
+  },
+  deliveryOrCollection: {
+    type: 'String'
+  },
+  lock: {
+    type: Boolean,
+    default: false
+  },
+  finalLock: {
+    type: Boolean,
+    default: false
+  },
+  paymentPreference: {
     type: String,
     required: true
   }
