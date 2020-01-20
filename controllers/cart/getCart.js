@@ -1,8 +1,7 @@
 const Cart = require('../../models/cart')
-const Store = require('../../models/store')
-const Product = require('../../models/product')
 
-async function getCart(req, res) {
+
+async function getCart (req, res) {
   try {
     const cartId = req.params.cart_id
     const cart = await Cart.findById({ _id: cartId })
@@ -20,8 +19,6 @@ async function getCart(req, res) {
         }
       }
     ])
-
-    console.log(populatedCart)
 
     const storeCart = populatedCart.filter(
       item => String(item._id) === String(cartId)
