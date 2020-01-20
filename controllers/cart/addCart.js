@@ -5,7 +5,7 @@ const Store = require('../../models/store')
 const validateCartInput = require('../../middleware/validateCartData')
 const Mailgen = require('mailgen')
 
-async function addCart (req, res) {
+async function addCart(req, res) {
   const { errors, isValid } = validateCartInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
@@ -24,7 +24,8 @@ async function addCart (req, res) {
     // link to FE route of buyers saved cart
     const link = `https://shopping-cart-eu3.netlify.com/cart/${cartId}`
     // Configure mailgen by setting a theme and your product info
-    const logoUrl = 'https://res.cloudinary.com/pureretail/image/upload/v1579174900/photos/PureRetail_Logo_onniwf.png'
+    const logoUrl =
+      'https://res.cloudinary.com/pureretail/image/upload/v1579174900/photos/PureRetail_Logo_onniwf.png'
     const mailGenerator = new Mailgen({
       theme: 'salted',
       product: {
@@ -71,6 +72,7 @@ async function addCart (req, res) {
       result
     })
   } catch (err) {
+    console.log(err)
     return res.status(500).json(err.message)
   }
 }

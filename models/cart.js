@@ -32,8 +32,7 @@ const cartSchema = new mongoose.Schema({
     default: false
   },
   checkoutDate: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   paidAmount: {
     type: Number
@@ -42,9 +41,11 @@ const cartSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  deliveryInfo: {
-    type: 'String',
-    required: true
+  deliveryAddress: {
+    type: String
+  },
+  deliveryOrCollection: {
+    type: 'String'
   },
   lock: {
     type: Boolean,
@@ -53,6 +54,10 @@ const cartSchema = new mongoose.Schema({
   finalLock: {
     type: Boolean,
     default: false
+  },
+  paymentPreference: {
+    type: String,
+    required: true
   }
 })
 
