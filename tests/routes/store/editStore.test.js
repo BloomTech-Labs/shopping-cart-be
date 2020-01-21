@@ -85,6 +85,7 @@ describe("edit store", () => {
       .set("Authorization", token);
     expect(response.status).toBe(400);
     expect(response.body).toBeDefined();
+
     expect(response.body).toEqual({
       ownerName: "Name of store owner is required",
       currency: "Store currency is required",
