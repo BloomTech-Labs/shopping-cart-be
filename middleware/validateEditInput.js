@@ -25,8 +25,8 @@ function validateEditInput (data) {
     errors.storeName = 'Store name is required'
   }
 
-    // Store address check
-   if (Validator.isEmpty(data.address)) {
+  // Store address check
+  if (Validator.isEmpty(data.address)) {
     errors.address = 'Store address is required'
   }
 

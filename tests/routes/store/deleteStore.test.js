@@ -43,7 +43,7 @@ beforeAll(async () => {
       ownerName: 'Johnny Walker',
       currency: 'Yen',
       imageUrl: 'some image',
-      address:'no3 jou road',
+      address: 'no3 jou road',
       seller: response2.body.user.id
     })
     storeName = newStore2.storeName

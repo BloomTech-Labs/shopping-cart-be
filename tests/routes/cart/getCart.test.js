@@ -42,7 +42,7 @@ beforeAll(async () => {
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image',
-        address: 'no 337 rous road',
+        address: 'no 337 rous road'
       })
       .set('Authorization', token)
     storeId = store.body.saved._id

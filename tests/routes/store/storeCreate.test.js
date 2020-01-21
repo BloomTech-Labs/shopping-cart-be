@@ -78,7 +78,7 @@ describe('test', () => {
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image',
-        address: 'no 27 rous road',
+        address: 'no 27 rous road'
       })
       .set('Authorization', token2)
     const res = response.body.saved
@@ -99,7 +99,7 @@ describe('test', () => {
         ownerName: 'Jack Daniels',
         currency: 'dollars',
         imageUrl: 'some image',
-        address: 'no 37 rous road',
+        address: 'no 37 rous road'
       })
       .set('Authorization', token2)
 
@@ -112,7 +112,7 @@ describe('test', () => {
         currency: 'Naira',
         imageUrl: 'hhtp://picture.png',
         storeName: 'deboclothing',
-        address: 'no 107 rous road',
+        address: 'no 107 rous road'
       })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -124,7 +124,7 @@ describe('test', () => {
   it('should return currency is required', async () => {
     const response = await request(server)
       .post('/api/store')
-      .send({ ownerName: 'John Doe', address: 'no 207 rous road', })
+      .send({ ownerName: 'John Doe', address: 'no 207 rous road' })
       .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
@@ -137,7 +137,7 @@ describe('test', () => {
         ownerName: 'Tody',
         currency: 'Naira',
         imageUrl: 'hhtp://picture.png',
-        address: 'no 117 rous road',
+        address: 'no 117 rous road'
       })
       .set('Authorization', token)
     expect(response.status).toBe(400)

@@ -36,7 +36,7 @@ beforeAll(async () => {
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image',
-        address: 'no 702 rous road',
+        address: 'no 702 rous road'
       })
       .set('Authorization', token)
     const product = await request(server)

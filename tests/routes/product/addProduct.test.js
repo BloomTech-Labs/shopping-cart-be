@@ -34,7 +34,7 @@ beforeAll(async () => {
         ownerName: 'Jane Doe',
         currency: 'dollars',
         imageUrl: 'some image',
-        address: 'no 701 rous road',
+        address: 'no 701 rous road'
       })
       .set('Authorization', token)
   } catch (error) {
