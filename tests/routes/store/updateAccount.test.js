@@ -32,7 +32,8 @@ beforeAll(async () => {
         storeName: 'wear4feets',
         ownerName: 'Jane Doe',
         currency: 'dollars',
-        imageUrl: 'some image'
+        imageUrl: 'some image',
+        address: 'no 227 rous road'
       })
       .set('Authorization', token)
 

@@ -34,7 +34,8 @@ beforeAll(async () => {
         storeName: 'Love & Joy',
         ownerName: 'Jane Doe',
         currency: 'dollars',
-        imageUrl: 'some image'
+        imageUrl: 'some image',
+        address: 'no 705 rous road',
       })
       .set('Authorization', token)
     storeId = res.body.saved._id

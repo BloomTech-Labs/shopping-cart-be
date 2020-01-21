@@ -63,6 +63,7 @@ describe('test', () => {
         ownerName: 'Jack Daniels',
         currency: 'dollars',
         imageUrl: 'some image',
+        address: 'no 17 rous road',
         seller: response1.body.user.id
       })
     } catch (error) {
@@ -76,7 +77,8 @@ describe('test', () => {
         storeName: 'Glass &  Sticks',
         ownerName: 'Jane Doe',
         currency: 'dollars',
-        imageUrl: 'some image'
+        imageUrl: 'some image',
+        address: 'no 27 rous road',
       })
       .set('Authorization', token2)
     const res = response.body.saved
@@ -87,6 +89,7 @@ describe('test', () => {
     expect(res).toHaveProperty('imageUrl')
     expect(res).toHaveProperty('storeName')
     expect(res).toHaveProperty('seller')
+    expect(res).toHaveProperty('address')
   })
   it('You can not create more than one store', async () => {
     const response = await request(server)
@@ -95,7 +98,8 @@ describe('test', () => {
         storeName: 'Ruff&Rumble',
         ownerName: 'Jack Daniels',
         currency: 'dollars',
-        imageUrl: 'some image'
+        imageUrl: 'some image',
+        address: 'no 37 rous road',
       })
       .set('Authorization', token2)
 
@@ -107,7 +111,8 @@ describe('test', () => {
       .send({
         currency: 'Naira',
         imageUrl: 'hhtp://picture.png',
-        storeName: 'deboclothing'
+        storeName: 'deboclothing',
+        address: 'no 107 rous road',
       })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -119,7 +124,7 @@ describe('test', () => {
   it('should return currency is required', async () => {
     const response = await request(server)
       .post('/api/store')
-      .send({ ownerName: 'John Doe' })
+      .send({ ownerName: 'John Doe', address: 'no 207 rous road', })
       .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
@@ -131,7 +136,8 @@ describe('test', () => {
       .send({
         ownerName: 'Tody',
         currency: 'Naira',
-        imageUrl: 'hhtp://picture.png'
+        imageUrl: 'hhtp://picture.png',
+        address: 'no 117 rous road',
       })
       .set('Authorization', token)
     expect(response.status).toBe(400)
