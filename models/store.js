@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 const storeSchema = mongoose.Schema({
   ownerName: {
     type: String,
@@ -10,7 +10,7 @@ const storeSchema = mongoose.Schema({
   storeName: { type: String, required: true, unique: true },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Seller"
+    ref: 'Seller'
   },
   address: { type: String, required: true },
   register_date: {
@@ -18,6 +18,6 @@ const storeSchema = mongoose.Schema({
     default: Date.now
   },
   stripeId: { type: String }
-});
-const Store = mongoose.model("store", storeSchema);
-module.exports = Store;
+})
+const Store = mongoose.model('store', storeSchema)
+module.exports = Store
