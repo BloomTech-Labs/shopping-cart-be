@@ -1,34 +1,33 @@
-require("dotenv").config();
-const express = require("express");
-const helmet = require("helmet");
-const cors = require("cors");
-const path = require("path");
-const mongoose = require("mongoose");
-const mongoURI = require("./config/config");
+require('dotenv').config()
+const express = require('express')
+const helmet = require('helmet')
+const cors = require('cors')
+const path = require('path')
+const mongoose = require('mongoose')
+const mongoURI = require('./config/config')
 
-const authRouter = require("./routes/authRouter");
-const productRouter = require("./routes/productRouter");
-const storeRouter = require("./routes/storeRouter");
-const cartRouter = require("./routes/cartRouter");
-const paymentRouter = require("./routes/paymentRouter");
-const server = express();
+const authRouter = require('./routes/authRouter')
+const productRouter = require('./routes/productRouter')
+const storeRouter = require('./routes/storeRouter')
+const cartRouter = require('./routes/cartRouter')
+const paymentRouter = require('./routes/paymentRouter')
+const server = express()
 
-server.use(helmet());
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
+server.use(helmet())
+server.use(express.json())
+server.use(express.urlencoded({ extended: false }))
 
-server.use(cors());
+server.use(cors())
 
+server.use('/api/auth', authRouter)
+server.use('/api/store', productRouter)
+server.use('/api/store', storeRouter)
+server.use('/api/store', cartRouter)
+server.use('/api/payment', paymentRouter)
 
-server.use("/api/auth", authRouter);
-server.use("/api/store", productRouter);
-server.use("/api/store", storeRouter);
-server.use("/api/store", cartRouter);
-server.use("/api/payment", paymentRouter);
-
-server.use(express.static(path.join(__dirname, "public")));
-server.set("views", path.join(__dirname, "views"));
-server.set("view engine", "pug");
+server.use(express.static(path.join(__dirname, 'public')))
+server.set('views', path.join(__dirname, 'views'))
+server.set('view engine', 'pug')
 
 mongoose
   .connect(mongoURI, {
@@ -37,14 +36,14 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true
   })
-  .catch(err => console.log(err));
+  .catch(err => console.log(err))
 
-server.get("/", (req, res) => {
-  res.status(200).send("Api is running!!");
-});
+server.get('/', (req, res) => {
+  res.status(200).send('Api is running!!')
+})
 
-server.all("*", (req, res) => {
-  res.status(404).json({ message: "This URL can not be found" });
-});
+server.all('*', (req, res) => {
+  res.status(404).json({ message: 'This URL can not be found' })
+})
 
-module.exports = server;
+module.exports = server
