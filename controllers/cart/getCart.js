@@ -1,6 +1,6 @@
 const Cart = require('../../models/cart')
 
-async function getCart(req, res) {
+async function getCart (req, res) {
   try {
     const cartId = req.params.cart_id
     const cart = await Cart.findById({ _id: cartId })
@@ -23,8 +23,8 @@ async function getCart(req, res) {
       item => String(item._id) === String(cartId)
     )[0]
 
-    let copyOfContents = [...storeCart.contents]
-    let details = []
+    const copyOfContents = [...storeCart.contents]
+    const details = []
     copyOfContents.forEach(item => {
       for (let i = 0; i < copyOfContents.length; i++) {
         if (String(item.product) == String(storeCart.content[i]._id)) {
