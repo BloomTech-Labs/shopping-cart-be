@@ -30,6 +30,7 @@ async function createStore (req, res) {
         currency: req.body.currency,
         imageUrl: req.body.imageUrl,
         storeName: req.body.storeName,
+        address: req.body.address,
         seller: req.decodedToken.sub
       })
       const saved = await newStore.save()
