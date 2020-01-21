@@ -38,6 +38,7 @@ beforeAll(async () => {
       ownerName: 'Jane Doe',
       currency: 'dollars',
       imageUrl: 'some image',
+      address: 'no 5 jous road',
       seller: response1.body.user.id
     })
 
@@ -53,6 +54,7 @@ beforeAll(async () => {
       ownerName: 'Naira Marley',
       currency: 'Naira',
       imageUrl: 'some image',
+      address: 'no 7 rous road',
       seller: response2.body.user.id
     })
 
@@ -83,10 +85,12 @@ describe('edit store', () => {
       .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
+
     expect(response.body).toEqual({
       ownerName: 'Name of store owner is required',
       currency: 'Store currency is required',
-      storeName: 'Store name is required'
+      storeName: 'Store name is required',
+      address: 'Store address is required'
     })
   })
 
@@ -99,14 +103,19 @@ describe('edit store', () => {
     expect(response.body).toBeDefined()
     expect(response.body).toEqual({
       currency: 'Store currency is required',
-      storeName: 'Store name is required'
+      storeName: 'Store name is required',
+      address: 'Store address is required'
     })
   })
 
   it('should return imageUrl & storename required', async () => {
     const response = await request(server)
       .put('/api/store')
-      .send({ ownerName: 'John Doe', currency: 'cedi' })
+      .send({
+        ownerName: 'John Doe',
+        currency: 'cedi',
+        address: 'Store address is required'
+      })
       .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body).toBeDefined()
@@ -122,7 +131,8 @@ describe('edit store', () => {
       .send({
         ownerName: 'John Doe',
         currency: 'cedi',
-        imageUrl: 'https://someimage.com'
+        imageUrl: 'https://someimage.com',
+        address: 'Store address is required'
       })
       .set('Authorization', token)
     expect(response.status).toBe(400)
@@ -139,7 +149,8 @@ describe('edit store', () => {
         ownerName: 'John Doe',
         currency: 'shillings',
         imageUrl: 'https://someimage.com',
-        storeName: 'sticks & bones'
+        storeName: 'sticks & bones',
+        address: 'no 10 eoous road'
       })
       .set('Authorization', token)
     expect(response.status).toBe(200)
@@ -152,7 +163,8 @@ describe('edit store', () => {
         ownerName: 'John Doe',
         currency: 'cedi',
         imageUrl: 'https://someimage.com',
-        storeName: 'sticks & bones'
+        storeName: 'sticks & bones',
+        address: 'no 15 jous road'
       })
       .set('Authorization', token3)
     expect(response.status).toBe(404)
@@ -166,7 +178,8 @@ describe('edit store', () => {
         storeName: 'Harry&Jane',
         ownerName: 'Naira Marley',
         currency: 'Naira',
-        imageUrl: 'some image'
+        imageUrl: 'some image',
+        address: 'no 7 rous road'
       })
       .set('Authorization', token)
     expect(response.body).toEqual({

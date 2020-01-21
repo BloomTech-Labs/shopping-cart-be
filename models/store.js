@@ -12,6 +12,7 @@ const storeSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Seller'
   },
+  address: { type: String, required: true },
   register_date: {
     type: Date,
     default: Date.now

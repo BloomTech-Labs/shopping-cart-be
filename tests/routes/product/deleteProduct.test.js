@@ -35,7 +35,8 @@ beforeAll(async () => {
         storeName: 'Glass &  Sticks',
         ownerName: 'Jane Doe',
         currency: 'dollars',
-        imageUrl: 'some image'
+        imageUrl: 'some image',
+        address: 'no 702 rous road'
       })
       .set('Authorization', token)
     const product = await request(server)

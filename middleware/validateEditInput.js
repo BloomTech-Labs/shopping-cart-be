@@ -8,6 +8,7 @@ function validateEditInput (data) {
   data.ownerName = !isEmpty(data.ownerName) ? data.ownerName : ''
   data.currency = !isEmpty(data.currency) ? data.currency : ''
   data.storeName = !isEmpty(data.storeName) ? data.storeName : ''
+  data.address = !isEmpty(data.address) ? data.address : ''
 
   // Store owner checks
   if (Validator.isEmpty(data.ownerName)) {
@@ -22,6 +23,11 @@ function validateEditInput (data) {
   // Store imageURL check
   if (Validator.isEmpty(data.storeName)) {
     errors.storeName = 'Store name is required'
+  }
+
+  // Store address check
+  if (Validator.isEmpty(data.address)) {
+    errors.address = 'Store address is required'
   }
 
   return {

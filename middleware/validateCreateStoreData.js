@@ -6,6 +6,8 @@ function validateCreateStoreInput (data) {
   data.ownerName = !isEmpty(data.ownerName) ? data.ownerName : ''
   data.currency = !isEmpty(data.currency) ? data.currency : ''
   data.storeName = !isEmpty(data.storeName) ? data.storeName : ''
+  data.address = !isEmpty(data.address) ? data.address : ''
+
   // Store owner's name checks
   if (Validator.isEmpty(data.ownerName)) {
     errors.ownerName = 'Name of store owner is required'
@@ -15,6 +17,8 @@ function validateCreateStoreInput (data) {
   } else if (Validator.isEmpty(data.storeName)) {
     // Store name check
     errors.storeName = 'Store name is required'
+  } else if (Validator.isEmpty(data.address)) {
+    errors.address = 'Store address is required'
   }
   return {
     errors,
