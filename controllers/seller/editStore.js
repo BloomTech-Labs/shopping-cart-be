@@ -5,7 +5,7 @@ const { validateEditInput } = require('../../middleware/validateEditInput')
 async function editStore (req, res) {
   const { sub } = req.decodedToken
   const { errors, isValid } = validateEditInput(req.body)
-  const { ownerName, currency, imageUrl, storeName } = req.body
+  const { ownerName, currency, imageUrl, storeName, address } = req.body
 
   if (!isValid) {
     return res.status(400).json(errors)
@@ -31,7 +31,8 @@ async function editStore (req, res) {
         ownerName,
         currency,
         imageUrl,
-        storeName
+        storeName,
+        address
       }
       const storeId = findStore._id
 
