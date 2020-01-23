@@ -4,7 +4,7 @@ const Store = require('../models/store')
 const stripeAuth = new StripeStrategy({
     clientID: process.env.STRIPE_CLIENT_ID,
     clientSecret: process.env.STRIPE_SECRET,
-    callbackURL: "http://localhost:4000/auth/stripe/callback",
+    callbackURL: "https://shopping-cart-eu3.herokuapp.com/api/auth/stripe/callback"
   },
 async (accessToken, refreshToken, stripe_properties, done) => {
     let stripeId = stripe_properties.stripe_user_id

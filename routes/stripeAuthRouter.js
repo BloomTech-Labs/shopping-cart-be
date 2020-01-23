@@ -26,10 +26,10 @@ router.post('/', async (req,res) => {
 router.get('/', passport.authenticate('stripe', { scope: 'read_write' }))
 
 router.get('/callback',
-  passport.authenticate('stripe', { failureRedirect: 'http://localhost:3000/profile' }),
+  passport.authenticate('stripe', { failureRedirect: 'https://shopping-cart-eu3.netlify.com/account'}),
   async function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('http://localhost:3000/profile');
+    res.redirect('https://shopping-cart-eu3.netlify.com/account');
   });
 
 module.exports = router
