@@ -3,9 +3,9 @@ const isEmpty = require('is-empty')
 function validatePaymentInput (data) {
   const errors = {}
   // Convert empty fields to an empty string so we can use validator functions
-  let { amount, currency } = data
+  let { amount, storeId } = data
   amount = amount || ''
-  currency = currency || ''
+  storeId = storeId || ''
 
   // amount checks
   if (!amount) {
@@ -16,12 +16,10 @@ function validatePaymentInput (data) {
     errors.amount = 'amount cant be less than 1'
   }
 
-  // currency checks
-  if (!currency) {
-    errors.currency = 'crrency field is required'
-  } else if (!isNaN(currency)) {
-    errors.currency = 'currency cant be a number'
-  }
+  // StoreId checks
+  if (!storeId) {
+    errors.storeId = 'storeId field is required'
+  } 
 
   return {
     errors,
