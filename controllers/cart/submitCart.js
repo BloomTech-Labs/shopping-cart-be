@@ -1,7 +1,7 @@
 const Cart = require('../../models/cart')
 const Store = require('../../models/store')
 const Seller = require('../../models/seller')
-const validateCartInput = require('../../middleware/validateCartData')
+const {validateCartInput} = require('../../middleware/validateCartData')
 
 async function submitCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)

@@ -1,5 +1,5 @@
 const Cart = require('../../models/cart')
-const validateCartInput = require('../../middleware/validateCartData')
+const {validateCartInput} = require('../../middleware/validateCartData')
 
 async function editCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)
