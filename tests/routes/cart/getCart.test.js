@@ -75,7 +75,14 @@ beforeAll(async () => {
     // add item to cart
     const cart = await request(server)
       .post(`/api/store/${storeId}/cart`)
-      .send({ contents: [product1Id, product2Id], agreedPrice: 40, total: 400 })
+      .send({
+        contents: [
+          { product: product1Id, quantity: 3 },
+          { product: product2Id, quantity: 30 }
+        ],
+        agreedPrice: 40,
+        total: 400
+      })
 
     cartId = cart.body._id
   } catch (error) {

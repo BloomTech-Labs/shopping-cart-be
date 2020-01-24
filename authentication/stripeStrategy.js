@@ -2,10 +2,9 @@
  * Module dependencies.
  */
 var util = require('util')
-  , url = require('url')
-  , OAuth2Strategy = require('passport-oauth').OAuth2Strategy
-  , InternalOAuthError = require('passport-oauth').InternalOAuthError;
-
+var url = require('url')
+var OAuth2Strategy = require('passport-oauth').OAuth2Strategy
+var InternalOAuthError = require('passport-oauth').InternalOAuthError
 
 /**
  * `Strategy` constructor.
@@ -46,21 +45,20 @@ var util = require('util')
  * @param {Function} verify
  * @api public
  */
-function Strategy(options, verify) {
-  options = options || {};
-  options.authorizationURL = options.authorizationURL || 'https://connect.stripe.com/express/oauth/authorize';
-  options.tokenURL = options.tokenURL || 'https://connect.stripe.com/oauth/token';
-  options.scopeSeparator = options.scopeSeparator || ',';
+function Strategy (options, verify) {
+  options = options || {}
+  options.authorizationURL = options.authorizationURL || 'https://connect.stripe.com/express/oauth/authorize'
+  options.tokenURL = options.tokenURL || 'https://connect.stripe.com/oauth/token'
+  options.scopeSeparator = options.scopeSeparator || ','
 
-  OAuth2Strategy.call(this, options, verify);
-  this.name = 'stripe';
+  OAuth2Strategy.call(this, options, verify)
+  this.name = 'stripe'
 }
 
 /**
  * Inherit from `OAuth2Strategy`.
  */
-util.inherits(Strategy, OAuth2Strategy);
-
+util.inherits(Strategy, OAuth2Strategy)
 
 /**
  * Authenticate request by delegating to a service provider using OAuth 2.0.
@@ -68,28 +66,28 @@ util.inherits(Strategy, OAuth2Strategy);
  * @param {Object} req
  * @api protected
  */
-OAuth2Strategy.prototype.authenticate = function(req, options) {
-  options = options || {};
-  var self = this;
+OAuth2Strategy.prototype.authenticate = function (req, options) {
+  options = options || {}
+  var self = this
 
   if (req.query && req.query.error) {
     // TODO: Error information pertaining to OAuth 2.0 flows is encoded in the
     //       query parameters, and should be propagated to the application.
-    return this.fail();
+    return this.fail()
   }
 
-  var callbackURL = options.callbackURL || this._callbackURL;
+  var callbackURL = options.callbackURL || this._callbackURL
   if (callbackURL) {
-    var parsed = url.parse(callbackURL);
+    var parsed = url.parse(callbackURL)
     if (!parsed.protocol) {
       // The callback URL is relative, resolve a fully qualified URL from the
       // URL of the originating request.
-      callbackURL = url.resolve(utils.originalURL(req), callbackURL);
+      callbackURL = url.resolve(utils.originalURL(req), callbackURL)
     }
   }
 
   if (req.query && req.query.code) {
-    var code = req.query.code;
+    var code = req.query.code
 
     // NOTE: The module oauth (0.9.5), which is a dependency, automatically adds
     //       a 'type=web_server' parameter to the percent-encoded data sent in
@@ -98,31 +96,30 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
     //       time of this writing).  This parameter is not necessary, but its
     //       presence does not appear to cause any issues.
     this._oauth2.getOAuthAccessToken(code, { grant_type: 'authorization_code', redirect_uri: callbackURL },
-      function(err, accessToken, refreshToken, params) {
-        if (err) { return self.error(new InternalOAuthError('failed to obtain access token', err)); }
+      function (err, accessToken, refreshToken, params) {
+        if (err) { return self.error(new InternalOAuthError('failed to obtain access token', err)) }
 
-        function verified(err, user, info) {
-          if (err) { return self.error(err); }
-          if (!user) { return self.fail(info); }
-          self.success(user, info);
+        function verified (err, user, info) {
+          if (err) { return self.error(err) }
+          if (!user) { return self.fail(info) }
+          self.success(user, info)
         }
 
         // Generate the additional stripe object
-        var stripe = {};
-        stripe.token_type = params.token_type || null;
-        stripe.stripe_publishable_key = params.stripe_publishable_key || null;
-        stripe.scope = params.scope || null;
-        stripe.livemode = params.livemode || null;
-        stripe.stripe_user_id = params.stripe_user_id || null;
-
+        var stripe = {}
+        stripe.token_type = params.token_type || null
+        stripe.stripe_publishable_key = params.stripe_publishable_key || null
+        stripe.scope = params.scope || null
+        stripe.livemode = params.livemode || null
+        stripe.stripe_user_id = params.stripe_user_id || null
 
         if (self._passReqToCallback) {
-          self._verify(req, accessToken, refreshToken, stripe, verified);
+          self._verify(req, accessToken, refreshToken, stripe, verified)
         } else {
-          self._verify(accessToken, refreshToken, stripe, verified);
+          self._verify(accessToken, refreshToken, stripe, verified)
         }
       }
-    );
+    )
   } else {
     // NOTE: The module oauth (0.9.5), which is a dependency, automatically adds
     //       a 'type=web_server' parameter to the query portion of the URL.
@@ -130,23 +127,23 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
     //       (draft 22, as of the time of this writing).  This parameter is not
     //       necessary, but its presence does not appear to cause any issues.
 
-    var params = this.authorizationParams(options);
-    params['response_type'] = 'code';
-    params['redirect_uri'] = callbackURL;
-    var scope = options.scope || this._scope;
+    var params = this.authorizationParams(options)
+    params.response_type = 'code'
+    params.redirect_uri = callbackURL
+    var scope = options.scope || this._scope
     if (scope) {
-      if (Array.isArray(scope)) { scope = scope.join(this._scopeSeparator); }
-      params.scope = scope;
+      if (Array.isArray(scope)) { scope = scope.join(this._scopeSeparator) }
+      params.scope = scope
     }
-    var state = options.state;
-    if (state) { params.state = state; }
+    var state = options.state
+    if (state) { params.state = state }
 
-    var location = this._oauth2.getAuthorizeUrl(params);
-    this.redirect(location);
+    var location = this._oauth2.getAuthorizeUrl(params)
+    this.redirect(location)
   }
-};
+}
 
 /**
  * Expose `Strategy`.
  */
-module.exports = Strategy;
+module.exports = Strategy

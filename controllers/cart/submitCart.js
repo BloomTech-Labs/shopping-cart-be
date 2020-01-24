@@ -1,7 +1,7 @@
 const Cart = require('../../models/cart')
 const Store = require('../../models/store')
 const Seller = require('../../models/seller')
-const validateCartInput = require('../../middleware/validateCartData')
+const {validateCartInput} = require('../../middleware/validateCartData')
 
 async function submitCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)
@@ -17,6 +17,7 @@ async function submitCart (req, res) {
     const seller = await Seller.findById({ _id: store.seller })
     const cart = req.body
     cart.storeId = store._id
+    cart.currency = store.currency
     const newCart = new Cart(cart)
     const result = await newCart.save()
     const cartId = result._id
