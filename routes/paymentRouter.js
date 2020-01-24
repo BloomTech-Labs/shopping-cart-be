@@ -35,14 +35,14 @@ router.post('/charge', async (req, res) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: transaction.amount,
+      amount: transaction.amount * 100,
       currency: currency
     }
-    // , {
-    //   stripeAccount: stripeId,
-    // }
+    , {
+      stripeAccount: stripeId,
+    }
     )
-    res.status(200).json({ paymentIntent: paymentIntent })
+    res.status(200).json({ paymentIntent: paymentIntent, stripeId })
   } catch (error) {
     res.status(400).json(error)
   }
