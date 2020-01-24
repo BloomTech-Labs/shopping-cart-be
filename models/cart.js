@@ -43,7 +43,7 @@ const cartSchema = new mongoose.Schema({
     type: String
   },
   deliveryOrCollection: {
-    type: 'String'
+    type: String
   },
   lock: {
     type: Boolean,
@@ -54,6 +54,9 @@ const cartSchema = new mongoose.Schema({
     default: false
   },
   paymentPreference: {
+    type: String
+  },
+  currency: {
     type: String,
     required: true
   }
