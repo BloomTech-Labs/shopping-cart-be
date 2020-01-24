@@ -19,7 +19,7 @@ function validatePaymentInput (data) {
   // StoreId checks
   if (!storeId) {
     errors.storeId = 'storeId field is required'
-  } 
+  }
 
   return {
     errors,

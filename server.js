@@ -39,7 +39,7 @@ passport.deserializeUser((user, done) => {
   done(null, user)
 })
 
-passport.use(stripeAuth);
+passport.use(stripeAuth)
 
 server.use(express.static(path.join(__dirname, 'public')))
 server.set('views', path.join(__dirname, 'views'))

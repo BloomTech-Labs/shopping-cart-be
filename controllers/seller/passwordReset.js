@@ -3,6 +3,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = require('twilio')(accountSid, authToken)
 const Seller = require('../../models/seller')
+const baseUrl = require('../../helpers/baseUrl')
 
 const { validateRecoverPhone } = require('../../middleware/validateSellerData')
 const {
@@ -36,7 +37,7 @@ async function recover (req, res) {
       seller.generatePasswordReset()
       try {
         const savedSeller = await seller.save()
-        const link = `https://shopping-cart-eu3.netlify.com/setnewpassword?token=${savedSeller.resetPasswordToken}`
+        const link = `${baseUrl}/setnewpassword?token=${savedSeller.resetPasswordToken}`
 
         const message = await client.messages.create({
           body: `Hi \n

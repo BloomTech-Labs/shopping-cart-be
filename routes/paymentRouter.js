@@ -13,23 +13,23 @@ router.post('/charge', async (req, res) => {
   }
   try {
     const transaction = req.body
-    const store = await Store.findById({_id: transaction.storeId})
-    let stripeId = store.stripeId
+    const store = await Store.findById({ _id: transaction.storeId })
+    const stripeId = store.stripeId
     let currency
 
-    switch(store.currency) {
+    switch (store.currency) {
       case 'DOL':
         currency = 'usd'
-        break;
+        break
       case 'POU':
         currency = 'gbp'
-        break;
+        break
       case 'EUR':
         currency = 'eur'
-        break;
+        break
       case 'YEN':
         currency = 'jpy'
-        break;
+        break
       default:
         currency = 'usd'
     }

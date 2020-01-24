@@ -2,6 +2,7 @@ const Cart = require('../../models/cart')
 const Store = require('../../models/store')
 const Seller = require('../../models/seller')
 const validateCartInput = require('../../middleware/validateCartData')
+const baseUrl = require('../../helpers/baseUrl')
 
 async function submitCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)
@@ -21,7 +22,7 @@ async function submitCart (req, res) {
     const result = await newCart.save()
     const cartId = result._id
     // link to FE route of buyers saved cart
-    const link = `https://shopping-cart-eu3.netlify.com/cart/${cartId}`
+    const link = `${baseUrl}/cart/${cartId}`
 
     const message = `Hello ${store.ownerName},
     I am making a purchase from your store: ${store.storeName} on the pure retail app.
