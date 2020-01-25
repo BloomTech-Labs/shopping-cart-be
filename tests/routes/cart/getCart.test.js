@@ -60,7 +60,6 @@ beforeAll(async () => {
         total: 400,
         email: 'test@gmail.com'
       })
-    console.log(cart.body)
 
     cartId = cart.body._id
   } catch (error) {
