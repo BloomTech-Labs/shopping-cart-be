@@ -11,7 +11,7 @@ let storeId
 let product1Id
 let product2Id
 
-async function clearDb () {
+async function clearDb() {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})
@@ -47,42 +47,20 @@ beforeAll(async () => {
       .set('Authorization', token)
     storeId = store.body.saved._id
 
-    //   create products
-    const product1 = await request(server)
-      .post('/api/store/products')
-      .send({
-        name: 'Shoes1',
-        description: 'A very nice',
-        price: 500,
-        stock: 10,
-        images: ['mee.jpg', 'us.jpg']
-      })
-      .set('Authorization', token)
-    product1Id = product1.body._id
-
-    const product2 = await request(server)
-      .post('/api/store/products')
-      .send({
-        name: 'Shoes2',
-        description: 'A very nice2',
-        price: 5000,
-        stock: 100,
-        images: ['mee2.jpg', 'us2.jpg']
-      })
-      .set('Authorization', token)
-    product2Id = product2.body._id
-
     // add item to cart
     const cart = await request(server)
       .post(`/api/store/${storeId}/cart`)
       .send({
+        storeId: storeId,
         contents: [
           { product: product1Id, quantity: 3 },
           { product: product2Id, quantity: 30 }
         ],
         agreedPrice: 40,
-        total: 400
+        total: 400,
+        email: 'test@gmail.com'
       })
+    console.log(cart.body)
 
     cartId = cart.body._id
   } catch (error) {
@@ -103,6 +81,7 @@ describe('get cart contents', () => {
 
   xit('should return found store with details', async () => {
     const response = await request(server).get(`/api/store/cart/${cartId}`)
+    console.log(response.body)
     expect(response.status).toBe(200)
     expect(response.body.contents).toBeDefined()
     expect(response.body.checkedOut).toBeDefined()
