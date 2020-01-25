@@ -2,6 +2,7 @@ const router = require('express').Router()
 const passport = require('passport')
 const Store = require('../models/store')
 const validateStripeAuthInput = require('../middleware/validateStripeAuthData')
+const baseUrl = require('../helpers/baseUrl')
 
 router.post('/', async (req, res) => {
   const { errors, isValid } = validateStripeAuthInput(req.body)
@@ -24,12 +25,10 @@ router.post('/', async (req, res) => {
 router.get('/', passport.authenticate('stripe', { scope: 'read_write' }))
 
 router.get('/callback',
-  // passport.authenticate('stripe', { failureRedirect: 'http://localhost:3000/account'}),
-  passport.authenticate('stripe', { failureRedirect: 'https://shopping-cart-eu3.netlify.com/account' }),
+  passport.authenticate('stripe', { failureRedirect: `${baseUrl}/account` }),
   async function (req, res) {
     // Successful authentication, redirect home.
-    // res.redirect('http://localhost:3000/profile');
-    res.redirect('https://shopping-cart-eu3.netlify.com/account')
+    res.redirect(`${baseUrl}/account`)
   })
 
 module.exports = router
