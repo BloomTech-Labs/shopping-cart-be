@@ -3,7 +3,6 @@ const server = require('../../../server')
 const Product = require('../../../models/product')
 const Seller = require('../../../models/seller')
 const Store = require('../../../models/store')
-const Cart = require('../../../models/cart')
 
 let token
 let storeId
@@ -66,6 +65,7 @@ beforeAll(async () => {
         images: ['mee2.jpg', 'us2.jpg']
       })
       .set('Authorization', token)
+
     product2Id = product2.body._id
   } catch (error) {
     console.error(error.name, error.message)
