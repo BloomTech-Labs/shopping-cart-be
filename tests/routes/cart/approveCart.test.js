@@ -3,9 +3,11 @@ const server = require('../../../server')
 const Product = require('../../../models/product')
 const Seller = require('../../../models/seller')
 const Store = require('../../../models/store')
+const Cart = require('../../../models/cart')
 
 let token
 let storeId
+let cartId
 let product1Id
 let product2Id
 
@@ -13,11 +15,12 @@ async function clearDb() {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})
+  await Cart.deleteMany({})
 }
 
-beforeEach(() => {
-  jest.setTimeout(10000)
-})
+// beforeEach(() => {
+//   jest.setTimeout(10000)
+// })
 
 beforeAll(async () => {
   jest.setTimeout(10000)
@@ -67,55 +70,51 @@ beforeAll(async () => {
       .set('Authorization', token)
 
     product2Id = product2.body._id
+
+    // create a cart
+    const cart = await request(server)
+      .post(`/api/store/${storeId}/cart`)
+      .send({ total: 340, agreedPrice: 340, email: 'johndoe@gmail.com' })
+    console.log(cart.body)
   } catch (error) {
     console.error(error.name, error.message)
   }
 })
 
-describe('add item to cart', () => {
-  it('should work', async () => {
-    expect(1).toBe(1)
-  })
-
-  it('should return agreed price and total fields required', async () => {
+describe('approve cart route', () => {
+  it('should return total and agreed price is required', async () => {
     const response = await request(server)
-      .post(`/api/store/${storeId}/cart`)
+      .put(`/api/store/cart/${cartId}/approve`)
       .send({})
+      .set('Authorization', token)
     expect(response.status).toBe(400)
-    expect(response.body.agreedPrice).toBeDefined()
     expect(response.body.total).toBeDefined()
+    expect(response.body.agreedPrice).toBeDefined()
   })
 
-  it('should return email required', async () => {
+  it('should return cart not found', async () => {
     const response = await request(server)
-      .post(`/api/store/${storeId}/cart`)
+      .put(`/api/store/cart/${storeId}/approve`)
       .send({ total: 34, agreedPrice: 34 })
-    expect(response.status).toBe(400)
-    expect(response.body.email).toBeDefined()
-  })
-
-  it('should return store not found', async () => {
-    const response = await request(server)
-      .post(`/api/store/${product1Id}/cart`)
-      .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
+      .set('Authorization', token)
     expect(response.status).toBe(404)
     expect(response.body.message).toBeDefined()
   })
 
-  it('should return a saved cart', async () => {
+  it('should return a database related error', async () => {
     const response = await request(server)
-      .post(`/api/store/${storeId}/cart`)
-      .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
-    console.log(response.body)
-    expect(response.status).toBe(200)
-    expect(response.body.result).toBeDefined()
-  })
-
-  it('should return a server related error', async () => {
-    const response = await request(server)
-      .post('/api/store/wrongid/cart')
-      .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
+      .put(`/api/store/cart/wrongid/approve`)
+      .send({ total: 34, agreedPrice: 34 })
+      .set('Authorization', token)
     expect(response.status).toBe(500)
     expect(response.body).toBeDefined()
+  })
+
+  it('should return final lock on cart', async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/${cartId}/approve`)
+      .send({ total: 34, agreedPrice: 34 })
+      .set('Authorization', token)
+    console.log()
   })
 })
