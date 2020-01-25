@@ -9,7 +9,6 @@ let token
 let storeId
 let cartId
 let product1Id
-let product2Id
 
 async function clearDb() {
   await Seller.deleteMany({})
@@ -56,20 +55,8 @@ beforeAll(async () => {
         images: ['mee.jpg', 'us.jpg']
       })
       .set('Authorization', token)
+
     product1Id = product1.body._id
-
-    const product2 = await request(server)
-      .post('/api/store/products')
-      .send({
-        name: 'Shoes2',
-        description: 'A very nice2',
-        price: 5000,
-        stock: 100,
-        images: ['mee2.jpg', 'us2.jpg']
-      })
-      .set('Authorization', token)
-
-    product2Id = product2.body._id
 
     // create a cart
     const cart = await request(server)
@@ -110,11 +97,11 @@ describe('approve cart route', () => {
     expect(response.body).toBeDefined()
   })
 
-  it('should return final lock on cart', async () => {
+  xit('should return final lock on cart', async () => {
     const response = await request(server)
       .put(`/api/store/cart/${cartId}/approve`)
       .send({ total: 34, agreedPrice: 34 })
       .set('Authorization', token)
-    console.log()
+    expect(response.status).toBe(200)
   })
 })
