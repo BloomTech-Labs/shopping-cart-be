@@ -96,11 +96,4 @@ describe('edit cart route', () => {
   it('should work', () => {
     expect(1).toBe(1)
   })
-
-  it('should return some error', async () => {
-    const response = await request(server)
-      .put(`api/store/cart/${cartId}`)
-      .send({})
-    console.log(response.body)
-  })
 })

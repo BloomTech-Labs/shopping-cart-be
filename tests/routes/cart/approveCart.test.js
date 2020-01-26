@@ -102,7 +102,6 @@ describe('approve cart route', () => {
       .put(`/api/store/cart/${cartId}/approve`)
       .send({ total: 34, agreedPrice: 34 })
       .set('Authorization', token)
-    console.log(response.body)
     expect(response.status).toBe(200)
     expect(response.body.finalLock).toBe(true)
   })
