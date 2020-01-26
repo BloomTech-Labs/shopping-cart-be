@@ -8,8 +8,6 @@ const Cart = require('../../../models/cart')
 let token
 let cartId
 let storeId
-let product1Id
-let product2Id
 
 async function clearDb() {
   await Seller.deleteMany({})
