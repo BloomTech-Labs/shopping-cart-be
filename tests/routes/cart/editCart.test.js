@@ -96,4 +96,38 @@ describe('edit cart route', () => {
   it('should work', () => {
     expect(1).toBe(1)
   })
+
+  it('should return some total and agreed price required', async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/${cartId}`)
+      .send({})
+    expect(response.status).toBe(400)
+    expect(response.body.total).toBeDefined()
+    expect(response.body.agreedPrice).toBeDefined()
+  })
+
+  it('should return cart not found', async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/${product2Id}`)
+      .send({ total: 34, agreedPrice: 34 })
+    expect(response.status).toBe(404)
+    expect(response.body.message).toBeDefined()
+  })
+
+  it(`should return the updated cart`, async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/${cartId}`)
+      .send({ total: 34, agreedPrice: 34, email: 'test2@gmail.com' })
+    expect(response.status).toBe(200)
+    expect(response.body.email).toEqual(
+      expect.not.stringContaining('test@gmail.com')
+    )
+  })
+
+  it('should return a server side error', async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/wrongid`)
+      .send({ total: 34, agreedPrice: 34, email: 'test2@gmail.com' })
+    expect(response.status).toBe(500)
+  })
 })

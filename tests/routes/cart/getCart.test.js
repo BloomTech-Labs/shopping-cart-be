@@ -15,7 +15,9 @@ async function clearDb() {
   await Store.deleteMany({})
   await Cart.deleteMany({})
 }
-
+it('should return approved cart', async () => {
+  const response = await request(server)
+})
 beforeEach(() => {
   jest.setTimeout(10000)
 })

@@ -6,9 +6,8 @@ const Store = require('../../../models/store')
 const Cart = require('../../../models/cart')
 
 let token
-let storeId
 let cartId
-let product1Id
+let storeId
 
 async function clearDb() {
   await Seller.deleteMany({})
@@ -16,18 +15,23 @@ async function clearDb() {
   await Store.deleteMany({})
   await Cart.deleteMany({})
 }
-
+it('should return approved cart', async () => {
+  const response = await request(server)
+})
 beforeEach(() => {
-  jest.setTimeout(10000)
+  jest.setTimeout(30000)
 })
 
 beforeAll(async () => {
-  jest.setTimeout(10000)
+  jest.setTimeout(30000)
   try {
     await clearDb()
     const response = await request(server)
       .post('/api/auth/register')
-      .send({ phone: '+233276202069', password: '12345678' })
+      .send({
+        phone: '+233276202069',
+        password: 'password12345'
+      })
 
     token = response.body.token
 
@@ -41,7 +45,6 @@ beforeAll(async () => {
         address: 'no 337 rous road'
       })
       .set('Authorization', token)
-
     storeId = store.body.saved._id
 
     //   create products
@@ -55,53 +58,75 @@ beforeAll(async () => {
         images: ['mee.jpg', 'us.jpg']
       })
       .set('Authorization', token)
-
     product1Id = product1.body._id
 
-    // create a cart
+    const product2 = await request(server)
+      .post('/api/store/products')
+      .send({
+        name: 'Shoes2',
+        description: 'A very nice2',
+        price: 5000,
+        stock: 100,
+        images: ['mee2.jpg', 'us2.jpg']
+      })
+      .set('Authorization', token)
+
+    product2Id = product2.body._id
+
+    // add item to cart
     const cart = await request(server)
       .post(`/api/store/${storeId}/cart`)
-      .send({ total: 340, agreedPrice: 340, email: 'test@yahoo.com' })
+      .send({
+        agreedPrice: 40,
+        total: 400,
+        email: 'test@gmail.com',
+        contents: [
+          { product: product1Id, quantity: 3 },
+          { product: product2Id, quantity: 3 }
+        ]
+      })
+
     cartId = cart.body.result._id
   } catch (error) {
     console.error(error.name, error.message)
   }
 })
 
-describe('approve cart route', () => {
-  it('should return total and agreed price is required', async () => {
+describe('submit cart route', () => {
+  it('should work', () => {
+    expect(1).toBe(1)
+  })
+
+  it('should return agreed price and total required', async () => {
     const response = await request(server)
-      .put(`/api/store/cart/${cartId}/approve`)
+      .post(`/api/store/${storeId}/cart/submit`)
       .send({})
-      .set('Authorization', token)
     expect(response.status).toBe(400)
     expect(response.body.total).toBeDefined()
     expect(response.body.agreedPrice).toBeDefined()
   })
 
-  it('should return cart not found', async () => {
+  it('should return store does not exist', async () => {
     const response = await request(server)
-      .put(`/api/store/cart/${storeId}/approve`)
+      .post(`/api/store/${cartId}/cart/submit`)
       .send({ total: 34, agreedPrice: 34 })
-      .set('Authorization', token)
     expect(response.status).toBe(404)
     expect(response.body.message).toBeDefined()
   })
 
-  it('should return a database related error', async () => {
+  it('should return a server related error', async () => {
     const response = await request(server)
-      .put(`/api/store/cart/wrongid/approve`)
+      .post(`/api/store/wrongid/cart/submit`)
       .send({ total: 34, agreedPrice: 34 })
-      .set('Authorization', token)
-    expect(response.status).toBe(500)
+    expect(response.statidus).toBe(500)
   })
 
-  it('should return final lock on cart', async () => {
+  it('should return successful submission', async () => {
     const response = await request(server)
-      .put(`/api/store/cart/${cartId}/approve`)
+      .post(`/api/store/${storeId}/cart/submit`)
       .send({ total: 34, agreedPrice: 34 })
-      .set('Authorization', token)
     expect(response.status).toBe(200)
-    expect(response.body.finalLock).toBe(true)
+    expect(response.body.status).toBeDefined()
+    expect(response.body.sellerPhone).toBeDefined()
   })
 })
