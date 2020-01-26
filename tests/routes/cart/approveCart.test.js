@@ -17,9 +17,9 @@ async function clearDb() {
   await Cart.deleteMany({})
 }
 
-// beforeEach(() => {
-//   jest.setTimeout(10000)
-// })
+beforeEach(() => {
+  jest.setTimeout(10000)
+})
 
 beforeAll(async () => {
   jest.setTimeout(10000)
@@ -61,8 +61,8 @@ beforeAll(async () => {
     // create a cart
     const cart = await request(server)
       .post(`/api/store/${storeId}/cart`)
-      .send({ total: 340, agreedPrice: 340, email: 'johndoe@gmail.com' })
-    console.log(cart.body)
+      .send({ total: 340, agreedPrice: 340, email: 'test@yahoo.com' })
+    cartId = cart.body.result._id
   } catch (error) {
     console.error(error.name, error.message)
   }
@@ -97,11 +97,13 @@ describe('approve cart route', () => {
     expect(response.body).toBeDefined()
   })
 
-  xit('should return final lock on cart', async () => {
+  it('should return final lock on cart', async () => {
     const response = await request(server)
       .put(`/api/store/cart/${cartId}/approve`)
       .send({ total: 34, agreedPrice: 34 })
       .set('Authorization', token)
+    console.log(response.body)
     expect(response.status).toBe(200)
+    expect(response.body.finalLock).toBe(true)
   })
 })

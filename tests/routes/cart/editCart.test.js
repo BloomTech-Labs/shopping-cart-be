@@ -3,8 +3,10 @@ const server = require('../../../server')
 const Product = require('../../../models/product')
 const Seller = require('../../../models/seller')
 const Store = require('../../../models/store')
+const Cart = require('../../../models/cart')
 
 let token
+let cartId
 let storeId
 let product1Id
 let product2Id
@@ -13,6 +15,7 @@ async function clearDb() {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})
+  await Cart.deleteMany({})
 }
 
 beforeEach(() => {
@@ -25,7 +28,10 @@ beforeAll(async () => {
     await clearDb()
     const response = await request(server)
       .post('/api/auth/register')
-      .send({ phone: '+233276202069', password: '12345678' })
+      .send({
+        phone: '+233276202069',
+        password: 'password12345'
+      })
 
     token = response.body.token
 
@@ -39,7 +45,6 @@ beforeAll(async () => {
         address: 'no 337 rous road'
       })
       .set('Authorization', token)
-
     storeId = store.body.saved._id
 
     //   create products
@@ -67,54 +72,35 @@ beforeAll(async () => {
       .set('Authorization', token)
 
     product2Id = product2.body._id
+
+    // add item to cart
+    const cart = await request(server)
+      .post(`/api/store/${storeId}/cart`)
+      .send({
+        agreedPrice: 40,
+        total: 400,
+        email: 'test@gmail.com',
+        contents: [
+          { product: product1Id, quantity: 3 },
+          { product: product2Id, quantity: 3 }
+        ]
+      })
+
+    cartId = cart.body.result._id
   } catch (error) {
     console.error(error.name, error.message)
   }
 })
 
-describe('add item to cart', () => {
-  it('should work', async () => {
+describe('edit cart route', () => {
+  it('should work', () => {
     expect(1).toBe(1)
   })
 
-  it('should return agreed price and total fields required', async () => {
+  it('should return some error', async () => {
     const response = await request(server)
-      .post(`/api/store/${storeId}/cart`)
+      .put(`api/store/cart/${cartId}`)
       .send({})
-    expect(response.status).toBe(400)
-    expect(response.body.agreedPrice).toBeDefined()
-    expect(response.body.total).toBeDefined()
-  })
-
-  it('should return email required', async () => {
-    const response = await request(server)
-      .post(`/api/store/${storeId}/cart`)
-      .send({ total: 34, agreedPrice: 34 })
-    expect(response.status).toBe(400)
-    expect(response.body.email).toBeDefined()
-  })
-
-  it('should return store not found', async () => {
-    const response = await request(server)
-      .post(`/api/store/${product1Id}/cart`)
-      .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
-    expect(response.status).toBe(404)
-    expect(response.body.message).toBeDefined()
-  })
-
-  it('should return a saved cart', async () => {
-    const response = await request(server)
-      .post(`/api/store/${storeId}/cart`)
-      .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
-    expect(response.status).toBe(200)
-    expect(response.body.result).toBeDefined()
-  })
-
-  it('should return a server related error', async () => {
-    const response = await request(server)
-      .post('/api/store/wrongid/cart')
-      .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
-    expect(response.status).toBe(500)
-    expect(response.body).toBeDefined()
+    console.log(response.body)
   })
 })
