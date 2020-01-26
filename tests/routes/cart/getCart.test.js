@@ -1,51 +1,49 @@
-const request = require('supertest')
-const server = require('../../../server')
-const Product = require('../../../models/product')
-const Seller = require('../../../models/seller')
-const Store = require('../../../models/store')
-const Cart = require('../../../models/cart')
+const request = require("supertest");
+const server = require("../../../server");
+const Product = require("../../../models/product");
+const Seller = require("../../../models/seller");
+const Store = require("../../../models/store");
+const Cart = require("../../../models/cart");
 
-let token
-let cartId
-let storeId
-let product1Id
-let product2Id
+let token;
+let cartId;
+let storeId;
 
 async function clearDb() {
-  await Seller.deleteMany({})
-  await Product.deleteMany({})
-  await Store.deleteMany({})
-  await Cart.deleteMany({})
+  await Seller.deleteMany({});
+  await Product.deleteMany({});
+  await Store.deleteMany({});
+  await Cart.deleteMany({});
 }
 
 beforeEach(() => {
-  jest.setTimeout(10000)
-})
+  jest.setTimeout(10000);
+});
 
 beforeAll(async () => {
-  jest.setTimeout(10000)
+  jest.setTimeout(10000);
   try {
-    await clearDb()
+    await clearDb();
     const response = await request(server)
-      .post('/api/auth/register')
+      .post("/api/auth/register")
       .send({
-        phone: '+233276202069',
-        password: 'password12345'
-      })
+        phone: "+233276202069",
+        password: "password12345"
+      });
 
-    token = response.body.token
+    token = response.body.token;
 
     const store = await request(server)
-      .post('/api/store')
+      .post("/api/store")
       .send({
-        storeName: 'Laptops & Phones',
-        ownerName: 'Jane Doe',
-        currency: 'dollars',
-        imageUrl: 'some image',
-        address: 'no 337 rous road'
+        storeName: "Laptops & Phones",
+        ownerName: "Jane Doe",
+        currency: "dollars",
+        imageUrl: "some image",
+        address: "no 337 rous road"
       })
-      .set('Authorization', token)
-    storeId = store.body.saved._id
+      .set("Authorization", token);
+    storeId = store.body.saved._id;
 
     // add item to cart
     const cart = await request(server)
@@ -53,28 +51,28 @@ beforeAll(async () => {
       .send({
         agreedPrice: 40,
         total: 400,
-        email: 'test@gmail.com'
-      })
+        email: "test@gmail.com"
+      });
 
-    cartId = cart.body._id
+    cartId = cart.body._id;
   } catch (error) {
-    console.error(error.name, error.message)
+    console.error(error.name, error.message);
   }
-})
+});
 
-describe('get cart contents', () => {
-  it('should return cart not found', async () => {
+describe("get cart contents", () => {
+  it("should return cart not found", async () => {
     const response = await request(server).get(
-      '/api/store/cart/5e1ee0099f037d24abba6aa9'
-    )
-    expect(response.status).toBe(404)
-    expect(response.body.message).toBeDefined()
-    expect(response.body).toEqual({ message: 'No cart found' })
-  })
+      "/api/store/cart/5e1ee0099f037d24abba6aa9"
+    );
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBeDefined();
+    expect(response.body).toEqual({ message: "No cart found" });
+  });
 
-  it('should return found cart with details', async () => {
-    const response = await request(server).get(`/api/store/cart/${cartId}`)
-    console.log(cartId, response.body)
+  it("should return found cart with details", async () => {
+    const response = await request(server).get(`/api/store/cart/${cartId}`);
+    console.log(cartId, response.body);
     // expect(response.status).toBe(200)
     // expect(response.body.contents).toBeDefined()
     // expect(response.body.checkedOut).toBeDefined()
@@ -82,11 +80,11 @@ describe('get cart contents', () => {
     // expect(response.body.total).toBeDefined()
     // expect(response.body.storeId).toBeDefined()
     // expect(response.body.checkoutDate).toBeDefined()
-  })
+  });
 
-  it('should return type error with wrong id', async () => {
-    const response = await request(server).get('/api/store/cart/wrongId/')
-    expect(response.status).toBe(500)
-    expect(response.body).toBeDefined()
-  })
-})
+  it("should return type error with wrong id", async () => {
+    const response = await request(server).get("/api/store/cart/wrongId/");
+    expect(response.status).toBe(500);
+    expect(response.body).toBeDefined();
+  });
+});
