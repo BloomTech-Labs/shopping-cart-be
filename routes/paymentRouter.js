@@ -48,4 +48,15 @@ router.post('/charge', async (req, res) => {
   }
 })
 
+
+router.post('/complete', (req, res) => {
+  try{
+    const details = req.body
+    res.status(200).json(details)
+  }
+  catch(error){
+    res.status(400).json(error)
+  }
+})
+
 module.exports = router
