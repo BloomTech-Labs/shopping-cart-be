@@ -74,6 +74,7 @@ beforeAll(async () => {
       .send({
         agreedPrice: 40,
         total: 400,
+        paidAmount: 400,
         checkedOut: true,
         email: 'test@gmail.com',
         contents: [

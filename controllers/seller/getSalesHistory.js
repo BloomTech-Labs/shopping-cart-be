@@ -15,7 +15,7 @@ async function getSalesHistory(req, res) {
           from: 'products',
           localField: 'contents.product',
           foreignField: '_id',
-          as: 'contents'
+          as: 'content'
         }
       }
     ])
@@ -30,10 +30,26 @@ async function getSalesHistory(req, res) {
         String(item.storeId) === String(storeId) && item.checkedOut === true
     )
 
-    // calculate total sales made
-    const totalSales = salesHistory.reduce((acc, item) => item.total + acc, 0)
+    let details = []
+    salesHistory.forEach((item, idx) => {
+      item.contents.forEach((x, index) => {
+        if (String(x.product) === String(item.content[index]._id)) {
+          details.push({
+            ...item.content[index],
+            quantity: x.quantity,
+            product: x.product
+          })
+        }
+      })
+    })
 
-    return res.status(200).json({ totalSales, salesHistory })
+    // calculate total sales made
+    const totalSales = salesHistory.reduce(
+      (acc, item) => item.paidAmount + acc,
+      0
+    )
+    // salesHistory.push(details)
+    return res.status(200).json({ totalSales, salesHistory, details })
   } catch (error) {
     res.status(500).json(error.message)
   }
