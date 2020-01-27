@@ -94,7 +94,7 @@ describe('add item to cart', () => {
     expect(response.body.email).toBeDefined()
   })
 
-  it('should return store not found', async () => {
+  xit('should return store not found', async () => {
     const response = await request(server)
       .post(`/api/store/${product1Id}/cart`)
       .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })
@@ -102,7 +102,7 @@ describe('add item to cart', () => {
     expect(response.body.message).toBeDefined()
   })
 
-  it('should return a saved cart', async () => {
+  xit('should return a saved cart', async () => {
     const response = await request(server)
       .post(`/api/store/${storeId}/cart`)
       .send({ total: 34, agreedPrice: 34, email: 'johndoe@gmail.com' })

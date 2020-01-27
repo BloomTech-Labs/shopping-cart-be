@@ -96,7 +96,7 @@ describe('approve cart route', () => {
     expect(response.status).toBe(500)
   })
 
-  it('should return final lock on cart', async () => {
+  xit('should return final lock on cart', async () => {
     const response = await request(server)
       .put(`/api/store/cart/${cartId}/approve`)
       .send({ total: 34, agreedPrice: 34 })

@@ -15,9 +15,7 @@ async function clearDb() {
   await Store.deleteMany({})
   await Cart.deleteMany({})
 }
-it('should return approved cart', async () => {
-  const response = await request(server)
-})
+
 beforeEach(() => {
   jest.setTimeout(30000)
 })
@@ -93,10 +91,6 @@ beforeAll(async () => {
 })
 
 describe('submit cart route', () => {
-  it('should work', () => {
-    expect(1).toBe(1)
-  })
-
   it('should return agreed price and total required', async () => {
     const response = await request(server)
       .post(`/api/store/${storeId}/cart/submit`)
@@ -106,7 +100,7 @@ describe('submit cart route', () => {
     expect(response.body.agreedPrice).toBeDefined()
   })
 
-  it('should return store does not exist', async () => {
+  xit('should return store does not exist', async () => {
     const response = await request(server)
       .post(`/api/store/${cartId}/cart/submit`)
       .send({ total: 34, agreedPrice: 34 })
@@ -114,7 +108,7 @@ describe('submit cart route', () => {
     expect(response.body.message).toBeDefined()
   })
 
-  it('should return a server related error', async () => {
+  xit('should return a server related error', async () => {
     const response = await request(server)
       .post(`/api/store/wrongid/cart/submit`)
       .send({ total: 34, agreedPrice: 34 })

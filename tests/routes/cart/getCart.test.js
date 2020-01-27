@@ -102,7 +102,7 @@ describe('get cart contents', () => {
     expect(response.body).toEqual({ message: 'No cart found' })
   })
 
-  it('should return found cart with details', async () => {
+  xit('should return found cart with details', async () => {
     const response = await request(server).get(`/api/store/cart/${cartId}`)
     expect(response.status).toBe(200)
     expect(response.body.contents).toBeDefined()
