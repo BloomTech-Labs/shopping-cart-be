@@ -9,7 +9,7 @@ let token
 let cartId
 let storeId
 
-async function clearDb() {
+async function clearDb () {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})

@@ -11,7 +11,7 @@ let storeId
 let product1Id
 let product2Id
 
-async function clearDb() {
+async function clearDb () {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})
@@ -114,7 +114,7 @@ describe('edit cart route', () => {
     expect(response.body.message).toBeDefined()
   })
 
-  xit(`should return the updated cart`, async () => {
+  xit('should return the updated cart', async () => {
     const response = await request(server)
       .put(`/api/store/cart/${cartId}`)
       .send({ total: 34, agreedPrice: 34, email: 'test2@gmail.com' })
@@ -126,7 +126,7 @@ describe('edit cart route', () => {
 
   it('should return a server side error', async () => {
     const response = await request(server)
-      .put(`/api/store/cart/wrongid`)
+      .put('/api/store/cart/wrongid')
       .send({ total: 34, agreedPrice: 34, email: 'test2@gmail.com' })
     expect(response.status).toBe(500)
   })

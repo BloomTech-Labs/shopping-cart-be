@@ -9,7 +9,7 @@ let token
 let cartId
 let storeId
 
-async function clearDb() {
+async function clearDb () {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})
@@ -110,7 +110,7 @@ describe('submit cart route', () => {
 
   xit('should return a server related error', async () => {
     const response = await request(server)
-      .post(`/api/store/wrongid/cart/submit`)
+      .post('/api/store/wrongid/cart/submit')
       .send({ total: 34, agreedPrice: 34 })
     expect(response.statidus).toBe(500)
   })

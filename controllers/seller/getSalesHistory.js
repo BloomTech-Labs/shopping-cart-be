@@ -2,7 +2,7 @@ const Store = require('../../models/store')
 const Cart = require('../../models/cart')
 const Product = require('../../models/product')
 
-async function getSalesHistory(req, res) {
+async function getSalesHistory (req, res) {
   try {
     const storeId = req.params.store_id
     const store = await Store.findById({ _id: storeId })
@@ -30,7 +30,7 @@ async function getSalesHistory(req, res) {
         String(item.storeId) === String(storeId) && item.checkedOut === true
     )
 
-    let details = []
+    const details = []
     salesHistory.forEach((item, idx) => {
       item.contents.forEach((x, index) => {
         if (String(x.product) === String(item.content[index]._id)) {
