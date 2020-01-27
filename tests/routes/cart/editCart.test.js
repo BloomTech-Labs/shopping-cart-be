@@ -8,6 +8,8 @@ const Cart = require('../../../models/cart')
 let token
 let cartId
 let storeId
+let product1Id
+let product2Id
 
 async function clearDb() {
   await Seller.deleteMany({})
@@ -15,15 +17,13 @@ async function clearDb() {
   await Store.deleteMany({})
   await Cart.deleteMany({})
 }
-it('should return approved cart', async () => {
-  const response = await request(server)
-})
+
 beforeEach(() => {
-  jest.setTimeout(10000)
+  jest.setTimeout(30000)
 })
 
 beforeAll(async () => {
-  jest.setTimeout(10000)
+  jest.setTimeout(30000)
   try {
     await clearDb()
     const response = await request(server)
@@ -92,31 +92,42 @@ beforeAll(async () => {
   }
 })
 
-describe('get cart contents', () => {
+describe('edit cart route', () => {
+  it('should work', () => {
+    expect(1).toBe(1)
+  })
+
+  it('should return some total and agreed price required', async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/${cartId}`)
+      .send({})
+    expect(response.status).toBe(400)
+    expect(response.body.total).toBeDefined()
+    expect(response.body.agreedPrice).toBeDefined()
+  })
+
   it('should return cart not found', async () => {
-    const response = await request(server).get(
-      '/api/store/cart/5e1ee0099f037d24abba6aa9'
-    )
+    const response = await request(server)
+      .put(`/api/store/cart/${product2Id}`)
+      .send({ total: 34, agreedPrice: 34 })
     expect(response.status).toBe(404)
     expect(response.body.message).toBeDefined()
-    expect(response.body).toEqual({ message: 'No cart found' })
   })
 
-  xit('should return found cart with details', async () => {
-    const response = await request(server).get(`/api/store/cart/${cartId}`)
+  xit(`should return the updated cart`, async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/${cartId}`)
+      .send({ total: 34, agreedPrice: 34, email: 'test2@gmail.com' })
     expect(response.status).toBe(200)
-    expect(response.body.contents).toBeDefined()
-    expect(response.body.checkedOut).toBeDefined()
-    expect(response.body.agreedPrice).toBeDefined()
-    expect(response.body.total).toBeDefined()
-    expect(response.body.storeId).toBeDefined()
-    expect(response.body.lock).toBeDefined()
-    expect(response.body.finalLock).toBeDefined()
+    expect(response.body.email).toEqual(
+      expect.not.stringContaining('test@gmail.com')
+    )
   })
 
-  it('should return type error with wrong id', async () => {
-    const response = await request(server).get('/api/store/cart/wrongId/')
+  it('should return a server side error', async () => {
+    const response = await request(server)
+      .put(`/api/store/cart/wrongid`)
+      .send({ total: 34, agreedPrice: 34, email: 'test2@gmail.com' })
     expect(response.status).toBe(500)
-    expect(response.body).toBeDefined()
   })
 })
