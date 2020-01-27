@@ -51,7 +51,7 @@ router.post('/charge', async (req, res) => {
 })
 
 
-router.post('/complete', async (req, res) => {
+router.put('/complete', async (req, res) => {
   const { errors, isValid } = validatePaymentCompleteInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
@@ -63,7 +63,7 @@ router.post('/complete', async (req, res) => {
       return res.status(404).json({ message: 'This cart does not exist' })
     } else {
       let payload = {
-        paidAmount: amount / 1000,
+        paidAmount: amount / 100,
         checkedOut: true
       }
       const updatedCart = await Cart.findOneAndUpdate(
