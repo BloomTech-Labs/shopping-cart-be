@@ -11,7 +11,7 @@ let storeId
 let product1Id
 let product2Id
 
-async function clearDb () {
+async function clearDb() {
   await Seller.deleteMany({})
   await Store.deleteMany({})
   await Cart.deleteMany({})
@@ -103,7 +103,7 @@ describe('get sales history route', () => {
       .set('Authorization', token)
     expect(response.status).toBe(200)
     expect(response.body.totalSales).toBe(400)
-    expect(response.body.salesHistory).toBeDefined()
+    expect(response.body.transactionDetails).toBeDefined()
   })
 
   it('should return server related error', async () => {

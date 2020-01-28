@@ -34,11 +34,9 @@ async function getSalesHistory(req, res) {
     salesHistory.forEach((item, idx) => {
       item.contents.forEach((x, index) => {
         if (String(x.product) === String(item.content[index]._id)) {
-          console.log(item)
           details.push({
             ...item.content[index],
             quantity: x.quantity,
-            // product: x.product,
             checkoutDate: item.checkoutDate,
             paidAmount: item.paidAmount,
             paymentPreference: item.paymentPreference
