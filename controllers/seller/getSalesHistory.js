@@ -2,7 +2,7 @@ const Store = require('../../models/store')
 const Cart = require('../../models/cart')
 const Product = require('../../models/product')
 
-async function getSalesHistory (req, res) {
+async function getSalesHistory(req, res) {
   try {
     const storeId = req.params.store_id
     const store = await Store.findById({ _id: storeId })
@@ -34,10 +34,14 @@ async function getSalesHistory (req, res) {
     salesHistory.forEach((item, idx) => {
       item.contents.forEach((x, index) => {
         if (String(x.product) === String(item.content[index]._id)) {
+          console.log(item)
           details.push({
             ...item.content[index],
             quantity: x.quantity,
-            product: x.product
+            // product: x.product,
+            checkoutDate: item.checkoutDate,
+            paidAmount: item.paidAmount,
+            paymentPreference: item.paymentPreference
           })
         }
       })
@@ -49,7 +53,7 @@ async function getSalesHistory (req, res) {
       0
     )
     // salesHistory.push(details)
-    return res.status(200).json({ totalSales, salesHistory, details })
+    return res.status(200).json({ totalSales, transactionDetails: details })
   } catch (error) {
     res.status(500).json(error.message)
   }
