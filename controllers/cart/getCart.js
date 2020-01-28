@@ -1,6 +1,6 @@
 const Cart = require('../../models/cart')
 
-async function getCart(req, res) {
+async function getCart (req, res) {
   try {
     const cartId = req.params.cart_id
     const cart = await Cart.findById({ _id: cartId })

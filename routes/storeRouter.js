@@ -30,10 +30,15 @@ router.get('/:store_id', storeController.getStore)
 // @route PUT /api/store/:store_id/account
 // @desc Get store by store_id from URL
 // @access Public
-router.put(
-  '/account',
+router.put('/account', authenticateMiddleware, storeController.updateAccount)
+
+// @route GET /api/store/:store_id/sales
+// @desc Get sellers sales history
+// @access Private
+router.get(
+  '/:store_id/sales',
   authenticateMiddleware,
-  storeController.updateAccount
+  storeController.getSalesHistory
 )
 
 module.exports = router

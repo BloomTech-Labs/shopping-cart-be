@@ -9,7 +9,7 @@ let storeId
 let product1Id
 let product2Id
 
-async function clearDb() {
+async function clearDb () {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})

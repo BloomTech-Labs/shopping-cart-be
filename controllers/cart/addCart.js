@@ -9,7 +9,7 @@ const {
 const Mailgen = require('mailgen')
 const baseUrl = require('../../helpers/baseUrl')
 
-async function addCart(req, res) {
+async function addCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)
   const { errorEmail, isValidEmail } = validateEmail(req.body)
   if (!isValid) {

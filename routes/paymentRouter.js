@@ -41,7 +41,7 @@ router.post('/charge', async (req, res) => {
       currency: currency
     }
     , {
-      stripeAccount: stripeId,
+      stripeAccount: stripeId
     }
     )
     res.status(200).json({ paymentIntent: paymentIntent, stripeId })

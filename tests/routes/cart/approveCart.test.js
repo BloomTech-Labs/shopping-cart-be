@@ -10,7 +10,7 @@ let storeId
 let cartId
 let product1Id
 
-async function clearDb() {
+async function clearDb () {
   await Seller.deleteMany({})
   await Product.deleteMany({})
   await Store.deleteMany({})
@@ -90,7 +90,7 @@ describe('approve cart route', () => {
 
   it('should return a database related error', async () => {
     const response = await request(server)
-      .put(`/api/store/cart/wrongid/approve`)
+      .put('/api/store/cart/wrongid/approve')
       .send({ total: 34, agreedPrice: 34 })
       .set('Authorization', token)
     expect(response.status).toBe(500)

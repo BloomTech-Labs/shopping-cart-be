@@ -8,17 +8,14 @@ const Cart = require('../../../models/cart')
 let token
 let cartId
 let storeId
+let product1Id
+let product2Id
 
-async function clearDb () {
+async function clearDb() {
   await Seller.deleteMany({})
-  await Product.deleteMany({})
   await Store.deleteMany({})
   await Cart.deleteMany({})
 }
-
-beforeEach(() => {
-  jest.setTimeout(30000)
-})
 
 beforeAll(async () => {
   jest.setTimeout(30000)
@@ -77,50 +74,43 @@ beforeAll(async () => {
       .send({
         agreedPrice: 40,
         total: 400,
+        paidAmount: 400,
+        checkedOut: true,
         email: 'test@gmail.com',
         contents: [
           { product: product1Id, quantity: 3 },
           { product: product2Id, quantity: 3 }
         ]
       })
-
     cartId = cart.body.result._id
   } catch (error) {
     console.error(error.name, error.message)
   }
 })
 
-describe('submit cart route', () => {
-  it('should return agreed price and total required', async () => {
+describe('get sales history route', () => {
+  it('should return store not found', async () => {
     const response = await request(server)
-      .post(`/api/store/${storeId}/cart/submit`)
-      .send({})
-    expect(response.status).toBe(400)
-    expect(response.body.total).toBeDefined()
-    expect(response.body.agreedPrice).toBeDefined()
-  })
-
-  xit('should return store does not exist', async () => {
-    const response = await request(server)
-      .post(`/api/store/${cartId}/cart/submit`)
-      .send({ total: 34, agreedPrice: 34 })
+      .get(`/api/store/${product1Id}/sales`)
+      .set('Authorization', token)
     expect(response.status).toBe(404)
     expect(response.body.message).toBeDefined()
   })
 
-  xit('should return a server related error', async () => {
+  it('should return the sales history', async () => {
     const response = await request(server)
-      .post('/api/store/wrongid/cart/submit')
-      .send({ total: 34, agreedPrice: 34 })
-    expect(response.statidus).toBe(500)
+      .get(`/api/store/${storeId}/sales`)
+      .set('Authorization', token)
+    expect(response.status).toBe(200)
+    expect(response.body.totalSales).toBe(400)
+    expect(response.body.transactionDetails).toBeDefined()
   })
 
-  it('should return successful submission', async () => {
+  it('should return server related error', async () => {
     const response = await request(server)
-      .post(`/api/store/${storeId}/cart/submit`)
-      .send({ total: 34, agreedPrice: 34 })
-    expect(response.status).toBe(200)
-    expect(response.body.status).toBeDefined()
-    expect(response.body.sellerPhone).toBeDefined()
+      .get('/api/store/wrongid/sales')
+      .set('Authorization', token)
+    expect(response.status).toBe(500)
+    expect(response.body).toBeDefined()
   })
 })
