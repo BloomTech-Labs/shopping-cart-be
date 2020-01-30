@@ -45,13 +45,26 @@ async function getSalesHistory(req, res) {
       })
     })
 
+    // calculate sales for the month
+    const today = new Date()
+    // console.log(salesHistory)
+    const monthSales = salesHistory.reduce((acc, item) => {
+      const date = new Date(item.checkoutDate)
+      if (today.getMonth() === date.getMonth()) {
+        return acc + item.paidAmount
+      }
+    }, 0)
+    console.log(monthSales)
+
     // calculate total sales made
     const totalSales = salesHistory.reduce(
       (acc, item) => item.paidAmount + acc,
       0
     )
     // salesHistory.push(details)
-    return res.status(200).json({ totalSales, transactionDetails: details })
+    return res
+      .status(200)
+      .json({ totalSales, transactionDetails: details, monthSales })
   } catch (error) {
     res.status(500).json(error.message)
   }
