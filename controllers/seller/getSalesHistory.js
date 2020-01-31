@@ -54,7 +54,6 @@ async function getSalesHistory(req, res) {
         return acc + item.paidAmount
       }
     }, 0)
-    console.log(monthSales)
 
     // calculate total sales made
     const totalSales = salesHistory.reduce(
