@@ -47,7 +47,6 @@ async function getSalesHistory(req, res) {
 
     // calculate sales for the month
     const today = new Date()
-    // console.log(salesHistory)
     const monthSales = salesHistory.reduce((acc, item) => {
       const date = new Date(item.checkoutDate)
       if (today.getMonth() === date.getMonth()) {

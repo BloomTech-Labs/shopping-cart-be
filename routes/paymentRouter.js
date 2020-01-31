@@ -2,7 +2,9 @@
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const router = require('express').Router()
 const validatePaymentInput = require('../middleware/validatePaymentData')
+const validatePaymentCompleteInput = require('../middleware/validatePaymentComleteData')
 const Store = require('../models/store')
+const Cart = require('../models/cart')
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
@@ -44,6 +46,35 @@ router.post('/charge', async (req, res) => {
     )
     res.status(200).json({ paymentIntent: paymentIntent, stripeId })
   } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
+
+router.put('/complete', async (req, res) => {
+  const { errors, isValid } = validatePaymentCompleteInput(req.body)
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  try{
+    const {cartId, amount} = req.body
+    const cart = await Cart.findById({ _id: cartId })
+    if (!cart) {
+      return res.status(404).json({ message: 'This cart does not exist' })
+    } else {
+      let payload = {
+        paidAmount: amount / 100,
+        checkedOut: true
+      }
+      const updatedCart = await Cart.findOneAndUpdate(
+        { _id: cartId },
+        { $set: payload },
+        { new: true }
+      )
+      return res.status(200).json(updatedCart)
+    }
+  }
+  catch(error){
     res.status(400).json(error)
   }
 })
