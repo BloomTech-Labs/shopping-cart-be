@@ -1,14 +1,15 @@
 const Store = require('../../models/store')
 const Cart = require('../../models/cart')
-const Product = require('../../models/product')
 
 async function getSalesHistory(req, res) {
   try {
-    const storeId = req.params.store_id
-    const store = await Store.findById({ _id: storeId })
-    if (!store) {
+    const seller = req.decodedToken.sub
+    const { _id: storeId } = await Store.findOne({ seller })
+
+    if (!storeId) {
       return res.status(404).json({ message: 'No store found' })
     }
+
     const populatedCart = await Cart.aggregate([
       {
         $lookup: {
@@ -60,13 +61,11 @@ async function getSalesHistory(req, res) {
       0
     )
     // salesHistory.push(details)
-    return res
-      .status(200)
-      .json({
-        totalSales,
-        transactionDetails: details,
-        monthSales: monthSales ? monthSales : 0
-      })
+    return res.status(200).json({
+      totalSales,
+      transactionDetails: details,
+      monthSales: monthSales ? monthSales : 0
+    })
   } catch (error) {
     res.status(500).json(error.message)
   }

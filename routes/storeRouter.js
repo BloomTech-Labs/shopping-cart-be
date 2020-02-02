@@ -17,6 +17,11 @@ router.put('/', authenticateMiddleware, storeController.editStore)
 // @access Private
 router.delete('/', authenticateMiddleware, storeController.deleteStore)
 
+// @route GET /api/store/sales
+// @desc Get sellers sales history
+// @access Private
+router.get('/sales', authenticateMiddleware, storeController.getSalesHistory)
+
 // @route GET api/store/
 // @desc Get store by seller_id from auth token
 // @access Private
@@ -31,14 +36,5 @@ router.get('/:store_id', storeController.getStore)
 // @desc Get store by store_id from URL
 // @access Public
 router.put('/account', authenticateMiddleware, storeController.updateAccount)
-
-// @route GET /api/store/:store_id/sales
-// @desc Get sellers sales history
-// @access Private
-router.get(
-  '/:store_id/sales',
-  authenticateMiddleware,
-  storeController.getSalesHistory
-)
 
 module.exports = router
