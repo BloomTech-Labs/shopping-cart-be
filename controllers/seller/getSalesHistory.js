@@ -4,9 +4,9 @@ const Cart = require('../../models/cart')
 async function getSalesHistory(req, res) {
   try {
     const seller = req.decodedToken.sub
-    const { _id: storeId } = await Store.findOne({ seller })
+    const store = await Store.findOne({ seller })
 
-    if (!storeId) {
+    if (!store) {
       return res.status(404).json({ message: 'No store found' })
     }
 
@@ -21,15 +21,15 @@ async function getSalesHistory(req, res) {
       }
     ])
 
-    if (populatedCart.length === 0) {
-      return res.status(404).json({ message: 'Cart is empty' })
-    }
-
     // find store related to carts
     const salesHistory = populatedCart.filter(
       item =>
-        String(item.storeId) === String(storeId) && item.checkedOut === true
+        String(item.storeId) === String(store._id) && item.checkedOut === true
     )
+
+    if (salesHistory.length === 0) {
+      return res.status(404).json({ message: 'Cart is empty' })
+    }
 
     const details = []
     salesHistory.forEach((item, idx) => {
@@ -60,7 +60,7 @@ async function getSalesHistory(req, res) {
       (acc, item) => item.paidAmount + acc,
       0
     )
-    // salesHistory.push(details)
+
     return res.status(200).json({
       totalSales,
       transactionDetails: details,
