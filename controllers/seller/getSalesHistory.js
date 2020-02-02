@@ -62,7 +62,11 @@ async function getSalesHistory(req, res) {
     // salesHistory.push(details)
     return res
       .status(200)
-      .json({ totalSales, transactionDetails: details, monthSales })
+      .json({
+        totalSales,
+        transactionDetails: details,
+        monthSales: monthSales ? monthSales : 0
+      })
   } catch (error) {
     res.status(500).json(error.message)
   }
