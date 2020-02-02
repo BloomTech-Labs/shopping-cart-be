@@ -1,7 +1,7 @@
 const Store = require('../../models/store')
 const mongoose = require('mongoose')
 
-async function getOneStore (req, res) {
+async function getOneStore(req, res) {
   try {
     const sellerId = req.decodedToken ? req.decodedToken.sub : null
     const store_id = req.params.store_id ? req.params.store_id : null
@@ -10,7 +10,9 @@ async function getOneStore (req, res) {
       return res.status(404).json({ message: 'There is no store with that id' })
     }
 
-    const store = await Store.findOne(sellerId ? { seller: sellerId } : { _id: store_id })
+    const store = await Store.findOne(
+      sellerId ? { seller: sellerId } : { _id: store_id }
+    )
 
     if (!store) {
       return res.status(404).json({ message: 'No store found' })

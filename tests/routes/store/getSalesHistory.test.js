@@ -6,7 +6,7 @@ const Store = require('../../../models/store')
 const Cart = require('../../../models/cart')
 
 let token
-let cartId
+let token2
 let storeId
 let product1Id
 let product2Id
@@ -29,6 +29,15 @@ beforeAll(async () => {
       })
 
     token = response.body.token
+
+    const response2 = await request(server)
+      .post('/api/auth/register')
+      .send({
+        phone: '2347031900153',
+        password: 'password12345'
+      })
+
+    token2 = response2.body.token
 
     const store = await request(server)
       .post('/api/store')
@@ -82,7 +91,6 @@ beforeAll(async () => {
           { product: product2Id, quantity: 3 }
         ]
       })
-    cartId = cart.body.result._id
   } catch (error) {
     console.error(error.name, error.message)
   }
@@ -91,26 +99,19 @@ beforeAll(async () => {
 describe('get sales history route', () => {
   it('should return store not found', async () => {
     const response = await request(server)
-      .get(`/api/store/${product1Id}/sales`)
-      .set('Authorization', token)
+      .get('/api/store/sales')
+      .set('Authorization', token2)
     expect(response.status).toBe(404)
     expect(response.body.message).toBeDefined()
+    expect(response.body.message).toBe('No store found')
   })
 
   it('should return the sales history', async () => {
     const response = await request(server)
-      .get(`/api/store/${storeId}/sales`)
+      .get('/api/store/sales')
       .set('Authorization', token)
     expect(response.status).toBe(200)
     expect(response.body.totalSales).toBe(400)
     expect(response.body.transactionDetails).toBeDefined()
-  })
-
-  it('should return server related error', async () => {
-    const response = await request(server)
-      .get('/api/store/wrongid/sales')
-      .set('Authorization', token)
-    expect(response.status).toBe(500)
-    expect(response.body).toBeDefined()
   })
 })

@@ -1,14 +1,15 @@
 const Store = require('../../models/store')
 const Cart = require('../../models/cart')
-const Product = require('../../models/product')
 
 async function getSalesHistory(req, res) {
   try {
-    const storeId = req.params.store_id
-    const store = await Store.findById({ _id: storeId })
+    const seller = req.decodedToken.sub
+    const store = await Store.findOne({ seller })
+
     if (!store) {
       return res.status(404).json({ message: 'No store found' })
     }
+
     const populatedCart = await Cart.aggregate([
       {
         $lookup: {
@@ -20,15 +21,15 @@ async function getSalesHistory(req, res) {
       }
     ])
 
-    if (populatedCart.length === 0) {
-      return res.status(404).json({ message: 'Cart is empty' })
-    }
-
     // find store related to carts
     const salesHistory = populatedCart.filter(
       item =>
-        String(item.storeId) === String(storeId) && item.checkedOut === true
+        String(item.storeId) === String(store._id) && item.checkedOut === true
     )
+
+    if (salesHistory.length === 0) {
+      return res.status(404).json({ message: 'Cart is empty' })
+    }
 
     const details = []
     salesHistory.forEach((item, idx) => {
@@ -59,10 +60,12 @@ async function getSalesHistory(req, res) {
       (acc, item) => item.paidAmount + acc,
       0
     )
-    // salesHistory.push(details)
-    return res
-      .status(200)
-      .json({ totalSales, transactionDetails: details, monthSales })
+
+    return res.status(200).json({
+      totalSales,
+      transactionDetails: details,
+      monthSales: monthSales ? monthSales : 0
+    })
   } catch (error) {
     res.status(500).json(error.message)
   }
