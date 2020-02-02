@@ -91,7 +91,7 @@ beforeAll(async () => {
 describe('get sales history route', () => {
   it('should return store not found', async () => {
     const response = await request(server)
-      .get(`/api/store/${product1Id}/sales`)
+      .get('/api/store/sales')
       .set('Authorization', token)
     expect(response.status).toBe(404)
     expect(response.body.message).toBeDefined()
@@ -99,18 +99,10 @@ describe('get sales history route', () => {
 
   it('should return the sales history', async () => {
     const response = await request(server)
-      .get(`/api/store/${storeId}/sales`)
+      .get('/api/store/sales')
       .set('Authorization', token)
     expect(response.status).toBe(200)
     expect(response.body.totalSales).toBe(400)
     expect(response.body.transactionDetails).toBeDefined()
-  })
-
-  it('should return server related error', async () => {
-    const response = await request(server)
-      .get('/api/store/wrongid/sales')
-      .set('Authorization', token)
-    expect(response.status).toBe(500)
-    expect(response.body).toBeDefined()
   })
 })
