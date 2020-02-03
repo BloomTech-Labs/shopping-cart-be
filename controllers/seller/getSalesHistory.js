@@ -1,7 +1,7 @@
 const Store = require('../../models/store')
 const Cart = require('../../models/cart')
 
-async function getSalesHistory(req, res) {
+async function getSalesHistory (req, res) {
   try {
     const seller = req.decodedToken.sub
     const store = await Store.findOne({ seller })
@@ -64,7 +64,7 @@ async function getSalesHistory(req, res) {
     return res.status(200).json({
       totalSales,
       transactionDetails: details,
-      monthSales: monthSales ? monthSales : 0
+      monthSales: monthSales || 0
     })
   } catch (error) {
     res.status(500).json(error.message)
