@@ -20,4 +20,6 @@ router.post('/reset/:token', sellerController.resetPassword)
 
 router.delete('/account', authenticate, sellerController.deleteAccount)
 
+router.put('/phone', authenticate, validatePhoneNumber,sellerController.updateSeller)
+
 module.exports = router
