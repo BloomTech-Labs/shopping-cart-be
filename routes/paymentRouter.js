@@ -50,19 +50,18 @@ router.post('/charge', async (req, res) => {
   }
 })
 
-
 router.put('/complete', async (req, res) => {
   const { errors, isValid } = validatePaymentCompleteInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
   }
-  try{
-    const {cartId, amount} = req.body
+  try {
+    const { cartId, amount } = req.body
     const cart = await Cart.findById({ _id: cartId })
     if (!cart) {
       return res.status(404).json({ message: 'This cart does not exist' })
     } else {
-      let payload = {
+      const payload = {
         paidAmount: amount / 100,
         checkedOut: true
       }
@@ -73,8 +72,7 @@ router.put('/complete', async (req, res) => {
       )
       return res.status(200).json(updatedCart)
     }
-  }
-  catch(error){
+  } catch (error) {
     res.status(400).json(error)
   }
 })
