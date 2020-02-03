@@ -41,7 +41,7 @@ async function editStore (req, res) {
         { $set: newStoreDetails },
         { new: true }
       )
-      return res.json(updateStore)
+      return res.status(200).json(updateStore)
     }
   } catch (err) {
     res.status(500).json({ message: err.message })

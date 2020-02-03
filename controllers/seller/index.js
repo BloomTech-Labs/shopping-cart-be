@@ -8,6 +8,7 @@ const { recover, resetPassword } = require('./passwordReset')
 const getStore = require('./getStore')
 const updateAccount = require('./updateAccount')
 const getSalesHistory = require('./getSalesHistory')
+const updateSeller = require('./updateSeller')
 
 module.exports = {
   register,
@@ -20,5 +21,6 @@ module.exports = {
   getStore,
   deleteAccount,
   updateAccount,
-  getSalesHistory
+  getSalesHistory,
+  updateSeller
 }

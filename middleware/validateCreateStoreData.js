@@ -1,5 +1,6 @@
 const Validator = require('validator')
 const isEmpty = require('is-empty')
+
 function validateCreateStoreInput (data) {
   const errors = {}
   // Convert empty fields to an empty string so we can use validator functions
@@ -37,4 +38,17 @@ function validateAccountDetails (data) {
     isValid: isEmpty(errors)
   }
 }
-module.exports = { validateCreateStoreInput, validateAccountDetails }
+
+function validatePhone (data) {
+  const errors = {}
+  data.phone = !isEmpty(data.phone) ? data.phone : ''
+  if (Validator.isEmpty(data.phone)) {
+    errors.phone = 'phone is required'
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  }
+}
+
+module.exports = { validateCreateStoreInput, validateAccountDetails, validatePhone }
