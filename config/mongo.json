@@ -8,6 +8,6 @@
 		"host": "localhost"
 	},
 	"production": {
-		"use_env_variable": "MONGODB_URI"
+		"use_env_variable": "DB_CONNECTION"
 	}
 }
