@@ -26,7 +26,7 @@ const storeSchema = mongoose.Schema({
 					}
 				]
 			},
-			required: [ 'streetNumber', 'suitNumber', 'city', 'state', 'zipCode' ],
+			required: [ 'streetNumber', 'city', 'state', 'zipCode' ],
 			trim: [ 'streetNumber', 'suitNumber', 'city', 'state', 'zipCode' ]
 		}
 	},
