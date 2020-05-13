@@ -1,12 +1,14 @@
 const Order = require("../../models/orders")
-const validateProductInput = require("../../middleware/validateProductData")
+const validateOrderInput = require("../../middleware/validateOrderData")
 const Store = require("../../models/store")
 
 async function addOrder(req, res) {
-  const { errors, isValid } = validateProductInput(req.body)
+  // validating order data
+  const { errors, isValid } = validateOrderInput(req.body)
   if (!isValid) {
     return res.status(400).json(errors)
   }
+  
   try {
     const store = await Store.findOne({ seller: req.decodedToken.sub }).exec()
     if (!store) {
