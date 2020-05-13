@@ -8,7 +8,7 @@ function validateOrderInput(data) {
 
     orderCreated = orderCreated || ''
     orderCompleted = orderCompleted || ''
-    orderStatus = orderStatus || ''
+    // orderStatus = orderStatus || ''
 
     if(Validator.isEmpty(orderCreated)) {
         errors.orderCreated = "orderCreated field is required"
@@ -18,9 +18,9 @@ function validateOrderInput(data) {
         errors.orderCompleted = "orderCompleted field is required"
     }
 
-    if(Validator.isEmpty(orderStatus)) {
-        errors.orderStatus = "orderStatus field is required"
-    }
+    // if(Validator.isEmpty(orderStatus)) {
+    //     errors.orderStatus = "orderStatus field is required"
+    // }
 
     return {
         errors,
