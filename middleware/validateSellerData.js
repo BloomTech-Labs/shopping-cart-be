@@ -32,16 +32,12 @@ function validateRegisterInput (data) {
 async function validatePhoneNumber (req, res, next) {
   try {
     if (req.body.phone) {
-      await client.lookups
-        .phoneNumbers(`+${req.body.phone}`)
-        .fetch()
-        .then(phone_number => phone_number)
+      await client.lookups.phoneNumbers(`+${req.body.phone}`).fetch().then((phone_number) => phone_number)
     }
     next()
   } catch (e) {
     return res.status(400).json({
-      phone:
-        'Phone Number is invalid, make sure you add your country calling code'
+      phone: 'Phone Number is invalid, make sure you add your country calling code'
     })
   }
 }

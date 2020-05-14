@@ -5,15 +5,15 @@ function validateCreateStoreInput(data) {
 	const errors = {};
 	// Convert empty fields to an empty string so we can use validator functions
 	data.businessName = !isEmpty(data.businessName) ? data.businessName : '';
-	// data.businessInfo = !isEmpty(data.businessInfo) ? data.businessInfo : '';
+	data.businessInfo = !isEmpty(data.businessInfo) ? data.businessInfo : '';
 
 	// Store owner's name checks
 	if (Validator.isEmpty(data.businessName)) {
 		errors.businessName = 'Name of store owner is required';
 	}
-	// else if (Validator.isEmpty(data.businessInfo)) {
-	// 	errors.businessInfo = 'Store businessInfo is required';
-	// }
+	else if (Validator.isEmpty(data.businessInfo)) {
+		errors.businessInfo = 'Store businessInfo is required';
+	}
 	return {
 		errors,
 		isValid: isEmpty(errors)

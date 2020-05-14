@@ -2,7 +2,7 @@ const Store = require('../../models/store');
 const { validateCreateStoreInput } = require('../../middleware/validateCreateStoreData');
 
 async function createStore(req, res) {
-	const { businessName } = req.body;
+	const { businessName, owner, businessInfo } = req.body;
 	const { sub: sellerId } = req.decodedToken;
 
 	const { errors, isValid } = validateCreateStoreInput(req.body);
@@ -15,16 +15,17 @@ async function createStore(req, res) {
 
 		if (result) {
 			return res.status(400).json({ message: 'You can not create more than one store' });
-			// } else {
-			//   const User = await Store.findOne({ storeName })
-			//   if (User) {
-			//     return res.status(400).json({ message: 'Store name already exists' })
-			//   }
+		}
+		else {
+			const User = await Store.findOne({ businessName });
+			if (User) {
+				return res.status(400).json({ message: 'Store name already exists' });
+			}
 		}
 		const newStore = new Store({
 			businessName: req.body.businessName,
-			ownerName: req.body.ownerName,
-			address: req.body.address,
+			owner: req.body.owner,
+			businessInfo: req.body.businessInfo,
 			seller: req.decodedToken.sub
 		});
 		const saved = await newStore.save();
