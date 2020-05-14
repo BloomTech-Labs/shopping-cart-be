@@ -1,31 +1,26 @@
-const Validator = require('validator')
-const isEmpty = require('is-empty')
+const Validator = require('validator');
+const isEmpty = require('is-empty');
 
 function validateOrderInput(data) {
-    const errors = {}
+  const errors = {};
 
-    let { orderCreated, orderCompleted, orderStatus} = data
+  let { orderCreated, orderCompleted, orderStatus } = data;
 
-    orderCreated = orderCreated || ''
-    orderCompleted = orderCompleted || ''
-    // orderStatus = orderStatus || ''
+  orderCreated = orderCreated || '';
+  orderCompleted = orderCompleted || '';
 
-    if(Validator.isEmpty(orderCreated)) {
-        errors.orderCreated = "orderCreated field is required"
-    }
+  if (Validator.isEmpty(orderCreated)) {
+    errors.orderCreated = 'orderCreated field is required';
+  }
 
-    if(Validator.isEmpty(orderCompleted)) {
-        errors.orderCompleted = "orderCompleted field is required"
-    }
+  if (Validator.isEmpty(orderCompleted)) {
+    errors.orderCompleted = 'orderCompleted field is required';
+  }
 
-    // if(Validator.isEmpty(orderStatus)) {
-    //     errors.orderStatus = "orderStatus field is required"
-    // }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
 }
 
-module.exports = validateOrderInput
+module.exports = validateOrderInput;
