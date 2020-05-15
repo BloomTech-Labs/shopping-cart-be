@@ -1,0 +1,13 @@
+{
+	"development": {
+		"database": "shopping-cart",
+		"host": "localhost"
+	},
+	"test": {
+		"database": "shopping-cart-test",
+		"host": "localhost"
+	},
+	"production": {
+		"use_env_variable": "DB_CONNECTION"
+	}
+}
