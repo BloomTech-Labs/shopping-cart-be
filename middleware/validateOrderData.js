@@ -1,16 +1,16 @@
-const Validator = require('validator')
-const isEmpty = require('is-empty')
+const Validator = require('validator');
+const isEmpty = require('is-empty');
 
 function validateOrderInput(data) {
-    const errors = {}
+  const errors = {};
 
     let { orderCreated } = data
 
     orderCreated = orderCreated || ''
 
-    if(Validator.isEmpty(orderCreated)) {
-        errors.orderCreated = "orderCreated field is required"
-    }
+  if (Validator.isEmpty(orderCreated)) {
+    errors.orderCreated = 'orderCreated field is required';
+  }
 
     return {
         errors,
@@ -18,4 +18,4 @@ function validateOrderInput(data) {
     }
 }
 
-module.exports = validateOrderInput
+module.exports = validateOrderInput;
