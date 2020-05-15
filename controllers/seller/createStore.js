@@ -1,14 +1,8 @@
 const Store = require('../../models/store');
-const { validateCreateStoreInput } = require('../../middleware/validateCreateStoreData');
 
 async function createStore(req, res) {
 	const { businessName, owner, businessInfo } = req.body;
 	const { sub: sellerId } = req.decodedToken;
-
-	const { errors, isValid } = validateCreateStoreInput(req.body);
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
 
 	try {
 		const result = await Store.findOne({ seller: sellerId });
