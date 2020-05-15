@@ -1,72 +1,65 @@
 {
-  "name": "labs-shopping-cart-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "cross-env NODE_ENV=test nyc jest --coverage --detectOpenHandles --forceExit",
-    "test-dev": "cross-env NODE_ENV=test jest --watchAll --verbose --coverage --runInBand",
-    "lint": "standard --fix",
-    "server": "nodemon index.js",
-    "start": "node index.js",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
-  },
-  "jest": {
-    "coverageReporters": [
-      "json"
-    ],
-    "testEnvironment": "node"
-  },
-  "nyc": {
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "tempDirectory": "./coverage"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LABS-EU3/shopping_cart_backend.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LABS-EU3/shopping_cart_backend/issues"
-  },
-  "homepage": "https://github.com/LABS-EU3/shopping_cart_backend#readme",
-  "dependencies": {
-    "@sendgrid/mail": "^6.4.0",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "coveralls": "^3.0.9",
-    "cross-env": "^6.0.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-validator": "^6.3.1",
-    "helmet": "^3.21.2",
-    "is-empty": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mailgen": "^2.0.10",
-    "mongoose": "^5.8.1",
-    "nyc": "^14.1.1",
-    "passport": "^0.4.1",
-    "passport-stripe": "^0.2.3",
-    "pug": "^2.0.4",
-    "stripe": "^8.1.0",
-    "twilio": "^3.39.1",
-    "validator": "^12.1.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.7.2",
-    "jest": "^25.4.0",
-    "nodemon": "^2.0.2",
-    "standard": "^14.3.1",
-    "supertest": "^4.0.2"
-  },
-  "standard": {
-    "env": [
-      "jest"
-    ]
-  }
+	"name": "labs-shopping-cart-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "cross-env NODE_ENV=test nyc jest --coverage --detectOpenHandles --forceExit",
+		"test-dev": "cross-env NODE_ENV=test jest --watchAll --verbose --coverage --runInBand",
+		"lint": "standard --fix",
+		"server": "nodemon index.js",
+		"start": "node index.js",
+		"coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+		"coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
+	},
+	"jest": {
+		"coverageReporters": [ "json" ],
+		"testEnvironment": "node"
+	},
+	"nyc": {
+		"reporter": [ "lcov", "text" ],
+		"tempDirectory": "./coverage"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/LABS-EU3/shopping_cart_backend.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/LABS-EU3/shopping_cart_backend/issues"
+	},
+	"homepage": "https://github.com/LABS-EU3/shopping_cart_backend#readme",
+	"dependencies": {
+		"@sendgrid/mail": "^6.4.0",
+		"bcryptjs": "^2.4.3",
+		"cors": "^2.8.5",
+		"coveralls": "^3.0.9",
+		"cross-env": "^6.0.3",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-validator": "^6.3.1",
+		"helmet": "^3.21.2",
+		"is-empty": "^1.2.0",
+		"jsonwebtoken": "^8.5.1",
+		"mailgen": "^2.0.10",
+		"mongoose": "^5.8.1",
+		"nyc": "^14.1.1",
+		"passport": "^0.4.1",
+		"passport-stripe": "^0.2.3",
+		"pug": "^2.0.4",
+		"stripe": "^8.1.0",
+		"twilio": "^3.39.1",
+		"validator": "^12.1.0"
+	},
+	"devDependencies": {
+		"eslint": "^6.7.2",
+		"jest": "^25.4.0",
+		"nodemon": "^2.0.2",
+		"standard": "^14.3.1",
+		"supertest": "^4.0.2"
+	},
+	"standard": {
+		"env": [ "jest" ]
+	}
 }

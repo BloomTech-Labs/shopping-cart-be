@@ -2,6 +2,11 @@ const mongoose = require('mongoose')
 const crypto = require('crypto')
 
 const sellerSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
   phone: {
     type: Number,
     required: true,
