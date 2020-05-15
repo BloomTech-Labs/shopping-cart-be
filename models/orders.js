@@ -12,7 +12,6 @@ const orderSchema = mongoose.Schema({
   },
   orderCompleted: {
     type: Date,
-    required: true,
   },
   orderItem: [
     {
