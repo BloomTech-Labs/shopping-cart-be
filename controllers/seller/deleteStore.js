@@ -13,6 +13,7 @@ async function deleteStore (req, res) {
     await Product.deleteMany({ storeId })
     await Store.deleteOne({ _id: storeId })
     return res.status(200).json({ message: `${store.storeName} store has been removed` })
+    
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }

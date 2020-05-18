@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const beutifulSchema = require('mongoose-beautiful-unique-validation');
+// const beutifulSchema = require('mongoose-beautiful-unique-validation');
 
 const storeSchema = mongoose.Schema({
 	businessName: {
