@@ -13,11 +13,16 @@
 		"coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
 	},
 	"jest": {
-		"coverageReporters": [ "json" ],
+		"coverageReporters": [
+			"json"
+		],
 		"testEnvironment": "node"
 	},
 	"nyc": {
-		"reporter": [ "lcov", "text" ],
+		"reporter": [
+			"lcov",
+			"text"
+		],
 		"tempDirectory": "./coverage"
 	},
 	"repository": {
@@ -60,6 +65,8 @@
 		"supertest": "^4.0.2"
 	},
 	"standard": {
-		"env": [ "jest" ]
+		"env": [
+			"jest"
+		]
 	}
 }
