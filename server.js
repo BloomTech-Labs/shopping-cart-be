@@ -71,6 +71,7 @@ server.get('/', (req, res) => {
 
 server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
+
 });
 
 module.exports = server;

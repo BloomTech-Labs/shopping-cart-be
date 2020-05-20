@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const storeSchema = mongoose.Schema({
+
 	businessName: {
 		type: String,
 		required: true,
