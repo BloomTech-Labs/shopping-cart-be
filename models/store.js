@@ -6,9 +6,13 @@ const storeSchema = mongoose.Schema({
 		required: true,
 		trim: true
 	},
-	ownerName: {
+	seller: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Seller'
+	},
+	ownerName: {
+		type: String,
+		required: true
 	},
 	address: {
 		type: String,
