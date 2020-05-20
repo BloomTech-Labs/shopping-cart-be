@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-//changed store schema
 const storeSchema = mongoose.Schema({
 	businessName: {
 		type: String,
