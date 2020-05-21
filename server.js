@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
-const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const mongoURI = require('./config/config');
 const passport = require('passport');
@@ -20,10 +20,9 @@ const orderRouter = require('./routes/orderRouter');
 const server = express();
 
 server.use(helmet());
-server.use(morgan('dev'));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-
+server.use(morgan('dev'));
 server.use(cors());
 
 server.use(passport.initialize());
@@ -71,7 +70,6 @@ server.get('/', (req, res) => {
 
 server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
-
 });
 
 module.exports = server;

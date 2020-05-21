@@ -1,10 +1,8 @@
 const Store = require('../../models/store');
 
-const { validateEditInput } = require('../../middleware/validateEditInput');
-
 async function editStore(req, res) {
 	const { sub } = req.decodedToken;
-	const { ownerName, currency, imageUrl, storeName, address } = req.body;
+	const { businessName, ownerName, currency, imageUrl, storeName, address } = req.body;
 
 	//   find seller / store
 	try {
@@ -13,7 +11,7 @@ async function editStore(req, res) {
 			return res.status(404).json({ message: 'No store was found' });
 		}
 		else {
-			const existingStoreName = await Store.findOne({ storeName });
+			const existingStoreName = await Store.findOne({ businessName });
 			if (
 				existingStoreName &&
 				existingStoreName.storeName &&
