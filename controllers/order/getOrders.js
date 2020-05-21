@@ -14,7 +14,7 @@ async function getOrders(req, res) {
 
 async function getOneOrder(req, res) {
   try {
-    const order = await Order.findById(req.params.order_id).exec()
+    const order = await Order.findById(req.params.order_id).populate("orderItem.product").exec()
     if (!order) {
       return res.status(404).json({ message: "No order found!" })
     }

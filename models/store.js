@@ -7,7 +7,7 @@ const storeSchema = mongoose.Schema({
 		required: true,
 		trim: true
 	},
-	owner: {
+	seller: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Seller'
 	},

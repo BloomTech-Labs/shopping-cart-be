@@ -13,28 +13,26 @@ const orderSchema = mongoose.Schema({
   orderCompleted: {
     type: Date,
   },
+  
   orderItem: [
     {
-      productId: {
+      product: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "product",
+        ref: 'product',
         required: true,
       },
       quantity: {
         type: Number,
-      },
-    },
+        // required: true
+      }
+    }
   ],
-  orderStatus: [
-    {
-      ready: {
-        type: Boolean,
-      },
-      completed: {
-        type: Boolean,
-      },
-    },
-  ],
+  orderStatus: {
+    type: Boolean,
+  },
+  orderCompleteness: {
+    type: Boolean
+  }
 })
 
 const Order = mongoose.model("order", orderSchema)
