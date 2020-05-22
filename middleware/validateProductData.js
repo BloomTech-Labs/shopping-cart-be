@@ -4,20 +4,18 @@ const isEmpty = require('is-empty');
 function validateProductInput(data) {
 	const errors = {};
 	// Convert empty fields to an empty string so we can use validator functions
-	let { name, description, price, stock } = data;
-	name = name || '';
-	description = description || '';
+	let { productName, price, category } = data;
+	productName = productName || '';
+	category = category || '';
 	price = price || '';
 
-	stock = stock || '';
-
-	// Name checks
-	if (Validator.isEmpty(name)) {
+	//checks if client is sending product name as a string.
+	if (Validator.isEmpty(productName)) {
 		errors.name = 'Name field is required';
 	}
 
 	// description checks
-	if (Validator.isEmpty(description)) {
+	if (Validator.isEmpty(category)) {
 		errors.description = 'Description field is required';
 	}
 
@@ -30,14 +28,6 @@ function validateProductInput(data) {
 	}
 	else if (Number(price) < 0) {
 		errors.price = 'Price cant be less than 1';
-	}
-
-	// stock checks
-	if (stock && isNaN(stock)) {
-		errors.stock = 'Stock must be a number';
-	}
-	else if (stock && Number(stock) < 0) {
-		errors.stock = 'Stock cant be less than 1';
 	}
 
 	return {

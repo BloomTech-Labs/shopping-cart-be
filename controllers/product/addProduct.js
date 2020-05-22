@@ -13,6 +13,7 @@ async function addProduct(req, res) {
 		if (!store) {
 			return res.status(404).json({ message: 'There is no store associated with this account' });
 		}
+
 		const product = req.body;
 		product.storeId = store._id;
 		const newProduct = new Product(product);
