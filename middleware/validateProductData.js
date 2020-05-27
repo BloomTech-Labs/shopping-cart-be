@@ -4,15 +4,15 @@ const isEmpty = require('is-empty');
 function validateProductInput(data) {
 	const errors = {};
 	// Convert empty fields to an empty string so we can use validator functions
-	let { name, description, price, stock } = data;
-	name = name || '';
+	let { productName, description, price, stock } = data;
+	productName = productName || '';
 	description = description || '';
 	price = price || '';
 
 	stock = stock || '';
 
 	// Name checks
-	if (Validator.isEmpty(name)) {
+	if (Validator.isEmpty(productName)) {
 		errors.name = 'Name field is required';
 	}
 
