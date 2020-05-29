@@ -8,7 +8,7 @@ const orderSchema = mongoose.Schema({
   },
   orderCreated: {
     type: Date,
-    required: true,
+   
   },
   orderCompleted: {
     type: Date,

@@ -2,7 +2,7 @@ const Order = require("../../models/orders")
 
 async function getOrders(req, res) {
   try {
-    const orders = await Order.find({ storeId: req.params.store_id })
+    const orders = await Order.find({ storeId: req.params.store_id }).populate("orderItem.product").exec()
     if (orders.length === 0) {
       return res.status(404).json({ message: "No order found!" })
     }

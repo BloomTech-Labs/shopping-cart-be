@@ -22,7 +22,7 @@ async function submitCart (req, res) {
     order.orderCreated = cart.checkoutDate
     order.orderItem = cart.contents
     cart.storeId = store._id
-    cart.currency = store.currency
+   
     const newCart = new Cart(cart)
     const result = await newCart.save()
     const newOrder = new Order(order)
