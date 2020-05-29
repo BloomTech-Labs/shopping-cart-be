@@ -15,8 +15,7 @@ const cartRouter = require('./routes/cartRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const stripeAuthRouter = require('./routes/stripeAuthRouter');
 const orderRouter = require('./routes/orderRouter');
-// seller routes
-const sellerRouter = require('./routes/sellerDataRouter');
+
 
 const server = express();
 
@@ -37,7 +36,7 @@ server.use('/api/store', orderRouter);
 server.use('/api/payment', paymentRouter);
 server.use('/api/auth/stripe', stripeAuthRouter);
 // using our router
-server.use('/api/seller', sellerRouter);
+// server.use('/api/seller', sellerRouter);
 
 //new connection file.
 
