@@ -35,8 +35,7 @@ server.use('/api/store', cartRouter);
 server.use('/api/store', orderRouter);
 server.use('/api/payment', paymentRouter);
 server.use('/api/auth/stripe', stripeAuthRouter);
-// using our router
-// server.use('/api/seller', sellerRouter);
+
 
 //new connection file.
 
