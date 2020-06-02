@@ -8,11 +8,11 @@ const orderSchema = mongoose.Schema({
   },
   orderCreated: {
     type: Date,
-    required: true,
   },
   orderCompleted: {
     type: Date,
   },
+
   orderItem: [
     {
       product: {
@@ -22,19 +22,13 @@ const orderSchema = mongoose.Schema({
       },
       quantity: {
         type: Number,
+        // required: true
       },
     },
   ],
-  orderStatus: [
-    {
-      ready: {
-        type: Boolean,
-      },
-      completed: {
-        type: Boolean,
-      },
-    },
-  ],
+  orderStatus: {
+    type: String,
+  },
 })
 
 const Order = mongoose.model("order", orderSchema)

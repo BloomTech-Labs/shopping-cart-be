@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
-const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -20,7 +19,7 @@ const orderRouter = require('./routes/orderRouter');
 const server = express();
 
 server.use(helmet());
-server.use(morgan('dev'));
+// server.use(morgan('dev'));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 

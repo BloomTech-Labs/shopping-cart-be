@@ -1,7 +1,7 @@
-const Store = require('../../models/store');
+const Store = require("../../models/store")
 
 async function createStore(req, res) {
-	const { businessName, ownerName, address, secondAddress, city, state, zipCode, hours } = req.body;
+	const { businessName } = req.body;
 	const { sub: sellerId } = req.decodedToken;
 
 	try {
@@ -36,4 +36,4 @@ async function createStore(req, res) {
 	}
 }
 
-module.exports = createStore;
+module.exports = createStore
