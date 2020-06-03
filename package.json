@@ -50,6 +50,7 @@
 		"mailgen": "^2.0.10",
 		"mongoose": "^5.8.1",
 		"mongoose-beautiful-unique-validation": "^7.1.1",
+		"morgan": "^1.10.0",
 		"nyc": "^14.1.1",
 		"passport": "^0.4.1",
 		"passport-stripe": "^0.2.3",
