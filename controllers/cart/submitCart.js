@@ -3,6 +3,7 @@ const Store = require('../../models/store')
 const Seller = require('../../models/seller')
 const { validateCartInput } = require('../../middleware/validateCartData')
 const baseUrl = require('../../helpers/baseUrl')
+const Order = require('../../models/orders')
 
 async function submitCart (req, res) {
   const { errors, isValid } = validateCartInput(req.body)
@@ -17,10 +18,15 @@ async function submitCart (req, res) {
     }
     const seller = await Seller.findById({ _id: store.seller })
     const cart = req.body
+    const order = req.body
+    order.orderCreated = cart.checkoutDate
+    order.orderItem = cart.contents
     cart.storeId = store._id
-    cart.currency = store.currency
+   
     const newCart = new Cart(cart)
     const result = await newCart.save()
+    const newOrder = new Order(order)
+      await newOrder.save()
     const cartId = result._id
     // link to FE route of buyers saved cart
     const link = `${baseUrl}/cart/${cartId}`

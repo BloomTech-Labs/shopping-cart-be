@@ -26,7 +26,7 @@ async function addCart (req, res) {
     }
     const cart = req.body
     cart.storeId = store._id
-    cart.currency = store.currency
+  
     const newCart = new Cart(cart)
     const result = await newCart.save()
     const cartId = result._id
