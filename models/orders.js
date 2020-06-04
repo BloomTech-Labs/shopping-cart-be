@@ -24,8 +24,17 @@ const orderSchema = mongoose.Schema({
         type: Number,
         // required: true
       },
+      chosenVariant: {
+        option: {
+          type: String,
+        },
+        price: {
+          type: Number,
+        },
+      }
     },
   ],
+  
   orderStatus: {
     type: String,
   },
