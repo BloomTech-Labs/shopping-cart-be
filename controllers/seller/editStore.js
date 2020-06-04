@@ -21,20 +21,8 @@ async function editStore(req, res) {
 			) {
 				return res.status(400).json({ message: 'Store Name has been taken already' });
 			}
-			const newStoreDetails = {
-				businessName: req.body.businessName,
-				seller: req.decodedToken.sub,
-				ownerName: req.body.ownerName,
-				address: req.body.address,
-				secondAddress: req.body.secondAddress,
-				city: req.body.city,
-				state: req.body.city,
-				zipCode: req.body.zipCode,
-				hours: req.body.hours,
-				curbHours: req.body.curbHours,
-				logo: req.body.logo,
-				color: req.body.color
-			};
+			const newStoreDetails = req.body;
+
 			const storeId = findStore._id;
 
 			const updateStore = await Store.findOneAndUpdate(
