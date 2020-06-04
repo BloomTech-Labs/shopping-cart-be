@@ -1,10 +1,10 @@
 const Store = require('../../models/store');
 
-const { validateEditInput } = require('../../middleware/validateEditInput');
+// const { validateEditInput } = require('../../middleware/validateEditInput');
 
 async function editStore(req, res) {
 	const { sub } = req.decodedToken;
-	const { ownerName, currency, imageUrl, storeName, address } = req.body;
+	const { businessName } = req.body;
 
 	//   find seller / store
 	try {
@@ -13,20 +13,27 @@ async function editStore(req, res) {
 			return res.status(404).json({ message: 'No store was found' });
 		}
 		else {
-			const existingStoreName = await Store.findOne({ storeName });
+			const existingStoreName = await Store.findOne({ businessName });
 			if (
 				existingStoreName &&
 				existingStoreName.storeName &&
-				existingStoreName.storeName !== findStore.storeName
+				existingStoreName.storeName !== findStore.businessName
 			) {
 				return res.status(400).json({ message: 'Store Name has been taken already' });
 			}
 			const newStoreDetails = {
-				ownerName,
-				currency,
-				imageUrl,
-				storeName,
-				address
+				businessName: req.body.businessName,
+				seller: req.decodedToken.sub,
+				ownerName: req.body.ownerName,
+				address: req.body.address,
+				secondAddress: req.body.secondAddress,
+				city: req.body.city,
+				state: req.body.city,
+				zipCode: req.body.zipCode,
+				hours: req.body.hours,
+				curbHours: req.body.curbHours,
+				logo: req.body.logo,
+				color: req.body.color
 			};
 			const storeId = findStore._id;
 
