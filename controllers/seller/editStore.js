@@ -3,7 +3,7 @@ const Store = require('../../models/store');
 // const { validateEditInput } = require('../../middleware/validateEditInput');
 
 async function editStore(req, res) {
-	res.header('Access-Control-Allow-Origin', '*');
+	res.header(('Access-Control-Allow-Origin', 'https://localhost:3000'));
 	const { sub } = req.decodedToken;
 	const { businessName } = req.body;
 
