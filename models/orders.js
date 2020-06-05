@@ -8,11 +8,11 @@ const orderSchema = mongoose.Schema({
   },
   orderCreated: {
     type: Date,
-    default: Date.now
   },
   orderCompleted: {
     type: Date,
   },
+
   orderItem: [
     {
       product: {
@@ -34,9 +34,9 @@ const orderSchema = mongoose.Schema({
       }
     },
   ],
+  
   orderStatus: {
     type: String,
-    default: "Not Ready"
   },
 })
 
