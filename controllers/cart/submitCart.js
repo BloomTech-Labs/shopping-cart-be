@@ -19,7 +19,7 @@ async function submitCart(req, res) {
 		const seller = await Seller.findById({ _id: store.seller });
 		const cart = req.body;
 		const order = req.body;
-
+		order.orderCreated = cart.checkoutDate;
 		order.orderItem = cart.contents;
 		cart.storeId = store._id;
 
