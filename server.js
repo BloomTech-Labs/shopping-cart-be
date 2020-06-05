@@ -23,7 +23,7 @@ server.use(helmet());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-server.use(cors());
+// server.use(cors());
 
 server.use(passport.initialize());
 server.use(passport.session());
@@ -70,7 +70,6 @@ server.get('/', (req, res) => {
 
 server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
-
 });
 
 module.exports = server;
