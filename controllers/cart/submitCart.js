@@ -5,23 +5,33 @@ const { validateCartInput } = require('../../middleware/validateCartData');
 const baseUrl = require('../../helpers/baseUrl');
 const Order = require('../../models/orders');
 
-async function submitCart(req, res) {
-	const { errors, isValid } = validateCartInput(req.body);
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
-	const id = req.params.store_id;
-	try {
-		const store = await Store.findById({ _id: id });
-		if (!store) {
-			return res.status(404).json({ message: 'This store does not exist' });
-		}
-		const seller = await Seller.findById({ _id: store.seller });
-		const cart = req.body;
-		const order = req.body;
-		order.orderCreated = cart.checkoutDate;
-		order.orderItem = cart.contents;
-		cart.storeId = store._id;
+
+async function submitCart (req, res) {
+  const { errors, isValid } = validateCartInput(req.body)
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  const id = req.params.store_id
+  try {
+    const store = await Store.findById({ _id: id })
+    if (!store) {
+      return res.status(404).json({ message: 'This store does not exist' })
+    }
+    const seller = await Seller.findById({ _id: store.seller })
+    const cart = req.body
+    const order = req.body
+  
+    order.orderItem = cart.contents
+    cart.storeId = store._id
+   
+    const newCart = new Cart(cart)
+    const result = await newCart.save()
+    const newOrder = new Order(order)
+      await newOrder.save()
+    const cartId = result._id
+    // link to FE route of buyers saved cart
+    const link = `${baseUrl}/cart/${cartId}`
+
 
 		const newCart = new Cart(cart);
 		const result = await newCart.save();
