@@ -3,6 +3,7 @@ const Store = require('../../models/store');
 // const { validateEditInput } = require('../../middleware/validateEditInput');
 
 async function editStore(req, res) {
+	res.header('Access-Control-Allow-Origin', '*');
 	const { sub } = req.decodedToken;
 	const { businessName } = req.body;
 
@@ -30,6 +31,7 @@ async function editStore(req, res) {
 				{ $set: newStoreDetails },
 				{ new: true }
 			);
+
 			return res.status(200).json(updateStore);
 		}
 	} catch (err) {
