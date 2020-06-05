@@ -8,11 +8,11 @@ const orderSchema = mongoose.Schema({
   },
   orderCreated: {
     type: Date,
+    default: Date.now
   },
   orderCompleted: {
     type: Date,
   },
-
   orderItem: [
     {
       product: {
