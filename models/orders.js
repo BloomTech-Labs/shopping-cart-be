@@ -34,9 +34,9 @@ const orderSchema = mongoose.Schema({
       }
     },
   ],
-  
   orderStatus: {
     type: String,
+    default: "Not Ready"
   },
 })
 
