@@ -1,2 +1,2 @@
-const baseUrl = 'https://app.pure-retail.com'
-module.exports = baseUrl
+const baseUrl = 'https://develop.pure-retail-usa.com/';
+module.exports = baseUrl;
