@@ -27,7 +27,7 @@ server.use(
 	cors({
 		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Headers': 'Content-Type',
-		methods: [ 'OPTIONS', 'GET', 'PUT', 'POST', 'DELETE' ]
+		'Access-Control-Allow-Methods': [ 'OPTIONS', 'GET', 'PUT', 'POST', 'DELETE' ]
 	})
 );
 
