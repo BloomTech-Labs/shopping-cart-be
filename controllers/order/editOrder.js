@@ -4,12 +4,8 @@ async function editOrder(req, res) {
     
     const orderId = req.params.order_id
 
-    const editOrderDetails = {
-        orderCompleted : req.body.orderCompleted,
-        orderCreated: req.body.orderCreated,
-        orderStatus: req.body.orderStatus,
-        orderItem: req.body.orderItem
-    }
+    const editOrderDetails = req.body
+    
 
     try {
         const currendOrder = await Order.findById({_id : orderId})
