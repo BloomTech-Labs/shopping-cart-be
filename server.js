@@ -19,11 +19,15 @@ const orderRouter = require('./routes/orderRouter');
 const server = express();
 
 server.use(helmet());
-// server.use(morgan('dev'));
+
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-server.use(cors());
+server.use(
+	cors({
+		origin: 'http://localhost:3000'
+	})
+);
 
 server.use(passport.initialize());
 server.use(passport.session());
