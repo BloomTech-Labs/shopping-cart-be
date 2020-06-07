@@ -23,7 +23,7 @@ async function createStore(req, res) {
 			address: req.body.address,
 			secondAddress: req.body.secondAddress,
 			city: req.body.city,
-			state: req.body.city,
+			state: req.body.state,
 			zipCode: req.body.zipcode,
 			hours: req.body.hours,
 			curbHours: req.body.curbHours,
