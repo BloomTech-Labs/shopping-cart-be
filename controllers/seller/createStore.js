@@ -24,7 +24,7 @@ async function createStore(req, res) {
 			secondAddress: req.body.secondAddress,
 			city: req.body.city,
 			state: req.body.state,
-			zipCode: req.body.zipcode,
+			zipcode: req.body.zipcode,
 			hours: req.body.hours,
 			curbHours: req.body.curbHours,
 			logo: req.body.logo,
