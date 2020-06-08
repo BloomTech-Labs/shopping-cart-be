@@ -1,10 +1,10 @@
 const Store = require('../../models/store');
 
-const { validateEditInput } = require('../../middleware/validateEditInput');
+// const { validateEditInput } = require('../../middleware/validateEditInput');
 
 async function editStore(req, res) {
 	const { sub } = req.decodedToken;
-	const { ownerName, currency, imageUrl, storeName, address } = req.body;
+	const { businessName } = req.body;
 
 	//   find seller / store
 	try {
@@ -13,21 +13,16 @@ async function editStore(req, res) {
 			return res.status(404).json({ message: 'No store was found' });
 		}
 		else {
-			const existingStoreName = await Store.findOne({ storeName });
+			const existingStoreName = await Store.findOne({ businessName });
 			if (
 				existingStoreName &&
 				existingStoreName.storeName &&
-				existingStoreName.storeName !== findStore.storeName
+				existingStoreName.storeName !== findStore.businessName
 			) {
 				return res.status(400).json({ message: 'Store Name has been taken already' });
 			}
-			const newStoreDetails = {
-				ownerName,
-				currency,
-				imageUrl,
-				storeName,
-				address
-			};
+			const newStoreDetails = req.body;
+
 			const storeId = findStore._id;
 
 			const updateStore = await Store.findOneAndUpdate(
@@ -35,6 +30,7 @@ async function editStore(req, res) {
 				{ $set: newStoreDetails },
 				{ new: true }
 			);
+
 			return res.status(200).json(updateStore);
 		}
 	} catch (err) {

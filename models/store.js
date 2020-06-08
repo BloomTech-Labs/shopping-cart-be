@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const storeSchema = mongoose.Schema({
-
 	businessName: {
 		type: String,
 		required: true,
@@ -26,7 +25,7 @@ const storeSchema = mongoose.Schema({
 	},
 	city: { type: String },
 	state: { type: String },
-	zipCode: { type: Number },
+	zipcode: { type: Number },
 	hours: { type: String },
 	curbHours: { type: String },
 	logo: { type: String },

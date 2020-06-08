@@ -1,4 +1,4 @@
-const Store = require("../../models/store")
+const Store = require('../../models/store');
 
 async function createStore(req, res) {
 	const { businessName } = req.body;
@@ -18,14 +18,17 @@ async function createStore(req, res) {
 		}
 		const newStore = new Store({
 			businessName: req.body.businessName,
+			seller: req.decodedToken.sub,
 			ownerName: req.body.ownerName,
 			address: req.body.address,
 			secondAddress: req.body.secondAddress,
 			city: req.body.city,
-			state: req.body.city,
-			zipCode: req.body.zipCode,
+			state: req.body.state,
+			zipcode: req.body.zipcode,
 			hours: req.body.hours,
-			seller: req.decodedToken.sub
+			curbHours: req.body.curbHours,
+			logo: req.body.logo,
+			color: req.body.color
 		});
 		const saved = await newStore.save();
 		return res.status(201).json({
@@ -36,4 +39,4 @@ async function createStore(req, res) {
 	}
 }
 
-module.exports = createStore
+module.exports = createStore;

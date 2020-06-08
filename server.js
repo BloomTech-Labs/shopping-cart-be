@@ -19,11 +19,17 @@ const orderRouter = require('./routes/orderRouter');
 const server = express();
 
 server.use(helmet());
-// server.use(morgan('dev'));
+
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-server.use(cors());
+server.use(
+	cors({
+		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Allow-Headers': 'Content-Type',
+		'Access-Control-Allow-Methods': [ 'OPTIONS', 'GET', 'PUT', 'POST', 'DELETE' ]
+	})
+);
 
 server.use(passport.initialize());
 server.use(passport.session());
@@ -70,7 +76,6 @@ server.get('/', (req, res) => {
 
 server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
-
 });
 
 module.exports = server;
