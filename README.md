@@ -19,7 +19,7 @@
 
 **[View API Reference Here](https://documenter.getpostman.com/view/10342728/SzmY8MAK?version=latest)** <br />
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2451f94fbc7a20072bc4)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/cd654b14bda46307356c#?env%5BDevelopment%5D=W3sia2V5IjoidXJsIiwidmFsdWUiOiJodHRwOi8vbG9jYWxob3N0OjQwMDAiLCJlbmFibGVkIjp0cnVlfV0=)
 
 ## Getting started
 
