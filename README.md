@@ -14,10 +14,10 @@
 
 **Link to API deployed to Heroku**
 
-**[Production Deployment](https://shopping-cart-eu3.herokuapp.com/)** <br/>
-**[Staging Deployment](https://shopping-cart-eu3-staging.herokuapp.com/)**
+**[Production Deployment](https://shopping-cart-pro.herokuapp.com/)** <br/>
+**[Staging Deployment](https://shopping-cart-be.herokuapp.com/)**
 
-**[View API Reference Here](https://documenter.getpostman.com/view/5770396/SWEDyEJf?version=latest)** <br />
+**[View API Reference Here](https://documenter.getpostman.com/view/10342728/SzmY8MAK?version=latest)** <br />
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2451f94fbc7a20072bc4)
 
