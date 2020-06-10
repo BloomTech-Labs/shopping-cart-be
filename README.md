@@ -19,8 +19,6 @@
 
 **[View API Reference Here](https://documenter.getpostman.com/view/10342728/SzmY8MAK?version=latest)** <br />
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/cd654b14bda46307356c)
-
 ## Getting started
 
 To get this project up and running locally:
