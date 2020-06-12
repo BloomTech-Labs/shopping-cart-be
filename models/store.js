@@ -1,23 +1,36 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
 const storeSchema = mongoose.Schema({
-  ownerName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  currency: { type: String, required: true },
-  imageUrl: { type: String },
-  storeName: { type: String, required: true, unique: true },
-  seller: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Seller'
-  },
-  address: { type: String, required: true },
-  register_date: {
-    type: Date,
-    default: Date.now
-  },
-  stripeId: { type: String }
-})
-const Store = mongoose.model('store', storeSchema)
-module.exports = Store
+	businessName: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	seller: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Seller'
+	},
+	ownerName: {
+		type: String,
+		required: true
+	},
+	address: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	secondAddress: {
+		type: String,
+		trim: true
+	},
+	city: { type: String },
+	state: { type: String },
+	zipcode: { type: Number },
+	hours: { type: String },
+	curbHours: { type: String },
+	logo: { type: String },
+	color: { type: String }
+});
+
+const Store = mongoose.model('store', storeSchema);
+module.exports = Store;

@@ -1,25 +1,23 @@
-const router = require('express').Router()
-const sellerController = require('../controllers/seller/index')
-const authenticate = require('../middleware/authenticateMiddleware')
-
-const { validatePhoneNumber } = require('../middleware/validateSellerData')
+const router = require('express').Router();
+const sellerController = require('../controllers/seller/index');
+const authenticate = require('../middleware/authenticateMiddleware');
 
 // @route POST api/auth/register
 // @desc Register new user
 // @access Public
-router.post('/register', validatePhoneNumber, sellerController.register)
+router.post('/register', sellerController.register);
 
 // @route POST api/auth/login
 // @desc Login user
 // @access Public
-router.post('/login', sellerController.login)
+router.post('/login', sellerController.login);
 
-router.post('/recover', sellerController.recover)
+router.post('/recover', sellerController.recover);
 
-router.post('/reset/:token', sellerController.resetPassword)
+router.post('/reset/:token', sellerController.resetPassword);
 
-router.delete('/account', authenticate, sellerController.deleteAccount)
+router.delete('/account', authenticate, sellerController.deleteAccount);
 
-router.put('/phone', authenticate, validatePhoneNumber, sellerController.updateSeller)
+router.put('/phone', authenticate, sellerController.updateSeller);
 
-module.exports = router
+module.exports = router;
