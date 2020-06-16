@@ -8,6 +8,7 @@ const orderSchema = mongoose.Schema({
   },
   orderCreated: {
     type: Date,
+    default: Date.now()
   },
   orderCompleted: {
     type: Date,
@@ -24,8 +25,17 @@ const orderSchema = mongoose.Schema({
         type: Number,
         // required: true
       },
+      chosenVariant: {
+        option: {
+          type: String,
+        },
+        price: {
+          type: Number,
+        },
+      }
     },
   ],
+  
   orderStatus: {
     type: String,
   },
