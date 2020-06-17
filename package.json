@@ -10,7 +10,7 @@
     "server": "nodemon index.js",
     "start": "node index.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "coverage": "npm test -- --coverage --watchAll=false || true"
+    "coverage": "npm test -- --coverage --watchAll=false"
   },
   "jest": {
     "collectCoverageFrom": [
