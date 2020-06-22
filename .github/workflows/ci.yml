@@ -16,7 +16,7 @@ jobs:
       - run: npm install
       - uses: paambaati/codeclimate-action@v2.4.0
         env:
-          CC_TEST_REPORTER_ID: "${{ secrets.CODE_CLIMATE_REPORTER_ID }}"
+          CC_TEST_REPORTER_ID: "${{ secrets.CODECLIMATEREPORTERID }}"
         with:
           coverageCommand: npm run coverage
           coverageLocations: "./coverage/clover.xml:clover"
