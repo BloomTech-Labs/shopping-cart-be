@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc jest --coverage --detectOpenHandles --forceExit",
+    "test": "cross-env NODE_ENV=test nyc jest",
     "test-dev": "cross-env NODE_ENV=test jest --watchAll --verbose --coverage --runInBand",
     "lint": "standard --fix",
     "server": "nodemon index.js",
@@ -18,11 +18,7 @@
       "!**/node_modules/**",
       "!**/vendor/**",
       "!**/__tests__/**"
-    ],
-    "coverageReporters": [
-      "json"
-    ],
-    "testEnvironment": "node"
+    ]
   },
   "nyc": {
     "reporter": [
