@@ -6,14 +6,15 @@ const path = require('path');
 const mongoose = require('mongoose');
 const mongoURI = require('./config/config');
 const passport = require('passport');
+const stripe = require('stripe')(process.env.STRIPE_SECRET, { apiVersion: '' });
 
-const stripeAuth = require('./authentication/stripeAuthentication');
 const authRouter = require('./routes/authRouter');
 const productRouter = require('./routes/productRouter');
 const storeRouter = require('./routes/storeRouter');
 const cartRouter = require('./routes/cartRouter');
 const paymentRouter = require('./routes/paymentRouter');
-const stripeAuthRouter = require('./routes/stripeAuthRouter');
+const stripeAuthRouter = require('./authentication/stripeStrategy');
+
 const orderRouter = require('./routes/orderRouter');
 
 const server = express();
@@ -42,6 +43,8 @@ server.use('/api/store', orderRouter);
 server.use('/api/payment', paymentRouter);
 server.use('/api/auth/stripe', stripeAuthRouter);
 
+//Stripe Auth
+
 //new connection file.
 
 passport.serializeUser((user, done) => {
@@ -50,8 +53,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
 	done(null, user);
 });
-
-passport.use(stripeAuth);
 
 server.use(express.static(path.join(__dirname, 'public')));
 server.set('views', path.join(__dirname, 'views'));

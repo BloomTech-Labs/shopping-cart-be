@@ -13,16 +13,11 @@
 		"coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
 	},
 	"jest": {
-		"coverageReporters": [
-			"json"
-		],
+		"coverageReporters": [ "json" ],
 		"testEnvironment": "node"
 	},
 	"nyc": {
-		"reporter": [
-			"lcov",
-			"text"
-		],
+		"reporter": [ "lcov", "text" ],
 		"tempDirectory": "./coverage"
 	},
 	"repository": {
@@ -54,6 +49,8 @@
 		"passport": "^0.4.1",
 		"passport-stripe": "^0.2.3",
 		"pug": "^2.0.4",
+		"querystring": "^0.2.0",
+		"request-promise-native": "^1.0.8",
 		"stripe": "^8.1.0",
 		"twilio": "^3.39.1",
 		"validator": "^12.1.0"
@@ -66,8 +63,6 @@
 		"supertest": "^4.0.2"
 	},
 	"standard": {
-		"env": [
-			"jest"
-		]
+		"env": [ "jest" ]
 	}
 }
