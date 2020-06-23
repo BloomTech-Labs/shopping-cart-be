@@ -66,9 +66,9 @@ mongoose
 			useFindAndModify: false,
 			useCreateIndex: true
 		},
-		console.log('MongoDB connected')
+		console.log('Mongo is connected')
 	)
-	.catch((err) => console.log(err));
+	.catch((err) => Promise.reject(new Error('woops', err)));
 
 server.get('/', (req, res) => {
 	res.status(200).send('Api is running!!');
