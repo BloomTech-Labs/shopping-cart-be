@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc jest --coverage --detectOpenHandles --forceExit",
-    "test-dev": "cross-env NODE_ENV=test jest --watchAll --verbose --coverage --runInBand",
+    "test": "jest --detectOpenHandles --forceExit",
     "lint": "standard --fix",
     "server": "nodemon index.js",
     "start": "node index.js",
@@ -13,17 +12,13 @@
     "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
   "jest": {
-    "coverageReporters": [
-      "json"
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/__tests__/**"
     ],
     "testEnvironment": "node"
-  },
-  "nyc": {
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "tempDirectory": "./coverage"
   },
   "repository": {
     "type": "git",
