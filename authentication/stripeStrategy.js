@@ -20,4 +20,13 @@ router.get('/authorize', (req, res) => {
 	res.redirect(`${config.stripe.authorizeUri}?${querystring.stringify(parameters)}`);
 });
 
+router.get('/token', async (req, res, next) => {
+	try {
+		const test = test;
+	} catch (error) {
+		console.log(`This does not work`);
+		next(error);
+	}
+});
+
 module.exports = router;
