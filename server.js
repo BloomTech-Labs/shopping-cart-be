@@ -7,7 +7,11 @@ const mongoose = require('mongoose');
 const mongoURI = require('./config/config');
 const passport = require('passport');
 const stripe = require('stripe')(process.env.STRIPE_SECRET, { apiVersion: '' });
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(session);
 
+const stripeConfig = require('./config.stripe');
 const authRouter = require('./routes/authRouter');
 const productRouter = require('./routes/productRouter');
 const storeRouter = require('./routes/storeRouter');
@@ -74,6 +78,26 @@ mongoose
 server.get('/', (req, res) => {
 	res.status(200).send('Api is running!!');
 });
+
+const sessionStore = new MongoStore({
+	mongooseConnection: mongoose.connection,
+	collection: 'sessions'
+});
+server.use(cookieParser(process.env.COOKIE_SECRET));
+server.use(
+	session({
+		cookie: {
+			httpOnly: true,
+			secure: true,
+			maxAge: 1000 * 60 * 60 * 24 * 7
+		},
+		saveUninitialized: false,
+		secret: stripeConfig.secret,
+		signed: true,
+		resave: true,
+		store: sessionStore
+	})
+);
 
 server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
