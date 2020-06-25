@@ -80,6 +80,7 @@ server.use(
 );
 
 server.get('/', (req, res) => {
+	console.log(req.session);
 	res.status(200).send('Api is running!!');
 });
 

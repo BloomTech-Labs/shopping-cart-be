@@ -12,14 +12,15 @@ const router = express.Router();
 // * Redirect to Stripe to set up payments.
 
 router.get('/authorize', (req, res) => {
-	const parameters = {
+	var parameters = {
 		client_id: config.stripe.clientId,
+		state: req.session,
 		scope: 'read_write'
 	};
 
-	console.log('req 1', req);
+	parameters = Object.assign(parameters, { redirect_uri: 'http://localhost:4000/api/auth/stripe/token' });
+	// console.log(`${config.stripe.authorizeUri}?${querystring.stringify(parameters)}`);
 	res.redirect(`${config.stripe.authorizeUri}?${querystring.stringify(parameters)}`);
-	console.log('req 2', req);
 });
 
 router.get('/token', async (req, res, next) => {
