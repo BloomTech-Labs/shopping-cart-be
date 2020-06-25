@@ -25,7 +25,17 @@ router.get('/authorize', (req, res) => {
 
 router.get('/token', async (req, res, next) => {
 	try {
-		const test = test;
+		const tokenRequest = await request.post(config.stripe.tokenUri, {
+			form: {
+				grant_type: 'authorization_code',
+				client_id: config.stripe.clientId,
+				client_secret: config.stripe.secretKey,
+				code: req.query.code
+			},
+			json: true
+		});
+		console.log('token endpoint', tokenRequest);
+		console.log('User', req.user);
 	} catch (error) {
 		console.log(`This does not work`);
 		next(error);
