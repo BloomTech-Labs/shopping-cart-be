@@ -17,9 +17,7 @@ router.get('/authorize', (req, res) => {
 		scope: 'read_write'
 	};
 
-	console.log('req 1', req);
 	res.redirect(`${config.stripe.authorizeUri}?${querystring.stringify(parameters)}`);
-	console.log('req 2', req);
 });
 
 router.get('/token', async (req, res, next) => {
