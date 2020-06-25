@@ -34,8 +34,7 @@ router.get('/token', async (req, res, next) => {
 			},
 			json: true
 		});
-		console.log('token endpoint', tokenRequest);
-		console.log('User', req.user);
+		res.status(200).json(console.log('1.Token Request, 2. User', tokenRequest, req.user));
 	} catch (error) {
 		console.log(`This does not work`);
 		next(error);
