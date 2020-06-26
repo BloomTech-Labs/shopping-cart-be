@@ -18,6 +18,7 @@ const cartRouter = require('./routes/cartRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const stripeAuthRouter = require('./authentication/stripeStrategy');
 const orderRouter = require('./routes/orderRouter');
+const authenticateMiddleware = require('./middleware/authenticateMiddleware');
 
 const server = express();
 server.use(helmet());

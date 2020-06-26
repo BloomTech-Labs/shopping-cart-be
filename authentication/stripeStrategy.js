@@ -8,10 +8,12 @@ const querystring = require('querystring');
 
 const express = require('express');
 const router = express.Router();
+const Store = require('../models/store');
+const Seller = require('../models/seller');
 
 // * Redirect to Stripe to set up payments.
 
-router.get('/authorize', (req, res) => {
+router.get('/authorize', async (req, res) => {
 	var parameters = {
 		client_id: config.stripe.clientId,
 		state: req.session,
@@ -25,6 +27,8 @@ router.get('/authorize', (req, res) => {
 
 router.get('/token', async (req, res, next) => {
 	try {
+		const { sub } = req.decodedToken;
+
 		const tokenRequest = await request.post(config.stripe.tokenUri, {
 			form: {
 				grant_type: 'authorization_code',
@@ -34,7 +38,11 @@ router.get('/token', async (req, res, next) => {
 			},
 			json: true
 		});
-		res.status(200).json(console.log('1.Token Request, 2. User', tokenRequest, req.user));
+
+		const updateUser = await Seller.findOneAndUpdate({ _id: sub }, { $set: tokenRequest }, { new: true });
+		return res.status(200).json({
+			updateUser
+		});
 	} catch (error) {
 		console.log(`This does not work`);
 		next(error);
