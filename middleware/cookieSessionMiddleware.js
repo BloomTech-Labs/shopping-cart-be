@@ -1,9 +1,3 @@
-require('dotenv').config();
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongo')(session);
-const { mongoConnector } = require('../server');
-
 module.exports = (req, res, next) => {
 	try {
 		if (!req.headers.authorization) {
