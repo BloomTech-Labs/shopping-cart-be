@@ -14,11 +14,24 @@ const cartRouter = require('./routes/cartRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const stripeAuthRouter = require('./authentication/stripeStrategy');
 const orderRouter = require('./routes/orderRouter');
+const session = require('express-session');
 
 const server = express();
 server.use(helmet());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+const cookieConfig = {
+	secret: process.env.COOKIE_SECRET || 'BOOPGOESBLOOP',
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		expires: new Date(Date.now() + 604800000),
+		//TODO: switch secure to true if you are not using Postman!
+		secure: false, // set to true if your using https
+		httpOnly: true
+	}
+};
+server.use(session(cookieConfig));
 
 server.use(
 	cors({
@@ -70,4 +83,4 @@ server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
 });
 
-module.exports = server;
+module.exports = { server, cookieConfig };

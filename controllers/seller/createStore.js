@@ -6,7 +6,6 @@ async function createStore(req, res) {
 
 	try {
 		const result = await Store.findOne({ seller: sellerId });
-		console.log('IS there anything in the DT', sellerId);
 		if (result) {
 			return res.status(400).json({ message: 'You can not create more than one store' });
 		}
