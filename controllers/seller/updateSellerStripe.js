@@ -7,6 +7,7 @@ async function updateSellerStripe(req, res, next) {
 	if (!req.decodedToken) {
 		return res.status(400).json({ message: 'No Token found' });
 	}
+	//test
 	const { sub } = req.decodedToken;
 	try {
 		const findSeller = await Seller.findOne({ _id: sub });
