@@ -10,7 +10,6 @@ async function updatePhone(req, res) {
 
 	//   find seller / store
 	try {
-		const { phone } = req.body;
 		const findSeller = await Seller.findOne({ _id: sub });
 		if (!findSeller) {
 			return res.status(404).json({ message: 'No seller was found' });

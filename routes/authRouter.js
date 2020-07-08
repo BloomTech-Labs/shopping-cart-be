@@ -12,6 +12,8 @@ router.post('/register', sellerController.register);
 // @access Public
 router.post('/login', sellerController.login);
 
+router.put('/stripeUpdate', authenticate, sellerController.updateSellerStripe);
+
 router.post('/recover', sellerController.recover);
 
 router.post('/reset/:token', sellerController.resetPassword);

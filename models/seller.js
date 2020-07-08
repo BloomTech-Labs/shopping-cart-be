@@ -9,10 +9,12 @@ const sellerSchema = mongoose.Schema({
 		trim: true
 	},
 	password: { type: String, required: true },
-	stripe_user_id: { type: String, unique: true },
-	stripe_publishable_key: { type: String },
+
 	access_token: { type: String },
 	refresh_token: { type: String },
+	stripe_publishable_key: { type: String },
+	stripe_user_id: { type: String },
+
 	resetPasswordToken: {
 		type: String,
 		required: false

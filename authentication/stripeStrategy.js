@@ -2,14 +2,12 @@
 require('dotenv').config();
 
 const config = require('../config.stripe');
-const stripe = require('stripe')(config.stripe.secretKey);
+// const stripe = require('stripe')(config.stripe.secretKey);
 const request = require('request-promise-native');
 const querystring = require('querystring');
 
 const express = require('express');
 const router = express.Router();
-const Store = require('../models/store');
-const Seller = require('../models/seller');
 
 // * Redirect to Stripe to set up payments.
 
@@ -27,7 +25,8 @@ router.get('/authorize', async (req, res) => {
 
 router.get('/token', async (req, res, next) => {
 	try {
-		const { sub } = req.decodedToken;
+		//TODO: comment out if needed.
+		// const { sub } = req.decodedToken;
 
 		const tokenRequest = await request.post(config.stripe.tokenUri, {
 			form: {
@@ -39,10 +38,8 @@ router.get('/token', async (req, res, next) => {
 			json: true
 		});
 
-		const updateUser = await Seller.findOneAndUpdate({ _id: sub }, { $set: tokenRequest }, { new: true });
-		return res.status(200).json({
-			updateUser
-		});
+		// const updateUser = await Seller.findOneAndUpdate({ _id: sub }, { $set: tokenRequest }, { new: true });
+		return res.status(200).json({ tokenRequest });
 	} catch (error) {
 		console.log(`This does not work`);
 		next(error);
