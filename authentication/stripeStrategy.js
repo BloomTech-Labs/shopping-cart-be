@@ -23,7 +23,7 @@ router.get('/authorize', async (req, res) => {
 	res.redirect(`${config.stripe.authorizeUri}?${querystring.stringify(parameters)}`);
 });
 
-router.get('/token?code=:code', async (req, res, next) => {
+router.get('/token', async (req, res, next) => {
 	try {
 		//TODO: comment out if needed.
 		// const { sub } = req.decodedToken;
