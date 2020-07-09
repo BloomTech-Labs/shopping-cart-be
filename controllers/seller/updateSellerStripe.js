@@ -22,7 +22,9 @@ async function updateSellerStripe(req, res, next) {
 				stripe_user_id: req.body.stripe_user_id
 			};
 			const user = await Seller.findOneAndUpdate({ _id: sub }, { $set: updateInfo }, { new: true });
-			return res.status(201).json(user);
+			return res
+				.status(201)
+				.json({ message: 'Success: Your Stripe info has been registered! Thank You! PS: Fuck CORS!' });
 		}
 	} catch (error) {
 		next(error);
