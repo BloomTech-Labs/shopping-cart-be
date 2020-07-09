@@ -31,4 +31,5 @@ async function updateSellerStripe(req, res, next) {
 	}
 }
 
+//TODO = create an endpoint put request that removes all stripe info.
 module.exports = updateSellerStripe;

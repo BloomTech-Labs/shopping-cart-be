@@ -10,6 +10,7 @@ const updateAccount = require('./updateAccount');
 const getSalesHistory = require('./getSalesHistory');
 const updateSeller = require('./updateSeller');
 const updateSellerStripe = require('./updateSellerStripe');
+const getSellerInfo = require('./getSellerInfo');
 
 module.exports = {
 	register,
@@ -24,5 +25,6 @@ module.exports = {
 	updateAccount,
 	getSalesHistory,
 	updateSeller,
-	updateSellerStripe
+	updateSellerStripe,
+	getSellerInfo
 };
