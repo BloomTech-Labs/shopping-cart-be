@@ -37,7 +37,8 @@ server.use(
 	cors({
 		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Headers': 'Content-Type',
-		'Access-Control-Allow-Methods': [ 'OPTIONS', 'GET', 'PUT', 'POST', 'DELETE' ]
+		'Access-Control-Allow-Methods': [ 'OPTIONS', 'GET', 'PUT', 'POST', 'DELETE' ],
+		'Access-Control-Allow-Credentials': true
 	})
 );
 server.use(cookieParser(process.env.COOKIE_SECRET));
