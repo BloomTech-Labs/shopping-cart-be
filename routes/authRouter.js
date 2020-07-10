@@ -16,6 +16,8 @@ router.put('/stripeUpdate', authenticate, sellerController.updateSellerStripe);
 
 router.get('/getseller', authenticate, sellerController.getSellerInfo);
 
+router.put('/disconnectStripe', authenticate, sellerController.disconnectStripe);
+
 router.post('/recover', sellerController.recover);
 
 router.post('/reset/:token', sellerController.resetPassword);
