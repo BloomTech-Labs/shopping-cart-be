@@ -11,7 +11,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 router.get('/secret', stripeController.getSecret);
 router.post('/create-payment-intent', stripeController.paymentIntent);
-router.get('');
+
 router.post('/charge', async (req, res) => {
 	const { errors, isValid } = validatePaymentInput(req.body);
 	if (!isValid) {
