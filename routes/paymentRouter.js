@@ -34,6 +34,7 @@ router.post('/create-payment-intent', async (req, res) => {
 		//sending publishable key and payment intent to the client.
 		res.status(200).send({
 			message: 'THIS WORKED',
+			amount: `Thank you for your payment of $${total}`,
 			publishableKey: stripeConfig.stripe.publishableKey,
 			clientSecret: paymentIntentActual.clientSecret,
 			metadata: { integration_check: 'accept_a_payment' }
