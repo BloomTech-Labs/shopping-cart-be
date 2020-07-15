@@ -1,65 +1,49 @@
 // Set your secret key: remember to change this to your live secret key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const router = require('express').Router();
-const validatePaymentInput = require('../middleware/validatePaymentData');
-const validatePaymentCompleteInput = require('../middleware/validatePaymentComleteData');
-const Store = require('../models/store');
-const Cart = require('../models/cart');
-const stripeController = require('../controllers/stripe/stripePayment');
+const Order = require('../models/orders');
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
+const stripeConfig = require('../config.stripe');
 
-router.get('/secret', stripeController.getSecret);
-router.post('/create-payment-intent', stripeController.paymentIntent);
-
-router.post('/charge', async (req, res) => {
-	const { errors, isValid } = validatePaymentInput(req.body);
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
+const stripe = require('stripe')(stripeConfig.stripe.secretKey);
+router.post('/create-payment-intent', async (req, res) => {
 	try {
-		const transaction = req.body;
-		const store = await Store.findById({ _id: transaction.storeId });
-		const stripeId = store.stripeId;
-		let currency;
+		const { orderId } = req.body;
+		console.log('orderId', orderId);
+		const orders = await Order.findOne({ _id: orderId });
+		console.log('orders', orders);
 
-		switch (store.currency) {
-			case 'DOL':
-				currency = 'usd';
-				break;
-			case 'POU':
-				currency = 'gbp';
-				break;
-			case 'EUR':
-				currency = 'eur';
-				break;
-			case 'YEN':
-				currency = 'jpy';
-				break;
-			default:
-				currency = 'usd';
-		}
+		let total = 0;
+		orders.orderItem.forEach((item) => {
+			const quantity = item.quantity;
+			const price = item.chosenVariant.price;
 
-		const paymentIntent = await stripe.paymentIntents.create(
-			{
-				amount: transaction.amount * 100,
-				currency: currency
-			},
-			{
-				stripeAccount: stripeId
-			}
-		);
-		res.status(200).json({ paymentIntent: paymentIntent, stripeId });
+			console.log('quant & price ', quantity, price);
+
+			total += quantity * price;
+			console.log('inside Foreach', total);
+		});
+
+		console.log('TOTAL', total);
+
+		const paymentIntentActual = await stripe.paymentIntents.create({
+			amount: total * 100,
+			currency: 'usd'
+		});
+
+		//sending publishable key and payment intent to the client.
+		res.status(200).send({
+			message: 'THIS WORKED',
+			publishableKey: stripeConfig.stripe.publishableKey,
+			clientSecret: paymentIntentActual.clientSecret,
+			metadata: { integration_check: 'accept_a_payment' }
+		});
 	} catch (error) {
-		res.status(400).json(error);
+		res.status(400).json({ message: 'Payment not processed' });
 	}
 });
 
 router.put('/complete', async (req, res) => {
-	const { errors, isValid } = validatePaymentCompleteInput(req.body);
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
 	try {
 		const { cartId, amount } = req.body;
 		const cart = await Cart.findById({ _id: cartId });
