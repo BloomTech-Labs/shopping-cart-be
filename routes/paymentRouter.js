@@ -9,22 +9,15 @@ const stripe = require('stripe')(stripeConfig.stripe.secretKey);
 router.post('/create-payment-intent', async (req, res) => {
 	try {
 		const { orderId } = req.body;
-		console.log('orderId', orderId);
 		const orders = await Order.findOne({ _id: orderId });
-		console.log('orders', orders);
 
 		let total = 0;
 		orders.orderItem.forEach((item) => {
 			const quantity = item.quantity;
 			const price = item.chosenVariant.price;
 
-			console.log('quant & price ', quantity, price);
-
 			total += quantity * price;
-			console.log('inside Foreach', total);
 		});
-
-		console.log('TOTAL', total);
 
 		const paymentIntentActual = await stripe.paymentIntents.create({
 			amount: total * 100,
