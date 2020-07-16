@@ -1,34 +1,27 @@
 // Set your secret key: remember to change this to your live secret key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const router = require('express').Router();
-const Order = require('../models/orders');
-
 const stripeConfig = require('../config.stripe');
 
 const stripe = require('stripe')(stripeConfig.stripe.secretKey);
 router.post('/create-payment-intent', async (req, res) => {
 	try {
-		const { orderId } = req.body;
-		const orders = await Order.findOne({ _id: orderId });
-
-		let total = 0;
-		orders.orderItem.forEach((item) => {
-			const quantity = item.quantity;
-			const price = item.chosenVariant.price;
-
-			total += quantity * price;
-		});
+		const { price, email, pK } = req.body;
+		console.log('req.body?', price, email, pK);
 
 		const paymentIntentActual = await stripe.paymentIntents.create({
-			amount: total * 100,
-			currency: 'usd'
+			amount: price,
+			currency: 'usd',
+			email: email
 		});
+
+		console.log('paymentIntent', paymentIntentActual);
 
 		//sending publishable key and payment intent to the client.
 		res.status(200).send({
 			message: 'THIS WORKED',
-			amount: `Thank you for your payment of $${total}`,
-			publishableKey: stripeConfig.stripe.publishableKey,
+			amount: `Thank you for your payment of $${price}`,
+			publishableKey: pK,
 			clientSecret: paymentIntentActual.clientSecret,
 			metadata: { integration_check: 'accept_a_payment' }
 		});
