@@ -15,10 +15,10 @@ router.post('/create-payment-intent', async (req, res) => {
 			{
 				amount: price,
 				currency: 'usd'
-			},
-			{
-				idempontencyKey: idempontencyKey
 			}
+			// {
+			// 	idempontencyKey: idempontencyKey
+			// }
 		);
 
 		console.log('paymentIntent', paymentIntentActual);
