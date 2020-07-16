@@ -6,21 +6,19 @@ const stripeConfig = require('../config.stripe');
 const stripe = require('stripe')(stripeConfig.stripe.secretKey);
 router.post('/create-payment-intent', async (req, res) => {
 	try {
-		const { price, email, pK } = req.body;
-		console.log('req.body?', price, email, pK);
+		const { price, pK } = req.body;
 
 		const paymentIntentActual = await stripe.paymentIntents.create({
 			amount: price,
-			currency: 'usd',
-			email: email
+			currency: 'usd'
 		});
 
 		console.log('paymentIntent', paymentIntentActual);
 
 		//sending publishable key and payment intent to the client.
 		res.status(200).send({
-			message: 'THIS WORKED',
-			amount: `Thank you for your payment of $${price}`,
+			message: `Thank you for your payment of $${price}`,
+			amount: price,
 			publishableKey: pK,
 			clientSecret: paymentIntentActual.clientSecret,
 			metadata: { integration_check: 'accept_a_payment' }
