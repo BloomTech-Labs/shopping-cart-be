@@ -64,6 +64,7 @@
 		"request-promise-native": "^1.0.8",
 		"stripe": "^8.1.0",
 		"twilio": "^3.39.1",
+		"uuid": "^8.2.0",
 		"validator": "^12.1.0"
 	},
 	"devDependencies": {

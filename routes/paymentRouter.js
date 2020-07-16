@@ -2,16 +2,24 @@
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const router = require('express').Router();
 const stripeConfig = require('../config.stripe');
+const uuid = require('uuid');
 
 const stripe = require('stripe')(stripeConfig.stripe.secretKey);
 router.post('/create-payment-intent', async (req, res) => {
 	try {
 		const { price, pK } = req.body;
 
-		const paymentIntentActual = await stripe.paymentIntents.create({
-			amount: price,
-			currency: 'usd'
-		});
+		const idempontencyKey = uuid();
+
+		const paymentIntentActual = await stripe.paymentIntents.create(
+			{
+				amount: price,
+				currency: 'usd'
+			},
+			{
+				idempontencyKey: idempontencyKey
+			}
+		);
 
 		console.log('paymentIntent', paymentIntentActual);
 
@@ -25,26 +33,6 @@ router.post('/create-payment-intent', async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({ message: 'Payment not processed' });
-	}
-});
-
-router.put('/complete', async (req, res) => {
-	try {
-		const { cartId, amount } = req.body;
-		const cart = await Cart.findById({ _id: cartId });
-		if (!cart) {
-			return res.status(404).json({ message: 'This cart does not exist' });
-		}
-		else {
-			const payload = {
-				paidAmount: amount / 100,
-				checkedOut: true
-			};
-			const updatedCart = await Cart.findOneAndUpdate({ _id: cartId }, { $set: payload }, { new: true });
-			return res.status(200).json(updatedCart);
-		}
-	} catch (error) {
-		res.status(400).json(error);
 	}
 });
 
