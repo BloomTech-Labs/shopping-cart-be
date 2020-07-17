@@ -37,6 +37,7 @@
 	"homepage": "https://github.com/LABS-EU3/shopping_cart_backend#readme",
 	"dependencies": {
 		"@sendgrid/mail": "^6.4.0",
+		"axios": "^0.19.2",
 		"bcryptjs": "^2.4.3",
 		"connect-mongo": "^3.2.0",
 		"cookie-parser": "^1.4.5",
