@@ -25,22 +25,4 @@ router.post('/create-payment-intent', async (req, res) => {
 	});
 });
 
-// router.get('/secret', async (req, res) => {
-// 	try {
-// 		const intent = await request
-// 			.post('http://localhost:4000/api/auth/stripe/create-payment-intent', {
-// 				price: 200,
-// 				pK:
-// 					'pk_test_51H2QaEI7mI0b1hERa7Hl22aT19XHAfYGpa4IyaP6LUR2vN7Khvu8nCSJIRPXOSKXVN32XVlH7eE0CfvO21vANYrB008zayIxxO',
-// 				stripeAccount: '123456'
-// 			})
-// 			.on('response', function(res) {
-// 				console.log(res.paymentIntentActual1559155);
-// 			});
-// 		res.status(200).json({ client_secret: intent.clientSecret });
-// 	} catch (error) {
-// 		res.status(400).json({ message: 'No secret for you' });
-// 	}
-// });
-
 module.exports = router;
