@@ -84,4 +84,4 @@ server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
 });
 
-module.exports = { server, cookieConfig };
+module.exports = server;
