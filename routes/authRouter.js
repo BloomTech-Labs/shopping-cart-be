@@ -16,6 +16,8 @@ router.put('/stripeUpdate', authenticate, sellerController.updateSellerStripe);
 
 router.get('/getseller', authenticate, sellerController.getSellerInfo);
 
+router.get('/pk/:storeId', sellerController.getSellerFromStore);
+
 router.put('/disconnectStripe', authenticate, sellerController.disconnectStripe);
 
 router.post('/recover', sellerController.recover);
