@@ -1,21 +1,92 @@
 const request = require('supertest');
 const server = require('../../../server');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 // const server = require('../../../server');
 // const Product = require('../../../models/product');
 // const Seller = require('../../../models/seller');
 // const Store = require('../../../models/store');
-const AddOrder = require('../../../models/orders')
+const AddOrder = require('../../../models/orders');
+const Store = require('../../../models/store');
+const Order = require('../../../models/orders');
+const Product = require('../../../models/product');
 
-describe( "something here", ()=> { 
-    it('should return a JSON object from the index route', async () => {
-    const response = await request(server).get('/api/store/order/1');
-    expect(response.type).toEqual('application/json');
-  });
-})
+let token;
+let token2;
+let token3;
 
-console.log(server)
-  
+async function clearDb() {
+	await Store.deleteMany({});
+	await Order.deleteMany({});
+}
+
+beforeEach(() => {
+	jest.setTimeout(10000);
+});
+describe('addOrderTest', () => {
+	beforeAll(async () => {
+		try {
+			clearDb();
+			const response1 = await request(server).post('/api/auth/register').send({
+				phone: '2347031900033',
+				password: 'password12345'
+			});
+
+			token = response1.body.token;
+
+			const response2 = await request(server).post('/api/auth/register').send({
+				phone: '23470319000',
+				password: 'password12345'
+			});
+
+			token2 = response2.body.token;
+
+			const newStore = Store.create({
+				businessName: 'Book&Sticks',
+				ownerName: 'Jane Doe',
+				address: '205 Boom Town',
+				secondAddress: 'BOOmTOWN, TP',
+				city: 'BOOM BOOM',
+				state: 'BAFFF',
+				zipcode: '75098',
+				hours: '3PM',
+				curbHours: '2PM',
+				logo: 'asdfasdf',
+				color: 'sdfsdf',
+				seller: response1.body.user.id
+			});
+			response.status(200).json({ newStore });
+			console.log(newStore);
+
+			const newProduct = Product.create({});
+		} catch (error) {
+			console.error(error.name, error.message);
+		}
+	});
+
+	it('should return a JSON object from the index route', async () => {
+		const response = await request(server).post('/api/store/order').send({
+			orderItem: [
+				{
+					product: '5f0e429370d3706be2c97b14',
+					quantity: 12,
+					chosenVariant: {
+						price: 2
+					}
+				},
+				{
+					product: '5f0e4b2061d7806ef6266210',
+					quantity: 10,
+					chosenVariant: {
+						price: 50
+					}
+				}
+			],
+			orderStatus: 'Ready',
+			orderCreated: ''
+		});
+		expect(response.type).toEqual('application/json');
+	});
+});
 
 // beforeAll(async () => {
 // 	jest.setTimeout(30000);
