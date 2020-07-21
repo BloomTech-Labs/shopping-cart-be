@@ -1,6 +1,12 @@
 {
 	"development": {
-		"database": "shopping-cart",
+		"database": {
+			"name": "shopping-cart",
+			"auth": {
+				"username": "testuser",
+				"password": "welcome"
+			}
+		},
 		"host": "localhost"
 	},
 	"test": {

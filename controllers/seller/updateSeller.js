@@ -10,7 +10,6 @@ async function updatePhone(req, res) {
 
 	//   find seller / store
 	try {
-		const { phone } = req.body;
 		const findSeller = await Seller.findOne({ _id: sub });
 		if (!findSeller) {
 			return res.status(404).json({ message: 'No seller was found' });
@@ -33,5 +32,7 @@ async function updatePhone(req, res) {
 		res.status(500).json({ message: err.message });
 	}
 }
+
+//test commit
 
 module.exports = updatePhone;
