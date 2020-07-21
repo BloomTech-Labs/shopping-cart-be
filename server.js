@@ -20,18 +20,6 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-const cookieConfig = {
-	secret: process.env.COOKIE_SECRET || 'BOOPGOESBLOOP',
-	resave: false,
-	saveUninitialized: true,
-	cookie: {
-		expires: new Date(Date.now() + 604800000),
-		//TODO: switch secure to true if you are not using Postman!
-		secure: false, // set to true if your using https
-		httpOnly: true
-	}
-};
-server.use(session(cookieConfig));
 
 server.use(
 	cors({
@@ -50,6 +38,7 @@ server.use('/api/store', cartRouter);
 server.use('/api/store', orderRouter);
 server.use('/api/stripe/payment', paymentRouter);
 server.use('/api/auth/stripe', stripeAuthRouter);
+j;
 
 passport.serializeUser((user, done) => {
 	done(null, user);
