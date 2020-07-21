@@ -11,7 +11,7 @@ router.get('/:store_id/order', getOrders);
 
 router.get('/order/:order_id', getOneOrder);
 
-router.post('/:storeID/order', addOrder);
+router.post('/:storeId/order', addOrder);
 
 router.put('/order/:order_id', authenticate, editOrder);
 
