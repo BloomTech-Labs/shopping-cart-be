@@ -38,7 +38,6 @@ server.use('/api/store', cartRouter);
 server.use('/api/store', orderRouter);
 server.use('/api/stripe/payment', paymentRouter);
 server.use('/api/auth/stripe', stripeAuthRouter);
-j;
 
 passport.serializeUser((user, done) => {
 	done(null, user);
