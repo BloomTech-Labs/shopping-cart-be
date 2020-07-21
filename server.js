@@ -71,9 +71,9 @@ mongoose
 			useFindAndModify: false,
 			useCreateIndex: true
 		},
-		console.log('Mongo is connected')
+		console.log('MongoDB connected')
 	)
-	.catch((err) => Promise.reject(new Error('woops', err)));
+	.catch((err) => console.log(err));
 
 server.get('/', (req, res) => {
 	console.log(req.session);
@@ -84,4 +84,4 @@ server.all('*', (req, res) => {
 	res.status(404).json({ message: 'This URL can not be found' });
 });
 
-module.exports = { server, cookieConfig };
+module.exports = server;
