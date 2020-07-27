@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = require('../../../server');
+const { server } = require('../../../server');
 const Seller = require('../../../models/seller');
 
 async function clearDb() {

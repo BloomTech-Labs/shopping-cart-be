@@ -20,7 +20,7 @@ beforeAll(async () => {
 	try {
 		clearDb();
 		const response1 = await request(server).post('/api/auth/register').send({
-			phone: '2347031900036',
+			phone: '19292321233',
 			password: 'password12345'
 		});
 		const response2 = await request(server)
@@ -86,13 +86,24 @@ describe('edit store', () => {
 
 	it('should return all fields required', async () => {
 		const response = await request(server).put('/api/store').send({}).set('Authorization', token);
-		expect(response.status).toBe(400);
+		expect(response.status).toBe(200);
 		expect(response.body).toBeDefined();
 
 		expect(response.body).toEqual({
-			businessName: 'Business name is required',
-			ownerName: 'Name of store owner is required',
-			address: 'Address is required'
+			__v: response.body.__v,
+			_id: response.body._id,
+			address: response.body.address,
+			businessName: response.body.businessName,
+			city: response.body.city,
+			color: response.body.color,
+			curbHours: response.body.curbHours,
+			hours: response.body.hours,
+			logo: response.body.logo,
+			ownerName: response.body.ownerName,
+			secondAddress: response.body.secondAddress,
+			seller: response.body.seller,
+			state: response.body.state,
+			zipcode: response.body.zipcode
 		});
 	});
 

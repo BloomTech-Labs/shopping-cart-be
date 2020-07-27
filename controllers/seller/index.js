@@ -12,6 +12,7 @@ const updateSeller = require('./updateSeller');
 const updateSellerStripe = require('./updateSellerStripe');
 const getSellerInfo = require('./getSellerInfo');
 const disconnectStripe = require('./disconnectSellerStripe');
+const getSellerFromStore = require('./getSellerFromStore');
 
 module.exports = {
 	register,
@@ -28,5 +29,6 @@ module.exports = {
 	updateSeller,
 	updateSellerStripe,
 	getSellerInfo,
-	disconnectStripe
+	disconnectStripe,
+	getSellerFromStore
 };
