@@ -12,6 +12,14 @@ router.post('/register', sellerController.register);
 // @access Public
 router.post('/login', sellerController.login);
 
+router.put('/stripeUpdate', authenticate, sellerController.updateSellerStripe);
+
+router.get('/getseller', authenticate, sellerController.getSellerInfo);
+
+router.get('/pk/:storeId', sellerController.getSellerFromStore);
+
+router.put('/disconnectStripe', authenticate, sellerController.disconnectStripe);
+
 router.post('/recover', sellerController.recover);
 
 router.post('/reset/:token', sellerController.resetPassword);
