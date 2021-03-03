@@ -48,7 +48,7 @@
     "nyc": "^14.1.1",
     "passport": "^0.4.1",
     "passport-stripe": "^0.2.3",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "stripe": "^8.1.0",
     "twilio": "^3.39.1",
     "validator": "^12.1.0"
