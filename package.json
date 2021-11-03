@@ -51,7 +51,7 @@
     "pug": "^2.0.4",
     "stripe": "^8.1.0",
     "twilio": "^3.39.1",
-    "validator": "^12.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "eslint": "^6.7.2",
